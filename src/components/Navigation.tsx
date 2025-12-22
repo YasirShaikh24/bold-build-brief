@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const navLinks = [
@@ -37,7 +37,7 @@ export const Navigation = () => {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-background/80 backdrop-blur-xl border-b border-border/50'
+            ? 'bg-background/80 backdrop-blur-xl border-b border-border/50 shadow-lg'
             : 'bg-transparent'
         }`}
       >
@@ -50,11 +50,17 @@ export const Navigation = () => {
                 e.preventDefault();
                 handleNavClick('#hero');
               }}
-              className="font-display text-2xl font-bold tracking-wider text-gradient"
+              className="flex items-center gap-3"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >
-              INTENSE
+              {/* Logo Icon */}
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                <TrendingUp className="w-5 h-5 text-primary-foreground" />
+              </div>
+              <span className="font-display text-2xl font-bold tracking-wider text-gradient">
+                InTence
+              </span>
             </motion.a>
 
             {/* Desktop Navigation */}

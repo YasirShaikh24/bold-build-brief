@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Code, FileText, Play } from 'lucide-react';
+import { ExternalLink, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -34,11 +34,16 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 60, rotateX: -10 }}
+        whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
         viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.6, delay: index * 0.1 }}
-        className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 cursor-pointer"
+        transition={{ duration: 0.7, delay: index * 0.12 }}
+        whileHover={{ 
+          y: -10, 
+          scale: 1.02,
+          boxShadow: "0 30px 60px hsl(var(--primary) / 0.2)"
+        }}
+        className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 cursor-pointer hover:border-primary/50 transition-all duration-500"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsModalOpen(true)}
@@ -57,7 +62,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
           {/* Overlay */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-accent via-accent/60 to-transparent"
             animate={{
               opacity: isHovered ? 1 : 0.7,
             }}
@@ -74,7 +79,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
             transition={{ duration: 0.3 }}
           >
             <div className="w-16 h-16 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 flex items-center justify-center">
-              <Play className="w-6 h-6 text-primary fill-primary" />
+              <Play className="w-6 h-6 text-primary-foreground fill-primary-foreground" />
             </div>
           </motion.div>
         </div>
@@ -93,13 +98,13 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
             {project.technologies.slice(0, 3).map((tech) => (
               <span
                 key={tech}
-                className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full"
+                className="px-3 py-1 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full"
               >
                 {tech}
               </span>
             ))}
             {project.technologies.length > 3 && (
-              <span className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full">
+              <span className="px-3 py-1 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full">
                 +{project.technologies.length - 3}
               </span>
             )}
@@ -124,7 +129,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
               alt={project.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-accent/50 to-transparent" />
           </div>
 
           {/* Tech Stack */}
@@ -141,39 +146,43 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
           {/* Project Story */}
           <div className="space-y-8">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
               <h4 className="font-display text-xl font-semibold text-primary mb-3">
                 The Problem
               </h4>
               <p className="text-muted-foreground leading-relaxed">{project.problem}</p>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+            >
               <h4 className="font-display text-xl font-semibold text-primary mb-3">
                 Our Solution
               </h4>
               <p className="text-muted-foreground leading-relaxed">{project.solution}</p>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
               <h4 className="font-display text-xl font-semibold text-primary mb-3">
                 The Result
               </h4>
               <p className="text-muted-foreground leading-relaxed">{project.result}</p>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons - Only View Project */}
           <div className="flex flex-wrap gap-4 mt-8 pt-6 border-t border-border">
             <Button variant="hero" className="flex-1 sm:flex-none">
               <ExternalLink className="w-4 h-4 mr-2" />
-              Live Demo
-            </Button>
-            <Button variant="heroOutline" className="flex-1 sm:flex-none">
-              <Code className="w-4 h-4 mr-2" />
-              View Code
-            </Button>
-            <Button variant="glass" className="flex-1 sm:flex-none">
-              <FileText className="w-4 h-4 mr-2" />
-              Case Study
+              View Project
             </Button>
           </div>
         </DialogContent>

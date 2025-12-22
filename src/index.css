@@ -6,67 +6,67 @@
 
 @layer base {
   :root {
-    /* Core Dark Theme */
-    --background: 220 15% 5%;
-    --foreground: 210 20% 95%;
+    /* Sapphire Veil Theme - Light Background */
+    --background: 210 40% 96%; /* #E7F0FA */
+    --foreground: 213 60% 15%; /* #0D2440 */
 
     /* Cards & Surfaces */
-    --card: 220 15% 8%;
-    --card-foreground: 210 20% 95%;
-    --card-hover: 220 15% 12%;
+    --card: 210 50% 98%;
+    --card-foreground: 213 60% 15%;
+    --card-hover: 210 40% 92%;
 
-    --popover: 220 15% 8%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 210 50% 98%;
+    --popover-foreground: 213 60% 15%;
 
-    /* Electric Cyan Primary */
-    --primary: 185 100% 50%;
-    --primary-foreground: 220 15% 5%;
-    --primary-glow: 185 100% 60%;
+    /* Sapphire Blue Primary */
+    --primary: 210 55% 39%; /* #2E5E99 */
+    --primary-foreground: 210 40% 96%;
+    --primary-glow: 210 45% 60%; /* #7BA4D0 */
 
-    /* Secondary - Muted Slate */
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 210 20% 85%;
+    /* Secondary - Lighter Blue */
+    --secondary: 210 45% 65%; /* #7BA4D0 */
+    --secondary-foreground: 213 60% 15%;
 
     /* Muted Elements */
-    --muted: 220 15% 18%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 210 30% 85%;
+    --muted-foreground: 213 40% 35%;
 
-    /* Accent - Neon Purple */
-    --accent: 270 100% 65%;
-    --accent-foreground: 210 20% 95%;
+    /* Accent - Deep Navy */
+    --accent: 213 60% 15%; /* #0D2440 */
+    --accent-foreground: 210 40% 96%;
 
     /* Destructive */
     --destructive: 0 85% 55%;
-    --destructive-foreground: 210 20% 95%;
+    --destructive-foreground: 210 40% 96%;
 
     /* Borders & Inputs */
-    --border: 220 15% 20%;
-    --input: 220 15% 15%;
-    --ring: 185 100% 50%;
+    --border: 210 30% 80%;
+    --input: 210 30% 90%;
+    --ring: 210 55% 39%;
 
     --radius: 0.75rem;
 
     /* Sidebar */
-    --sidebar-background: 220 15% 6%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 185 100% 50%;
-    --sidebar-primary-foreground: 220 15% 5%;
-    --sidebar-accent: 220 15% 12%;
-    --sidebar-accent-foreground: 210 20% 90%;
-    --sidebar-border: 220 15% 15%;
-    --sidebar-ring: 185 100% 50%;
+    --sidebar-background: 213 60% 15%;
+    --sidebar-foreground: 210 40% 96%;
+    --sidebar-primary: 210 55% 39%;
+    --sidebar-primary-foreground: 210 40% 96%;
+    --sidebar-accent: 210 45% 25%;
+    --sidebar-accent-foreground: 210 40% 96%;
+    --sidebar-border: 210 40% 20%;
+    --sidebar-ring: 210 55% 39%;
 
-    /* Custom Design Tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(185 100% 50%), hsl(220 100% 60%));
-    --gradient-accent: linear-gradient(135deg, hsl(270 100% 65%), hsl(320 100% 55%));
-    --gradient-dark: linear-gradient(180deg, hsl(220 15% 5%), hsl(220 15% 8%));
-    --gradient-card: linear-gradient(145deg, hsl(220 15% 10%), hsl(220 15% 6%));
-    --gradient-glow: radial-gradient(ellipse at center, hsl(185 100% 50% / 0.15), transparent 70%);
+    /* Custom Design Tokens - Sapphire Veil */
+    --gradient-primary: linear-gradient(135deg, hsl(210 55% 39%), hsl(213 60% 15%));
+    --gradient-accent: linear-gradient(135deg, hsl(210 45% 60%), hsl(210 55% 39%));
+    --gradient-dark: linear-gradient(180deg, hsl(213 60% 15%), hsl(213 65% 10%));
+    --gradient-card: linear-gradient(145deg, hsl(210 50% 98%), hsl(210 40% 94%));
+    --gradient-glow: radial-gradient(ellipse at center, hsl(210 55% 39% / 0.15), transparent 70%);
 
     /* Shadows & Glows */
-    --shadow-glow: 0 0 60px hsl(185 100% 50% / 0.3);
-    --shadow-card: 0 8px 32px hsl(220 15% 0% / 0.5);
-    --shadow-elevated: 0 24px 48px hsl(220 15% 0% / 0.6);
+    --shadow-glow: 0 0 60px hsl(210 55% 39% / 0.3);
+    --shadow-card: 0 8px 32px hsl(213 60% 15% / 0.1);
+    --shadow-elevated: 0 24px 48px hsl(213 60% 15% / 0.15);
 
     /* Typography */
     --font-display: 'Syne', sans-serif;
@@ -74,7 +74,33 @@
   }
 
   .dark {
-    /* Same as root - dark by default */
+    /* Dark mode - Deep Navy based */
+    --background: 213 60% 8%;
+    --foreground: 210 40% 96%;
+
+    --card: 213 55% 12%;
+    --card-foreground: 210 40% 96%;
+    --card-hover: 213 50% 16%;
+
+    --popover: 213 55% 12%;
+    --popover-foreground: 210 40% 96%;
+
+    --primary: 210 45% 60%;
+    --primary-foreground: 213 60% 8%;
+    --primary-glow: 210 55% 39%;
+
+    --secondary: 213 40% 20%;
+    --secondary-foreground: 210 40% 90%;
+
+    --muted: 213 35% 18%;
+    --muted-foreground: 210 20% 60%;
+
+    --accent: 210 45% 60%;
+    --accent-foreground: 213 60% 8%;
+
+    --border: 213 35% 20%;
+    --input: 213 40% 15%;
+    --ring: 210 45% 60%;
   }
 }
 
@@ -161,9 +187,9 @@
   .hero-overlay {
     background: linear-gradient(
       180deg,
-      hsl(220 15% 5% / 0.3) 0%,
-      hsl(220 15% 5% / 0.6) 50%,
-      hsl(220 15% 5%) 100%
+      hsl(213 60% 15% / 0.4) 0%,
+      hsl(213 60% 15% / 0.7) 50%,
+      hsl(213 60% 15%) 100%
     );
   }
 
