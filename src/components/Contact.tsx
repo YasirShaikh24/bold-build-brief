@@ -52,16 +52,23 @@ export const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Column - Info */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block"
+            >
               Get in Touch
-            </span>
+            </motion.span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Let's Build Something{' '}
-              <span className="text-gradient">INTENSE</span>
+              <span className="text-gradient">InTence</span>
             </h2>
             <p className="text-muted-foreground text-lg mb-12">
               Ready to transform your ideas into powerful digital solutions? We're
@@ -71,9 +78,11 @@ export const Contact = () => {
             {/* Contact Info */}
             <div className="space-y-6">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                whileHover={{ x: 5 }}
                 className="flex items-center gap-4"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -81,14 +90,16 @@ export const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">hello@intense.dev</p>
+                  <p className="font-medium">hello@intence.dev</p>
                 </div>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.3 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                whileHover={{ x: 5 }}
                 className="flex items-center gap-4"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -101,9 +112,11 @@ export const Contact = () => {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.4 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                whileHover={{ x: 5 }}
                 className="flex items-center gap-4"
               >
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -119,16 +132,22 @@ export const Contact = () => {
 
           {/* Right Column - Form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             <form
               onSubmit={handleSubmit}
-              className="p-8 md:p-10 rounded-3xl bg-card border border-border/50 backdrop-blur-sm"
+              className="p-8 md:p-10 rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl"
             >
               <div className="space-y-6">
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
                   <label
                     htmlFor="name"
                     className="block text-sm font-medium mb-2"
@@ -142,11 +161,16 @@ export const Contact = () => {
                     onChange={handleChange}
                     placeholder="Your name"
                     required
-                    className="h-12 bg-secondary/50 border-border/50 focus:border-primary"
+                    className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                >
                   <label
                     htmlFor="email"
                     className="block text-sm font-medium mb-2"
@@ -161,11 +185,16 @@ export const Contact = () => {
                     onChange={handleChange}
                     placeholder="your@email.com"
                     required
-                    className="h-12 bg-secondary/50 border-border/50 focus:border-primary"
+                    className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                >
                   <label
                     htmlFor="message"
                     className="block text-sm font-medium mb-2"
@@ -180,29 +209,36 @@ export const Contact = () => {
                     placeholder="Tell us about your project..."
                     required
                     rows={5}
-                    className="bg-secondary/50 border-border/50 focus:border-primary resize-none"
+                    className="bg-secondary/30 border-border/50 focus:border-primary resize-none"
                   />
-                </div>
+                </motion.div>
 
-                <Button
-                  type="submit"
-                  variant="hero"
-                  size="xl"
-                  className="w-full"
-                  disabled={isSubmitting}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 }}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5 mr-2" />
-                      Let's Build Something INTENSE
-                    </>
-                  )}
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="hero"
+                    size="xl"
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5 mr-2" />
+                        Let's Build Something InTence
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
               </div>
             </form>
           </motion.div>

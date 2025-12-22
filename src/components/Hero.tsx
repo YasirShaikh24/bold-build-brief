@@ -1,9 +1,20 @@
-import { motion } from 'framer-motion';
-import { ChevronDown, Play } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ChevronDown, Play, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import heroBg from '@/assets/hero-bg.jpg';
+import { useRef } from 'react';
 
 export const Hero = () => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"]
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1]);
+
   const handleScroll = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -12,26 +23,27 @@ export const Hero = () => {
   return (
     <section
       id="hero"
+      ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Image with Parallax */}
+      <motion.div className="absolute inset-0 z-0" style={{ y, scale }}>
         <img
           src={heroBg}
-          alt="INTENSE hero background"
+          alt="InTence hero background"
           className="w-full h-full object-cover"
         />
         <div className="hero-overlay absolute inset-0" />
         {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-radial from-primary/5 via-transparent to-transparent opacity-60" />
-      </div>
+        <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent opacity-60" />
+      </motion.div>
 
       {/* Floating particles effect */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-primary/30 rounded-full"
+            className="absolute w-1 h-1 bg-primary-glow/40 rounded-full"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -50,16 +62,25 @@ export const Hero = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
+      <motion.div 
+        className="relative z-10 container mx-auto px-6 lg:px-12 text-center"
+        style={{ opacity }}
+      >
+        {/* Logo Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-6"
+          className="mb-8 flex justify-center"
         >
-          <span className="inline-block px-4 py-2 text-sm font-medium text-primary border border-primary/30 rounded-full bg-primary/5 backdrop-blur-sm">
-            Software Development Studio
-          </span>
+          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-card/30 backdrop-blur-sm border border-border/30">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <span className="text-sm font-medium text-primary-foreground">
+              Innovation That Grows With You
+            </span>
+          </div>
         </motion.div>
 
         <motion.h1
@@ -68,18 +89,18 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight"
         >
-          <span className="text-foreground">INTENSE</span>
+          <span className="text-primary-foreground">InTence</span>
           <br />
-          <span className="text-gradient">Digital Experiences</span>
+          <span className="text-gradient-accent">Always Good</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12"
+          className="text-lg md:text-xl text-primary-foreground/80 max-w-2xl mx-auto mb-12"
         >
-          Software Development • Web Apps • UI/UX • Scalable Solutions
+          Web Apps • UI/UX • Scalable Solutions
         </motion.p>
 
         <motion.div
@@ -105,7 +126,7 @@ export const Hero = () => {
             Contact Us
           </Button>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
@@ -113,12 +134,13 @@ export const Hero = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        style={{ opacity }}
       >
         <motion.button
           onClick={() => handleScroll('#about')}
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+          className="flex flex-col items-center gap-2 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
         >
           <span className="text-xs font-medium uppercase tracking-widest">
             Scroll
