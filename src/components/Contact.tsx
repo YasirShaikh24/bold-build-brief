@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Send, Mail, MapPin, Phone, Loader2 } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,16 +22,40 @@ export const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
+      const data = await response.json();
 
-    setFormData({ name: '', email: '', message: '' });
-    setIsSubmitting(false);
+      if (response.ok && data.success) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+          duration: 5000,
+        });
+
+        // Reset form
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Failed to send message",
+        description: error instanceof Error ? error.message : "Please try again later or email us directly at intence.it@gmail.com",
+        variant: "destructive",
+        duration: 5000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -90,7 +114,7 @@ export const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium">hello@intence.dev</p>
+                  <p className="font-medium">intence.it@gmail.com</p>
                 </div>
               </motion.div>
 
@@ -161,6 +185,7 @@ export const Contact = () => {
                     onChange={handleChange}
                     placeholder="Your name"
                     required
+                    disabled={isSubmitting}
                     className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
                 </motion.div>
@@ -185,6 +210,7 @@ export const Contact = () => {
                     onChange={handleChange}
                     placeholder="your@email.com"
                     required
+                    disabled={isSubmitting}
                     className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
                 </motion.div>
@@ -208,6 +234,7 @@ export const Contact = () => {
                     onChange={handleChange}
                     placeholder="Tell us about your project..."
                     required
+                    disabled={isSubmitting}
                     rows={5}
                     className="bg-secondary/30 border-border/50 focus:border-primary resize-none"
                   />
