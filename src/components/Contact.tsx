@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Send, Mail, MapPin, Phone, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,6 +7,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
 export const Contact = () => {
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, margin: '-100px' });
   const { toast } = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,68 +68,113 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 lg:py-32 bg-card/30">
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+    <section id="contact" className="py-32 relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px]" />
+
+      <div className="container mx-auto px-6 lg:px-12 relative z-10" ref={containerRef}>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Column - Info */}
-          <div>
-            <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block"
+            >
               Get in Touch
-            </span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground">
+            </motion.span>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Let's Build Something{' '}
               <span className="text-gradient">InTence</span>
             </h2>
-            <p className="text-muted-foreground text-lg mb-10">
+            <p className="text-muted-foreground text-lg mb-12">
               Ready to transform your ideas into powerful digital solutions? We're
               here to help you create exceptional experiences that drive results.
             </p>
 
             {/* Contact Info */}
-            <div className="space-y-5">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <div className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-4"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Mail className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium text-foreground">intence.it@gmail.com</p>
+                  <p className="font-medium">intence.it@gmail.com</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-4"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Phone className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium text-foreground">+1 (555) 123-4567</p>
+                  <p className="font-medium">+1 (555) 123-4567</p>
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                whileHover={{ x: 5 }}
+                className="flex items-center gap-4"
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <MapPin className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Location</p>
-                  <p className="font-medium text-foreground">San Francisco, CA</p>
+                  <p className="font-medium">San Francisco, CA</p>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column - Form */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             <form
               onSubmit={handleSubmit}
-              className="p-6 md:p-8 rounded-2xl bg-card border border-border"
+              className="p-8 md:p-10 rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl"
             >
-              <div className="space-y-5">
-                <div>
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium mb-2 text-foreground"
+                    className="block text-sm font-medium mb-2"
                   >
                     Name
                   </label>
@@ -138,14 +186,19 @@ export const Contact = () => {
                     placeholder="Your name"
                     required
                     disabled={isSubmitting}
-                    className="h-12 bg-input border-border focus:border-primary text-foreground placeholder:text-muted-foreground"
+                    className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                >
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium mb-2 text-foreground"
+                    className="block text-sm font-medium mb-2"
                   >
                     Email
                   </label>
@@ -158,14 +211,19 @@ export const Contact = () => {
                     placeholder="your@email.com"
                     required
                     disabled={isSubmitting}
-                    className="h-12 bg-input border-border focus:border-primary text-foreground placeholder:text-muted-foreground"
+                    className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
-                </div>
+                </motion.div>
 
-                <div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                >
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium mb-2 text-foreground"
+                    className="block text-sm font-medium mb-2"
                   >
                     Project Description
                   </label>
@@ -178,30 +236,39 @@ export const Contact = () => {
                     required
                     disabled={isSubmitting}
                     rows={5}
-                    className="bg-input border-border focus:border-primary resize-none text-foreground placeholder:text-muted-foreground"
+                    className="bg-secondary/30 border-border/50 focus:border-primary resize-none"
                   />
-                </div>
+                </motion.div>
 
-                <Button
-                  type="submit"
-                  className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                  disabled={isSubmitting}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 }}
                 >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5 mr-2" />
-                      Let's Build Something InTence
-                    </>
-                  )}
-                </Button>
+                  <Button
+                    type="submit"
+                    variant="hero"
+                    size="xl"
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5 mr-2" />
+                        Let's Build Something InTence
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
