@@ -6,6 +6,9 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
+// IMPORTANT: Make sure this matches your backend server URL
+const API_URL = 'http://localhost:5000/api/contact';
+
 export const Contact = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
@@ -22,19 +25,32 @@ export const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    console.log('🚀 Submitting form...');
+    console.log('📝 Form data:', formData);
+    console.log('🔗 API URL:', API_URL);
+
     try {
-      // Call your backend API
-      const response = await fetch('http://localhost:5000/api/contact', {
+      // First, test if the server is reachable
+      console.log('🔍 Testing server connection...');
+      
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify(formData),
       });
 
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response ok:', response.ok);
+
       const data = await response.json();
+      console.log('📦 Response data:', data);
 
       if (response.ok && data.success) {
+        console.log('✅ Form submitted successfully!');
+        
         toast({
           title: "Message sent successfully!",
           description: "We'll get back to you within 24 hours.",
@@ -47,12 +63,24 @@ export const Contact = () => {
         throw new Error(data.message || 'Failed to send message');
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('❌ Error submitting form:', error);
+      
+      let errorMessage = 'Please try again later or email us directly at intence.it@gmail.com';
+      let errorTitle = 'Failed to send message';
+
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        errorTitle = 'Cannot connect to server';
+        errorMessage = 'Make sure the backend server is running on http://localhost:5000';
+        console.error('💡 Tip: Run "npm run server" in a separate terminal');
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
       toast({
-        title: "Failed to send message",
-        description: error instanceof Error ? error.message : "Please try again later or email us directly at intence.it@gmail.com",
+        title: errorTitle,
+        description: errorMessage,
         variant: "destructive",
-        duration: 5000,
+        duration: 7000,
       });
     } finally {
       setIsSubmitting(false);
