@@ -23,17 +23,34 @@ export const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
-        duration: 5000,
+      // Call your backend API
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      setFormData({ name: '', email: '', message: '' });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+          duration: 5000,
+        });
+
+        // Reset form
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
     } catch (error) {
       console.error('Error:', error);
       toast({
         title: "Failed to send message",
-        description: "Please try again later",
+        description: error instanceof Error ? error.message : "Please try again later or email us directly at intence.it@gmail.com",
         variant: "destructive",
         duration: 5000,
       });
@@ -145,7 +162,7 @@ export const Contact = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="order-1 lg:order-2 w-full max-w-full"
           >
-            <div className="p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl w-full">
+            <form onSubmit={handleSubmit} className="p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl w-full">
               <div className="space-y-4 md:space-y-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -219,8 +236,7 @@ export const Contact = () => {
                   transition={{ delay: 0.6 }}
                 >
                   <Button
-                    type="button"
-                    onClick={handleSubmit}
+                    type="submit"
                     variant="hero"
                     size="xl"
                     className="w-full text-sm md:text-base"
@@ -240,7 +256,7 @@ export const Contact = () => {
                   </Button>
                 </motion.div>
               </div>
-            </div>
+            </form>
           </motion.div>
         </div>
       </div>
