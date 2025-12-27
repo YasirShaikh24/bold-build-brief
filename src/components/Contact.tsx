@@ -23,17 +23,33 @@ export const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
-        duration: 5000,
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      setFormData({ name: '', email: '', message: '' });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+          duration: 5000,
+        });
+
+        // Reset form
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
     } catch (error) {
       console.error('Error:', error);
       toast({
         title: "Failed to send message",
-        description: "Please try again later",
+        description: error instanceof Error ? error.message : "Please try again later or email us directly at intence.it@gmail.com",
         variant: "destructive",
         duration: 5000,
       });
@@ -52,18 +68,18 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-32 relative overflow-hidden">
+    <section id="contact" className="py-32 relative overflow-hidden">
+      {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px]" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10" ref={containerRef}>
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10" ref={containerRef}>
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Left Column - Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
           >
             <motion.span 
               initial={{ opacity: 0, scale: 0.9 }}
@@ -74,16 +90,17 @@ export const Contact = () => {
             >
               Get in Touch
             </motion.span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Let's Build Something{' '}
               <span className="text-gradient">InTence</span>
             </h2>
-            <p className="text-muted-foreground text-base md:text-lg mb-8 md:mb-12">
-              Ready to transform your ideas into powerful digital solutions?
+            <p className="text-muted-foreground text-lg mb-12">
+              Ready to transform your ideas into powerful digital solutions? We're
+              here to help you create exceptional experiences that drive results.
             </p>
 
             {/* Contact Info */}
-            <div className="space-y-4 md:space-y-6">
+            <div className="space-y-6">
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -92,12 +109,12 @@ export const Contact = () => {
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Mail className="w-5 h-5 text-primary" />
                 </div>
-                <div className="min-w-0">
-                  <p className="text-xs md:text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium text-sm md:text-base truncate">intence.it@gmail.com</p>
+                <div>
+                  <p className="text-sm text-muted-foreground">Email</p>
+                  <p className="font-medium">intence.it@gmail.com</p>
                 </div>
               </motion.div>
 
@@ -109,12 +126,12 @@ export const Contact = () => {
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs md:text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium text-sm md:text-base">+1 (555) 123-4567</p>
+                  <p className="text-sm text-muted-foreground">Phone</p>
+                  <p className="font-medium">+1 (555) 123-4567</p>
                 </div>
               </motion.div>
 
@@ -126,12 +143,12 @@ export const Contact = () => {
                 whileHover={{ x: 5 }}
                 className="flex items-center gap-4"
               >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <MapPin className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs md:text-sm text-muted-foreground">Location</p>
-                  <p className="font-medium text-sm md:text-base">San Francisco, CA</p>
+                  <p className="text-sm text-muted-foreground">Location</p>
+                  <p className="font-medium">San Francisco, CA</p>
                 </div>
               </motion.div>
             </div>
@@ -143,17 +160,22 @@ export const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="order-1 lg:order-2 w-full max-w-full"
           >
-            <div className="p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl w-full">
-              <div className="space-y-4 md:space-y-6">
+            <form
+              onSubmit={handleSubmit}
+              className="p-8 md:p-10 rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl"
+            >
+              <div className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Name
                   </label>
                   <Input
@@ -164,7 +186,7 @@ export const Contact = () => {
                     placeholder="Your name"
                     required
                     disabled={isSubmitting}
-                    className="h-11 md:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full"
+                    className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
                 </motion.div>
 
@@ -174,7 +196,10 @@ export const Contact = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
                 >
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Email
                   </label>
                   <Input
@@ -186,7 +211,7 @@ export const Contact = () => {
                     placeholder="your@email.com"
                     required
                     disabled={isSubmitting}
-                    className="h-11 md:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full"
+                    className="h-12 bg-secondary/30 border-border/50 focus:border-primary"
                   />
                 </motion.div>
 
@@ -196,7 +221,10 @@ export const Contact = () => {
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 }}
                 >
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium mb-2"
+                  >
                     Project Description
                   </label>
                   <Textarea
@@ -208,7 +236,7 @@ export const Contact = () => {
                     required
                     disabled={isSubmitting}
                     rows={5}
-                    className="bg-secondary/30 border-border/50 focus:border-primary resize-none w-full"
+                    className="bg-secondary/30 border-border/50 focus:border-primary resize-none"
                   />
                 </motion.div>
 
@@ -219,28 +247,27 @@ export const Contact = () => {
                   transition={{ delay: 0.6 }}
                 >
                   <Button
-                    type="button"
-                    onClick={handleSubmit}
+                    type="submit"
                     variant="hero"
                     size="xl"
-                    className="w-full text-sm md:text-base"
+                    className="w-full"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-2 animate-spin" />
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                         Sending...
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                        <Send className="w-5 h-5 mr-2" />
                         Let's Build Something InTence
                       </>
                     )}
                   </Button>
                 </motion.div>
               </div>
-            </div>
+            </form>
           </motion.div>
         </div>
       </div>
