@@ -18,16 +18,19 @@ const transporter = nodemailer.createTransport({
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD,
   },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
-// Verify transporter configuration
+// Verify transporter
 transporter.verify((error, success) => {
   if (error) {
-    console.error('Error with email configuration:', error);
+    console.error('❌ Error with email configuration:', error);
   } else {
-    console.log('Server is ready to send emails');
-    console.log('Email will be sent from:', process.env.GMAIL_USER);
-    console.log('Email will be sent to:', process.env.RECIPIENT_EMAIL);
+    console.log('✅ Server is ready to send emails');
+    console.log('📧 Email will be sent from:', process.env.GMAIL_USER);
+    console.log('📬 Email will be sent to:', process.env.RECIPIENT_EMAIL);
   }
 });
 
@@ -35,7 +38,6 @@ transporter.verify((error, success) => {
 app.post('/api/contact', async (req, res) => {
   const { name, email, message } = req.body;
 
-  // Validation
   if (!name || !email || !message) {
     return res.status(400).json({
       success: false,
@@ -43,9 +45,8 @@ app.post('/api/contact', async (req, res) => {
     });
   }
 
-  // Email options
   const mailOptions = {
-    from: process.env.GMAIL_USER,
+    from: `"InTence Contact Form" <${process.env.GMAIL_USER}>`,
     to: process.env.RECIPIENT_EMAIL,
     subject: `New Contact Form Submission from ${name}`,
     html: `
@@ -69,22 +70,22 @@ app.post('/api/contact', async (req, res) => {
 
   try {
     const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', info.messageId);
+    console.log('✅ Email sent successfully:', info.messageId);
     
     res.status(200).json({
       success: true,
       message: 'Email sent successfully',
     });
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error('❌ Error sending email:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to send email. Please try again later.',
+      message: 'Failed to send email',
     });
   }
 });
 
-// Health check endpoint
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
@@ -92,6 +93,6 @@ app.get('/api/health', (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Using email: ${process.env.GMAIL_USER}`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📧 Using email: ${process.env.GMAIL_USER}`);
 });

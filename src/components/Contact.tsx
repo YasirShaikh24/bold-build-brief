@@ -6,8 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
-// IMPORTANT: Make sure this matches your backend server URL
-const API_URL = 'http://localhost:5000/api/contact';
+// ✅ PERFECT: Works on BOTH localhost AND production
+const API_URL = import.meta.env.VITE_API_URL || '/api/contact';
 
 export const Contact = () => {
   const containerRef = useRef(null);
@@ -25,14 +25,10 @@ export const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    console.log('🚀 Submitting form...');
+    console.log('🚀 Submitting form to:', API_URL);
     console.log('📝 Form data:', formData);
-    console.log('🔗 API URL:', API_URL);
 
     try {
-      // First, test if the server is reachable
-      console.log('🔍 Testing server connection...');
-      
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
@@ -43,7 +39,6 @@ export const Contact = () => {
       });
 
       console.log('📡 Response status:', response.status);
-      console.log('📡 Response ok:', response.ok);
 
       const data = await response.json();
       console.log('📦 Response data:', data);
@@ -65,20 +60,9 @@ export const Contact = () => {
     } catch (error) {
       console.error('❌ Error submitting form:', error);
       
-      let errorMessage = 'Please try again later or email us directly at intence.it@gmail.com';
-      let errorTitle = 'Failed to send message';
-
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        errorTitle = 'Cannot connect to server';
-        errorMessage = 'Make sure the backend server is running on http://localhost:5000';
-        console.error('💡 Tip: Run "npm run server" in a separate terminal');
-      } else if (error instanceof Error) {
-        errorMessage = error.message;
-      }
-
       toast({
-        title: errorTitle,
-        description: errorMessage,
+        title: "Failed to send message",
+        description: error instanceof Error ? error.message : 'Please try again or email us directly at intence.it@gmail.com',
         variant: "destructive",
         duration: 7000,
       });
