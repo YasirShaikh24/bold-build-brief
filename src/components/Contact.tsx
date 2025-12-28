@@ -81,197 +81,126 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 md:py-32 relative overflow-hidden">
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px]" />
+    <section id="contact" className="py-12 md:py-32 relative overflow-hidden">
+  {/* Hard-constrained background glow to prevent overflow */}
+  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[280px] md:w-[800px] h-[280px] md:h-[400px] bg-primary/10 rounded-full blur-[80px] md:blur-[150px] pointer-events-none" />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10" ref={containerRef}>
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
-          {/* Left Column - Info */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1"
-          >
-            <motion.span 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block"
-            >
-              Get in Touch
-            </motion.span>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6">
-              Let's Build Something{' '}
-              <span className="text-gradient">InTence</span>
-            </h2>
-            <p className="text-muted-foreground text-base md:text-lg mb-8 md:mb-12">
-              Ready to transform your ideas into powerful digital solutions?
-            </p>
+  <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10" ref={containerRef}>
+    <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+      
+      {/* Left Column - Info (Order 2 on mobile to show form first) */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="order-2 lg:order-1 w-full"
+      >
+        <span className="text-primary text-xs md:text-sm font-medium uppercase tracking-widest mb-3 block">
+          Get in Touch
+        </span>
+        <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+          Let's Build Something <span className="text-gradient">InTence</span>
+        </h2>
+        <p className="text-muted-foreground text-base md:text-lg mb-8 max-w-md">
+          Ready to transform your ideas into powerful digital solutions?
+        </p>
 
-            {/* Contact Info */}
-            <div className="space-y-4 md:space-y-6">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                whileHover={{ x: 5 }}
-                className="flex items-center gap-4"
-              >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-xs md:text-sm text-muted-foreground">Email</p>
-                  <p className="font-medium text-sm md:text-base truncate">intence.it@gmail.com</p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                whileHover={{ x: 5 }}
-                className="flex items-center gap-4"
-              >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs md:text-sm text-muted-foreground">Phone</p>
-                  <p className="font-medium text-sm md:text-base">+1 (555) 123-4567</p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                whileHover={{ x: 5 }}
-                className="flex items-center gap-4"
-              >
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs md:text-sm text-muted-foreground">Location</p>
-                  <p className="font-medium text-sm md:text-base">San Francisco, CA</p>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Right Column - Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="order-1 lg:order-2 w-full max-w-full"
-          >
-            <form onSubmit={handleSubmit} className="p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl w-full">
-              <div className="space-y-4 md:space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Name
-                  </label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your name"
-                    required
-                    disabled={isSubmitting}
-                    className="h-11 md:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                >
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="your@email.com"
-                    required
-                    disabled={isSubmitting}
-                    className="h-11 md:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.5 }}
-                >
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Project Description
-                  </label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell us about your project..."
-                    required
-                    disabled={isSubmitting}
-                    rows={5}
-                    className="bg-secondary/30 border-border/50 focus:border-primary resize-none w-full"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6 }}
-                >
-                  <Button
-                    type="submit"
-                    variant="hero"
-                    size="xl"
-                    className="w-full text-sm md:text-base"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-2 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                        Let's Build Something InTence
-                      </>
-                    )}
-                  </Button>
-                </motion.div>
+        {/* Contact Info - Grid for better mobile layout */}
+        <div className="grid grid-cols-1 gap-4 md:gap-6">
+          {[
+            { icon: Mail, label: 'Email', value: 'intence.it@gmail.com' },
+            { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
+            { icon: MapPin, label: 'Location', value: 'San Francisco, CA' }
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-secondary/5 border border-border/20">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <item.icon className="w-5 h-5 text-primary" />
               </div>
-            </form>
-          </motion.div>
+              <div className="min-w-0">
+                <p className="text-[10px] text-muted-foreground uppercase tracking-wider">{item.label}</p>
+                <p className="font-medium text-sm md:text-base truncate">{item.value}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    </section>
+      </motion.div>
+
+      {/* Right Column - Form (Order 1 on mobile) */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="order-1 lg:order-2 w-full max-w-full overflow-hidden"
+      >
+        <form 
+          onSubmit={handleSubmit} 
+          className="p-5 sm:p-8 rounded-3xl bg-card/40 border border-border/40 backdrop-blur-md shadow-2xl w-full"
+        >
+          <div className="space-y-5">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium mb-2 ml-1">Name</label>
+              <Input
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your name"
+                required
+                className="h-12 bg-secondary/10 border-border/40 focus:ring-primary/20 w-full text-base rounded-xl"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium mb-2 ml-1">Email</label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="your@email.com"
+                required
+                className="h-12 bg-secondary/10 border-border/40 focus:ring-primary/20 w-full text-base rounded-xl"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="message" className="block text-sm font-medium mb-2 ml-1">Project Description</label>
+              <Textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Tell us about your project..."
+                required
+                rows={4}
+                className="bg-secondary/10 border-border/40 focus:ring-primary/20 resize-none w-full text-base rounded-xl py-3 min-h-[120px]"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              variant="hero"
+              size="xl"
+              className="w-full h-14 text-base font-bold rounded-xl active:scale-95 transition-all touch-manipulation"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <>
+                  <Send className="w-5 h-5 mr-2" />
+                  Send Message
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+      </motion.div>
+    </div>
+  </div>
+</section>
   );
 };
