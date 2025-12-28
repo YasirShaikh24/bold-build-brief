@@ -136,7 +136,7 @@ export const Contact = () => {
       >
         <form 
           onSubmit={handleSubmit} 
-          className="p-5 sm:p-8 rounded-3xl bg-card/40 border border-border/40 backdrop-blur-md shadow-2xl w-full"
+          className="p-5 sm:p-8 rounded-3xl bg-card/40 border border-border/40 backdrop-blur-md w-full"
         >
           <div className="space-y-5">
             <div>
@@ -146,7 +146,7 @@ export const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Your name"
+                placeholder="Enter Your Name"
                 required
                 className="h-12 bg-secondary/10 border-border/40 focus:ring-primary/20 w-full text-base rounded-xl"
               />
@@ -160,7 +160,7 @@ export const Contact = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="your@email.com"
+                placeholder="Enter Your Mail Id (your@gmail.com)"
                 required
                 className="h-12 bg-secondary/10 border-border/40 focus:ring-primary/20 w-full text-base rounded-xl"
               />
