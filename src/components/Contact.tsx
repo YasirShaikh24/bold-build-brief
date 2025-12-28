@@ -1,13 +1,13 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Send, Mail, MapPin, Phone, Loader2, CheckCircle2 } from 'lucide-react';
+import { Send, Mail, MapPin, Phone, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
-// API URL - automatically uses correct endpoint
-const API_URL = '/api/contact';
+// IMPORTANT: Make sure this matches your backend server URL
+const API_URL = 'http://localhost:5000/api/contact';
 
 export const Contact = () => {
   const containerRef = useRef(null);
@@ -25,26 +25,35 @@ export const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    console.log('🚀 Submitting form to:', API_URL);
+    console.log('🚀 Submitting form...');
+    console.log('📝 Form data:', formData);
+    console.log('🔗 API URL:', API_URL);
 
     try {
+      // First, test if the server is reachable
+      console.log('🔍 Testing server connection...');
+      
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify(formData),
       });
 
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response ok:', response.ok);
+
       const data = await response.json();
-      console.log('📡 Response:', data);
+      console.log('📦 Response data:', data);
 
       if (response.ok && data.success) {
-        console.log('✅ Email sent successfully!');
+        console.log('✅ Form submitted successfully!');
         
         toast({
-          title: "✅ Message Sent!",
-          description: "Thank you! We'll respond within 24 hours.",
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
           duration: 5000,
         });
 
@@ -54,11 +63,22 @@ export const Contact = () => {
         throw new Error(data.message || 'Failed to send message');
       }
     } catch (error) {
-      console.error('❌ Error:', error);
+      console.error('❌ Error submitting form:', error);
       
+      let errorMessage = 'Please try again later or email us directly at intence.it@gmail.com';
+      let errorTitle = 'Failed to send message';
+
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        errorTitle = 'Cannot connect to server';
+        errorMessage = 'Make sure the backend server is running on http://localhost:5000';
+        console.error('💡 Tip: Run "npm run server" in a separate terminal');
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
       toast({
-        title: "Failed to send",
-        description: error instanceof Error ? error.message : 'Please email us directly at intence.it@gmail.com',
+        title: errorTitle,
+        description: errorMessage,
         variant: "destructive",
         duration: 7000,
       });
@@ -77,14 +97,12 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-12 sm:py-16 md:py-24 lg:py-32 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[800px] h-[300px] sm:h-[400px] bg-primary/10 rounded-full blur-[100px] sm:blur-[150px]" />
+    <section id="contact" className="py-16 md:py-32 relative overflow-hidden">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px]" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10" ref={containerRef}>
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start max-w-7xl mx-auto">
-          
-          {/* Left Column - Contact Info */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+          {/* Left Column - Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -97,96 +115,83 @@ export const Contact = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-primary text-xs sm:text-sm font-medium uppercase tracking-widest mb-3 sm:mb-4 block"
+              className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block"
             >
               Get in Touch
             </motion.span>
-            
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 md:mb-6 leading-tight">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 md:mb-6">
               Let's Build Something{' '}
               <span className="text-gradient">InTence</span>
             </h2>
-            
-            <p className="text-muted-foreground text-sm sm:text-base md:text-lg mb-6 sm:mb-8 md:mb-12">
+            <p className="text-muted-foreground text-base md:text-lg mb-8 md:mb-12">
               Ready to transform your ideas into powerful digital solutions?
             </p>
 
-            {/* Contact Cards */}
-            <div className="space-y-3 sm:space-y-4 md:space-y-6">
-              
-              {/* Email */}
-              <motion.a
-                href="mailto:intence.it@gmail.com"
+            {/* Contact Info */}
+            <div className="space-y-4 md:space-y-6">
+              <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 whileHover={{ x: 5 }}
-                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 hover:bg-card transition-all group"
+                className="flex items-center gap-4"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-1">Email</p>
-                  <p className="font-medium text-sm sm:text-base break-all">intence.it@gmail.com</p>
+                <div className="min-w-0">
+                  <p className="text-xs md:text-sm text-muted-foreground">Email</p>
+                  <p className="font-medium text-sm md:text-base truncate">intence.it@gmail.com</p>
                 </div>
-              </motion.a>
+              </motion.div>
 
-              {/* Phone */}
-              <motion.a
-                href="tel:+15551234567"
+              <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
                 whileHover={{ x: 5 }}
-                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 hover:bg-card transition-all group"
+                className="flex items-center gap-4"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-1">Phone</p>
-                  <p className="font-medium text-sm sm:text-base">+1 (555) 123-4567</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Phone</p>
+                  <p className="font-medium text-sm md:text-base">+1 (555) 123-4567</p>
                 </div>
-              </motion.a>
+              </motion.div>
 
-              {/* Location */}
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 whileHover={{ x: 5 }}
-                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all group"
+                className="flex items-center gap-4"
               >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-primary/10 group-hover:bg-primary/20 flex items-center justify-center flex-shrink-0 transition-colors">
-                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-1">Location</p>
-                  <p className="font-medium text-sm sm:text-base">San Francisco, CA</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">Location</p>
+                  <p className="font-medium text-sm md:text-base">San Francisco, CA</p>
                 </div>
               </motion.div>
             </div>
           </motion.div>
 
-          {/* Right Column - Contact Form */}
+          {/* Right Column - Form */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="order-1 lg:order-2 w-full"
+            className="order-1 lg:order-2 w-full max-w-full"
           >
-            <form 
-              onSubmit={handleSubmit} 
-              className="p-5 sm:p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl w-full"
-            >
-              <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                
-                {/* Name Field */}
+            <form onSubmit={handleSubmit} className="p-6 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl bg-card border border-border/50 backdrop-blur-sm shadow-xl w-full">
+              <div className="space-y-4 md:space-y-6">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -194,7 +199,7 @@ export const Contact = () => {
                   transition={{ delay: 0.3 }}
                 >
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Name <span className="text-destructive">*</span>
+                    Name
                   </label>
                   <Input
                     id="name"
@@ -204,11 +209,10 @@ export const Contact = () => {
                     placeholder="Your name"
                     required
                     disabled={isSubmitting}
-                    className="h-11 sm:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full text-sm sm:text-base"
+                    className="h-11 md:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full"
                   />
                 </motion.div>
 
-                {/* Email Field */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -216,7 +220,7 @@ export const Contact = () => {
                   transition={{ delay: 0.4 }}
                 >
                   <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email <span className="text-destructive">*</span>
+                    Email
                   </label>
                   <Input
                     id="email"
@@ -227,11 +231,10 @@ export const Contact = () => {
                     placeholder="your@email.com"
                     required
                     disabled={isSubmitting}
-                    className="h-11 sm:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full text-sm sm:text-base"
+                    className="h-11 md:h-12 bg-secondary/30 border-border/50 focus:border-primary w-full"
                   />
                 </motion.div>
 
-                {/* Message Field */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -239,7 +242,7 @@ export const Contact = () => {
                   transition={{ delay: 0.5 }}
                 >
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Project Description <span className="text-destructive">*</span>
+                    Project Description
                   </label>
                   <Textarea
                     id="message"
@@ -250,11 +253,10 @@ export const Contact = () => {
                     required
                     disabled={isSubmitting}
                     rows={5}
-                    className="bg-secondary/30 border-border/50 focus:border-primary resize-none w-full text-sm sm:text-base min-h-[120px] sm:min-h-[140px]"
+                    className="bg-secondary/30 border-border/50 focus:border-primary resize-none w-full"
                   />
                 </motion.div>
 
-                {/* Submit Button */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -265,17 +267,17 @@ export const Contact = () => {
                     type="submit"
                     variant="hero"
                     size="xl"
-                    className="w-full text-sm sm:text-base h-12 sm:h-14"
+                    className="w-full text-sm md:text-base"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
+                        <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-2 animate-spin" />
                         Sending...
                       </>
                     ) : (
                       <>
-                        <Send className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                        <Send className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                         Let's Build Something InTence
                       </>
                     )}
