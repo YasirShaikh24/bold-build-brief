@@ -71,7 +71,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   }, [hasAnimated, value]);
 
   return (
-    <span ref={ref} className="font-display text-5xl md:text-6xl font-bold text-white">
+    <span ref={ref} className="font-normal text-5xl md:text-6xl text-white">
       {count}
       {suffix}
     </span>
@@ -80,17 +80,17 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
 
 export const About = () => {
   return (
-    <section id="about" className="py-32 relative overflow-hidden">
+    <section id="about" className="py-20 md:py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-20">
-          <span className="text-blue-400 text-sm font-medium uppercase tracking-widest mb-4 block">
+        <div className="text-center mb-16">
+          <span className="text-purple-500 text-xs font-medium uppercase tracking-widest mb-4 block">
             About Us
           </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
-            We Build <span className="text-blue-400">Powerful</span> Software
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal mb-6 text-white leading-tight">
+            We Build <span className="text-purple-500">Powerful</span> Software
           </h2>
-          <p className="text-white/90 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
             InTence is a modern software development company focused on creating
             exceptional digital experiences through clean architecture, performance
             optimization, and real-world problem solving.
@@ -98,14 +98,14 @@ export const About = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="text-center p-8 rounded-2xl bg-black/40 backdrop-blur-sm border border-white/10"
+              className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10"
             >
               <Counter value={stat.value} suffix={stat.suffix} />
-              <p className="text-white/80 mt-3 font-medium">{stat.label}</p>
+              <p className="text-gray-400 mt-3 font-normal text-sm">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -115,15 +115,15 @@ export const About = () => {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="p-8 rounded-2xl bg-black/40 backdrop-blur-sm border border-white/10"
+              className="p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-purple-500/30 transition-all duration-300"
             >
-              <div className="w-14 h-14 rounded-xl bg-blue-500/20 flex items-center justify-center mb-6">
-                <feature.icon className="w-7 h-7 text-blue-400" />
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center mb-5">
+                <feature.icon className="w-6 h-6 text-purple-500" />
               </div>
-              <h3 className="font-display text-xl font-semibold mb-3 text-white">
+              <h3 className="text-lg font-medium mb-3 text-white">
                 {feature.title}
               </h3>
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-gray-400 text-sm leading-relaxed">
                 {feature.description}
               </p>
             </div>
