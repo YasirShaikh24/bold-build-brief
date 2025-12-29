@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -31,11 +30,8 @@ export const Navigation = () => {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 ${
           isScrolled
             ? 'bg-background/90 backdrop-blur-lg border-b border-border/50 shadow-lg'
             : 'bg-transparent'
@@ -70,7 +66,7 @@ export const Navigation = () => {
                     e.preventDefault();
                     handleNavClick(link.href);
                   }}
-                  className={`text-sm font-medium transition-colors ${
+                  className={`text-sm font-medium ${
                     isScrolled 
                       ? 'text-foreground hover:text-primary' 
                       : 'text-white hover:text-primary-glow'
@@ -101,43 +97,35 @@ export const Navigation = () => {
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl pt-24 md:hidden"
-          >
-            <div className="flex flex-col items-center gap-6 px-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(link.href);
-                  }}
-                  className="text-2xl font-display font-semibold text-foreground hover:text-primary transition-colors"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <Button
-                variant="hero"
-                size="lg"
-                onClick={() => handleNavClick('#contact')}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl pt-24 md:hidden">
+          <div className="flex flex-col items-center gap-6 px-6">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick(link.href);
+                }}
+                className="text-2xl font-display font-semibold text-foreground hover:text-primary"
               >
-                Get in Touch
-              </Button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {link.name}
+              </a>
+            ))}
+            <Button
+              variant="hero"
+              size="lg"
+              onClick={() => handleNavClick('#contact')}
+            >
+              Get in Touch
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   );
 };

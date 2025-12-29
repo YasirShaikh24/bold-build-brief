@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Github, Twitter, Linkedin, Instagram, TrendingUp } from 'lucide-react';
 
 const socialLinks = [
@@ -33,10 +32,9 @@ export const Footer = () => {
         <div className="grid lg:grid-cols-5 gap-12 mb-16">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <motion.a
+            <a
               href="#hero"
               className="inline-flex items-center gap-3 mb-6"
-              whileHover={{ scale: 1.05 }}
             >
               {/* Logo Icon */}
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
@@ -45,7 +43,7 @@ export const Footer = () => {
               <span className="font-display text-3xl font-bold tracking-wider text-gradient">
                 InTence
               </span>
-            </motion.a>
+            </a>
             <p className="text-muted-foreground mb-8 max-w-sm">
               Building powerful digital experiences through innovative software
               development and cutting-edge technology.
@@ -54,16 +52,14 @@ export const Footer = () => {
             {/* Social Links */}
             <div className="flex items-center gap-4">
               {socialLinks.map((social) => (
-                <motion.a
+                <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                  className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10"
                 >
                   <social.icon className="w-5 h-5" />
-                </motion.a>
+                </a>
               ))}
             </div>
           </div>
@@ -77,7 +73,7 @@ export const Footer = () => {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-muted-foreground hover:text-primary transition-colors link-underline"
+                      className="text-muted-foreground hover:text-primary"
                     >
                       {link}
                     </a>
@@ -94,13 +90,13 @@ export const Footer = () => {
             © {new Date().getFullYear()} InTence. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-colors">
+            <a href="#" className="hover:text-primary">
               Privacy Policy
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
+            <a href="#" className="hover:text-primary">
               Terms of Service
             </a>
-            <a href="#" className="hover:text-primary transition-colors">
+            <a href="#" className="hover:text-primary">
               Cookies
             </a>
           </div>
