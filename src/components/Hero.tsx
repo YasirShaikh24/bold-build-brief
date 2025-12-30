@@ -10,9 +10,10 @@ export const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+      className="relative flex items-start justify-center overflow-hidden pt-32"
+      style={{ minHeight: '110vh' }}
     >
-      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center -mt-32">
+      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
         {/* Main Heading */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal mb-5 tracking-tight leading-[1.1]">
           <span className="text-white block">InTence</span>
@@ -28,7 +29,7 @@ export const Hero = () => {
         </p>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <button
             onClick={() => handleScroll('#contact')}
             className="btn-primary"
@@ -39,13 +40,13 @@ export const Hero = () => {
             onClick={() => handleScroll('#about')}
             className="btn-secondary"
           >
-            What is Nubien?
+            What is InTence?
           </button>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 z-10">
         <button
           onClick={() => handleScroll('#about')}
           className="flex flex-col items-center gap-2 text-white/60 hover:text-white transition-colors"
