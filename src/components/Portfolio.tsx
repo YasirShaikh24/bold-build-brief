@@ -1,144 +1,194 @@
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
 
 const projects = [
   {
     id: 1,
     title: 'Firdaus Makeover',
+    subtitle: 'Beauty Platform',
     link: 'https://firdaus-beauty-suite.vercel.app',
-    description: 'A high-end, responsive beauty service platform designed for Firdaus Beauty Suite, showcasing professional makeup services and bridal packages.',
-    technologies: ['React', 'Tailwind CSS', 'Vite', 'Framer Motion'],
+    description: 'A high-end, responsive beauty service platform designed for Firdaus Beauty Suite.',
+    technologies: ['React', 'Tailwind CSS', 'Vite'],
   },
   {
     id: 2,
-    title: 'Shaden House (Saudi Project)',
+    title: 'Shaden House',
+    subtitle: 'Luxury Property',
     link: 'https://www.shadenhouse.com',
-    description: 'A modern, elegant website for a Saudi Arabian luxury property, built with React, Vite, and Tailwind CSS.',
-    technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion'],
+    description: 'A modern, elegant website for a Saudi Arabian luxury property.',
+    technologies: ['React', 'Vite', 'Tailwind CSS'],
   },
   {
     id: 3,
-    title: 'Coming Soon',
+    title: 'AI Analytics',
+    subtitle: 'Data Platform',
     link: '',
-    description: 'New exciting project in development.',
-    technologies: [],
+    description: 'Leverage AI to analyze trends and predict outcomes for smarter decisions.',
+    technologies: ['Python', 'React', 'PostgreSQL'],
   },
   {
     id: 4,
-    title: 'Coming Soon',
+    title: 'Computer Vision',
+    subtitle: 'AI Solutions',
     link: '',
-    description: 'New exciting project in development.',
-    technologies: [],
+    description: 'AI-based facial recognition, image analysis, and automation solutions.',
+    technologies: ['Python', 'TensorFlow', 'React'],
   },
   {
     id: 5,
-    title: 'Coming Soon',
+    title: 'Speech Recognition',
+    subtitle: 'Smart Actions',
     link: '',
-    description: 'New exciting project in development.',
-    technologies: [],
+    description: 'Develop voice assistants, transcriptions, and speech with AI.',
+    technologies: ['Node.js', 'Python', 'React'],
   },
   {
     id: 6,
-    title: 'Coming Soon',
+    title: 'AI Automation',
+    subtitle: 'Driven Decisions',
     link: '',
-    description: 'New exciting project in development.',
-    technologies: [],
+    description: 'Automate tasks, reduce costs, and improve productivity with solutions.',
+    technologies: ['Java', 'React', 'PostgreSQL'],
   },
 ];
 
-export const Portfolio = () => {
-  const containerRef = useRef(null);
-
-  return (
-    <section id="work" className="py-32 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary/10 rounded-full blur-[150px]" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[120px]" />
-
-      <div className="container mx-auto px-6 lg:px-12 relative z-10" ref={containerRef}>
-        <div className="text-center mb-20">
-          <span className="text-primary text-sm font-medium uppercase tracking-widest mb-4 block">
-            Our Work
-          </span>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-            Featured <span className="text-gradient">Projects</span>
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Explore our portfolio of successful projects across various industries.
-            Each project represents our commitment to excellence and innovation.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
 };
 
-const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
-  const thumbnailImage = `/projects/project-${project.id}/image-1.jpg`;
+const itemVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
+  },
+};
 
-  const handleVisitWebsite = () => {
-    if (project.link) {
-      window.open(project.link, '_blank', 'noopener,noreferrer');
+export const Portfolio = () => {
+  const handleVisit = (link: string) => {
+    if (link) {
+      window.open(link, '_blank', 'noopener,noreferrer');
     }
   };
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl bg-card">
-      {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-secondary/20">
-        <img
-          src={thumbnailImage}
-          alt={project.title || 'Project'}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-          }}
-        />
-        
-        {/* Visit Website Button - Always Visible */}
-        {project.link && (
-          <button
-            onClick={handleVisitWebsite}
-            className="absolute top-4 right-4 px-4 py-2 bg-primary text-primary-foreground rounded-lg shadow-lg text-sm font-semibold"
-          >
-            Visit Site
-          </button>
-        )}
-      </div>
+    <section id="work" className="py-24 md:py-32 relative overflow-hidden">
+      {/* Background glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px] pointer-events-none" />
 
-      {/* Content Below Image */}
-      <div className="p-6">
-        <h3 className="font-display text-xl font-semibold mb-2">
-          {project.title || 'Project Title'}
-        </h3>
-        <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-          {project.description || 'Add project description here'}
-        </p>
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        {/* Section Header */}
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            Services
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal mb-6 text-foreground">
+            AI-Powered Services for
+            <br />
+            <span className="text-gradient">Future-Driven Businesses</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Our cutting-edge AI solutions are designed to transform businesses,
+            enhance efficiency, and drive innovation.
+          </p>
+        </motion.div>
 
-        {/* Tech Stack */}
-        {project.technologies && project.technologies.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {project.technologies.slice(0, 3).map((tech, idx) => (
-              <span
-                key={`${tech}-${idx}`}
-                className="px-3 py-1 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full"
-              >
-                {tech}
-              </span>
-            ))}
-            {project.technologies.length > 3 && (
-              <span className="px-3 py-1 text-xs font-medium bg-secondary/50 text-secondary-foreground rounded-full">
-                +{project.technologies.length - 3}
-              </span>
-            )}
-          </div>
-        )}
+        {/* Projects Grid - 3 columns desktop, 2 mobile */}
+        <motion.div 
+          className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-50px' }}
+        >
+          {projects.map((project) => (
+            <motion.div
+              key={project.id}
+              variants={itemVariants}
+              className="group relative overflow-hidden rounded-2xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-500"
+            >
+              {/* Card Content */}
+              <div className="p-5 md:p-6">
+                {/* Icon + Arrow */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <span className="text-primary text-lg">✦</span>
+                  </div>
+                  {project.link && (
+                    <button
+                      onClick={() => handleVisit(project.link)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <ExternalLink className="w-4 h-4 text-muted-foreground hover:text-primary" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Title & Subtitle */}
+                <h3 className="text-lg font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-primary/80 mb-3">
+                  {project.subtitle}
+                </p>
+
+                {/* Description */}
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                  {project.description}
+                </p>
+
+                {/* Thumbnail Image */}
+                <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-secondary/20">
+                  <img
+                    src={`/projects/project-${project.id}/image-1.png`}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                    }}
+                  />
+                  {/* Subtle hover overlay */}
+                  <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Tags */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-3 mt-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          {['AI Content Generation', 'Cybersecurity', 'UX/UI Optimization', 'Data Insight', 'Analytics', 'Personalization', 'Data Analysis', 'Lead Generation'].map((tag) => (
+            <span
+              key={tag}
+              className="px-4 py-2 rounded-full bg-card border border-border/50 text-sm text-muted-foreground hover:border-primary/30 hover:text-primary transition-all cursor-default"
+            >
+              <span className="mr-2">◈</span>
+              {tag}
+            </span>
+          ))}
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
