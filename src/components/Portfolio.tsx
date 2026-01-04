@@ -86,7 +86,7 @@ export const Portfolio = () => {
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         {/* Section Header */}
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -96,15 +96,24 @@ export const Portfolio = () => {
             <span className="w-2 h-2 rounded-full bg-primary" />
             Services
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal mb-6 text-foreground">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light mb-4 text-foreground">
             AI-Powered Services for
             <br />
-            <span className="text-gradient">Future-Driven Businesses</span>
+            <span className="text-muted-foreground">Future-Driven Businesses</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-base max-w-xl mx-auto mb-6">
             Our cutting-edge AI solutions are designed to transform businesses,
             enhance efficiency, and drive innovation.
           </p>
+          <button
+            onClick={() => {
+              const element = document.querySelector('#contact');
+              element?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="px-5 py-2 bg-primary text-primary-foreground rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors"
+          >
+            Book a 15-min call
+          </button>
         </motion.div>
 
         {/* Projects Grid - 3 columns desktop, 2 mobile */}

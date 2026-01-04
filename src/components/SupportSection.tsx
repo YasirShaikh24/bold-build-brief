@@ -1,5 +1,10 @@
 import { motion } from 'framer-motion';
 import { Headphones, Sparkles, Clock } from 'lucide-react';
+import mockupLaptop1 from '@/assets/mockup-laptop-1.png';
+import mockupMobile1 from '@/assets/mockup-mobile-1.png';
+import mockupLaptop2 from '@/assets/mockup-laptop-2.png';
+import mockupDevices from '@/assets/mockup-devices.png';
+import mockupMulti from '@/assets/mockup-multi.png';
 
 const features = [
   {
@@ -20,11 +25,11 @@ const features = [
 ];
 
 const floatingImages = [
-  { src: '/projects/project-1/image-1.png', rotation: -15, delay: 0 },
-  { src: '/projects/project-1/image-2.png', rotation: -8, delay: 0.1 },
-  { src: '/projects/project-2/image-1.png', rotation: 0, delay: 0.2 },
-  { src: '/projects/project-2/image-2.png', rotation: 8, delay: 0.3 },
-  { src: '/projects/project-1/image-3.png', rotation: 15, delay: 0.4 },
+  { src: mockupLaptop1, rotation: -15, delay: 0 },
+  { src: mockupMobile1, rotation: -8, delay: 0.1 },
+  { src: mockupLaptop2, rotation: 0, delay: 0.2 },
+  { src: mockupDevices, rotation: 8, delay: 0.3 },
+  { src: mockupMulti, rotation: 15, delay: 0.4 },
 ];
 
 export const SupportSection = () => {
@@ -51,24 +56,24 @@ export const SupportSection = () => {
             <Headphones className="w-4 h-4" />
             24/7 Support
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal mb-4 text-foreground">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light mb-4 text-foreground">
             Here When You
             <br />
-            <span className="text-muted-foreground">Need Us Most Important.</span>
+            <span className="text-muted-foreground">Need Us Most.</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto mb-8">
+          <p className="text-muted-foreground text-base max-w-xl mx-auto mb-8">
             InTence comes with dedicated support to help you launch and maintain
             your site without friction.
           </p>
           <button
             onClick={() => handleScroll('#about')}
-            className="btn-purple"
+            className="px-6 py-2.5 bg-primary text-primary-foreground rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors"
           >
             View About InTence
           </button>
         </motion.div>
 
-        {/* Floating Images */}
+        {/* Floating Device Mockups */}
         <motion.div 
           className="flex justify-center items-center gap-3 md:gap-4 mb-16 py-8"
           initial={{ opacity: 0 }}
@@ -79,7 +84,7 @@ export const SupportSection = () => {
           {floatingImages.map((img, index) => (
             <motion.div
               key={index}
-              className="relative w-20 h-28 md:w-28 md:h-40 rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-24 h-32 md:w-36 md:h-48 rounded-2xl overflow-hidden shadow-2xl bg-card"
               initial={{ opacity: 0, y: 50, rotate: img.rotation }}
               whileInView={{ opacity: 1, y: 0, rotate: img.rotation }}
               viewport={{ once: true }}
@@ -89,22 +94,18 @@ export const SupportSection = () => {
             >
               <img
                 src={img.src}
-                alt="Project preview"
+                alt="Device mockup showing website or app"
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.backgroundColor = 'hsl(var(--card))';
-                }}
               />
               {/* Floating labels */}
               {index === 0 && (
                 <div className="absolute -top-3 -right-2 px-3 py-1 rounded-full bg-primary text-xs text-primary-foreground whitespace-nowrap">
-                  Hey, It's me!
+                  Web App
                 </div>
               )}
               {index === floatingImages.length - 1 && (
                 <div className="absolute -top-3 -left-2 px-3 py-1 rounded-full bg-primary text-xs text-primary-foreground whitespace-nowrap">
-                  Problem Solved
+                  Mobile App
                 </div>
               )}
             </motion.div>
