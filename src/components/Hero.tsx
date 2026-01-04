@@ -12,20 +12,11 @@ import {
 } from 'lucide-react';
 
 const techIcons = [
-  { name: 'JavaScript', icon: FileCode },
   { name: 'React', icon: Blocks },
-  { name: 'HTML', icon: Code },
-  { name: 'CSS', icon: Palette },
-  { name: 'Java', icon: Coffee },
   { name: 'Node.js', icon: Server },
   { name: 'Python', icon: Code },
   { name: 'AI / ML', icon: Brain },
-  { name: 'Database', icon: Database },
-  { name: 'Cloud', icon: Cloud },
 ];
-
-// Triple the array for seamless infinite scroll
-const allIcons = [...techIcons, ...techIcons, ...techIcons];
 
 export const Hero = () => {
   const handleScroll = (href: string) => {
@@ -110,48 +101,54 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Scrolling Tech Icon Strip - Shows Exactly 5 Items */}
-      <div className="relative w-full overflow-hidden pb-20 z-10 flex justify-center">
-        <div className="w-[900px] overflow-hidden">
+      {/* Scrolling Tech Strip - Centered, 3-4 Items Visible */}
+      <div className="relative w-full pb-20 z-10 flex flex-col items-center">
+        {/* Subtle line above - centered */}
+        <div className="w-full max-w-2xl h-px bg-white/10 mb-8" />
+        
+        {/* Container that shows only 3-4 items */}
+        <div className="relative w-full max-w-2xl overflow-hidden">
           <motion.div 
-            className="flex gap-6"
+            className="flex gap-16 items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ 
               opacity: 1, 
               y: 0,
-              x: ['0%', '-33.33%']
+              x: ['0%', '-50%']
             }}
             transition={{
               opacity: { duration: 0.8, delay: 0.6 },
               y: { duration: 0.8, delay: 0.6 },
               x: {
-                duration: 50,
+                duration: 30,
                 repeat: Infinity,
                 ease: 'linear',
               }
             }}
           >
-          {allIcons.map((tech, index) => (
-            <div
-              key={`${tech.name}-${index}`}
-              className="flex-shrink-0 flex items-center gap-3 px-6 py-3 rounded-xl bg-black/60 border border-white/[0.08] backdrop-blur-md"
-              style={{
-                fontSize: '0.875rem',
-                fontWeight: 400,
-                color: 'rgba(255, 255, 255, 0.35)',
-              }}
-            >
-              <tech.icon 
-                className="w-5 h-5" 
-                style={{ 
-                  opacity: 0.4,
-                  strokeWidth: 1.5,
-                }} 
-              />
-              <span>{tech.name}</span>
-            </div>
-          ))}
-                  </motion.div>
+            {/* Duplicate array multiple times for seamless loop */}
+            {[...techIcons, ...techIcons, ...techIcons, ...techIcons, ...techIcons, ...techIcons].map((tech, index) => (
+              <div
+                key={`${tech.name}-${index}`}
+                className="flex-shrink-0 flex items-center gap-3"
+                style={{
+                  fontSize: '0.875rem',
+                  fontWeight: 400,
+                  color: 'rgba(255, 255, 255, 0.4)',
+                  letterSpacing: '0.02em',
+                }}
+              >
+                <tech.icon 
+                  className="w-5 h-5" 
+                  style={{ 
+                    opacity: 0.5,
+                    strokeWidth: 1.5,
+                  }} 
+                />
+                <span>{tech.name}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
