@@ -9,35 +9,35 @@ export const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-[110vh] flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
     >
-      {/* Content - Positioned higher for floating effect */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center -mt-24 md:-mt-32">
-        {/* Main Heading */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal mb-6 tracking-tight leading-[1.05]">
+      {/* Content - Centered with proper spacing */}
+      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center">
+        {/* Main Heading - Refined sizing like reference */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 tracking-tight leading-[1.15] italic">
           <span className="text-foreground block">InTence</span>
           <span className="text-foreground block">Redefining the Future.</span>
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-2">
+        {/* Subtitle - Smaller, elegant */}
+        <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto mb-2">
           Creating latest solutions that redefine innovation.
         </p>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
+        <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto mb-8">
           Stay ahead with AI-powered technology for the future.
         </p>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        {/* CTA Buttons - Compact */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12">
           <button
             onClick={() => handleScroll('#contact')}
-            className="btn-primary"
+            className="px-6 py-2.5 text-sm bg-white text-black rounded-lg font-medium hover:bg-white/90 transition-colors"
           >
             Connect With Us
           </button>
           <button
             onClick={() => handleScroll('#about')}
-            className="btn-secondary"
+            className="px-6 py-2.5 text-sm bg-white/10 text-white rounded-lg font-medium hover:bg-white/20 transition-colors border border-white/20"
           >
             What is InTence?
           </button>
