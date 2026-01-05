@@ -62,15 +62,18 @@ export const Hero = () => {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16">
+          {/* Connect With Us Button - White Background */}
           <button
             onClick={() => handleScroll('#contact')}
-            className="group relative px-6 py-2.5 bg-[#8B5CF6] text-white rounded-lg font-medium text-sm overflow-hidden transition-all duration-300 hover:bg-[#7C3AED] hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)]"
+            className="group relative px-6 py-2.5 bg-white text-black rounded-lg font-medium text-sm overflow-hidden transition-all duration-300 hover:bg-gray-100 hover:scale-[1.02] hover:shadow-lg"
           >
-            <span className="relative z-10">Get In Touch</span>
+            <span className="relative z-10">Connect With Us</span>
           </button>
 
+          {/* What is Nubien Button */}
           <button
-            className="group px-6 py-2.5 bg-white/5 text-white rounded-lg font-medium text-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-sm"
+           onClick={() => handleScroll('#about')}
+          className="group px-6 py-2.5 bg-white/5 text-white rounded-lg font-medium text-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-sm"
           >
             What is InTence?
           </button>
