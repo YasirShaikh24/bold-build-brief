@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, TrendingUp } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
 
 const navLinks = [
-  { name: 'Home', href: '#hero', path: '/' },
-  { name: 'About', href: '#about', path: '/' },
-  { name: 'Services', href: '/services', path: '/services' },
-  { name: 'Portfolio', href: '#work', path: '/' },
-  { name: 'Contact', href: '#contact', path: '/' },
-  { name: 'FAQ', href: '#faq', path: '/' },
+  { name: 'Home', href: '#hero' },
+  { name: 'About', href: '#about' },
+  { name: 'Portfolio', href: '#work' },
+  { name: 'Contact', href: '#contact' },
+  { name: 'FAQ', href: '#faq' },
 ];
 
 export const Navigation = () => {
@@ -23,44 +21,22 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const location = useLocation();
-
-  const handleNavClick = (link: typeof navLinks[0]) => {
+  const handleNavClick = (href) => {
     setIsMobileMenuOpen(false);
-    
-    // If it's a route link (Services)
-    if (link.href.startsWith('/')) {
-      return; // Let Link component handle it
-    }
-    
-    // If we're on the home page, scroll to section
-    if (location.pathname === '/') {
-      const element = document.querySelector(link.href);
-      element?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      // Navigate to home page with hash
-      window.location.href = '/' + link.href;
-    }
+    const element = document.querySelector(href);
+    element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleLogoClick = () => {
     setIsMobileMenuOpen(false);
-    if (location.pathname === '/') {
-      const element = document.querySelector('#hero');
-      element?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = '/';
-    }
+    const element = document.querySelector('#hero');
+    element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleContactClick = () => {
     setIsMobileMenuOpen(false);
-    if (location.pathname === '/') {
-      const element = document.querySelector('#contact');
-      element?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.location.href = '/#contact';
-    }
+    const element = document.querySelector('#contact');
+    element?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -78,10 +54,10 @@ export const Navigation = () => {
             onClick={handleLogoClick}
             className="flex items-center gap-2.5"
           >
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <TrendingUp className="w-4 h-4 text-primary-foreground" />
+            <div className="w-8 h-8 rounded-lg bg-[#8B5CF6] flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-white" />
             </div>
-            <span className="text-xl font-medium tracking-wide text-foreground">
+            <span className="text-xl font-medium tracking-wide text-white">
               InTence
             </span>
           </button>
@@ -89,23 +65,13 @@ export const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
-              link.href.startsWith('/') ? (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ) : (
-                <button
-                  key={link.name}
-                  onClick={() => handleNavClick(link)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {link.name}
-                </button>
-              )
+              <button
+                key={link.name}
+                onClick={() => handleNavClick(link.href)}
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                {link.name}
+              </button>
             ))}
           </div>
 
@@ -113,7 +79,7 @@ export const Navigation = () => {
           <div className="hidden md:block">
             <button
               onClick={handleContactClick}
-              className="btn-purple"
+              className="px-6 py-2.5 bg-[#8B5CF6] text-white rounded-lg font-medium text-sm hover:bg-[#7C3AED] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300"
             >
               Get In Touch
             </button>
@@ -122,7 +88,7 @@ export const Navigation = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-foreground"
+            className="md:hidden p-2 text-white"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -135,28 +101,17 @@ export const Navigation = () => {
           <div className="container mx-auto px-6 py-6">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                link.href.startsWith('/') ? (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-left py-2 text-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                ) : (
-                  <button
-                    key={link.name}
-                    onClick={() => handleNavClick(link)}
-                    className="text-left py-2 text-foreground hover:text-primary transition-colors"
-                  >
-                    {link.name}
-                  </button>
-                )
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link.href)}
+                  className="text-left py-2 text-white hover:text-[#8B5CF6] transition-colors"
+                >
+                  {link.name}
+                </button>
               ))}
               <button
                 onClick={handleContactClick}
-                className="btn-purple mt-4"
+                className="px-6 py-2.5 bg-[#8B5CF6] text-white rounded-lg font-medium text-sm hover:bg-[#7C3AED] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300 mt-4"
               >
                 Get In Touch
               </button>

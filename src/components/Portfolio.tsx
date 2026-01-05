@@ -67,12 +67,12 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
+    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
 export const Portfolio = () => {
-  const handleVisit = (link: string) => {
+  const handleVisit = (link) => {
     if (link) {
       window.open(link, '_blank', 'noopener,noreferrer');
     }
@@ -80,8 +80,29 @@ export const Portfolio = () => {
 
   return (
     <section id="work" className="py-24 md:py-32 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px] pointer-events-none" />
+      {/* Background with rounded corners and spacing */}
+      <div className="absolute inset-0 z-0 px-3 md:px-6 lg:px-8 py-8">
+        <div 
+          className="w-full h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden"
+          style={{
+            backgroundImage: 'url(/src/assets/service.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          {/* Dark overlay for better text readability */}
+          <div 
+            className="w-full h-full"
+            style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Background glow - kept for additional effect */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-[150px] pointer-events-none z-[1]" />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         {/* Section Header */}
@@ -167,7 +188,7 @@ export const Portfolio = () => {
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     onError={(e) => {
-                      const target = e.target as HTMLImageElement;
+                      const target = e.target;
                       target.style.display = 'none';
                     }}
                   />

@@ -7,17 +7,19 @@ import { TechMarquee } from '@/components/TechMarquee';
 import { FAQ } from '@/components/FAQ';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
+import { FloatingContactButton } from '@/components/FloatingContactButton';
 
 const Index = () => {
   return (
     <main className="relative bg-background">
       <Navigation />
+      <FloatingContactButton />
 
       {/* Hero Section with video background - positioned lower */}
-      <div className="relative min-h-[120vh]">
+      <div className="relative min-h-[100vh]">
         {/* Video Background - pushed to bottom portion */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 top-[30vh]">
+          <div className="absolute inset-0 top-[25vh]">
             <video
               autoPlay
               loop
@@ -34,7 +36,7 @@ const Index = () => {
             </video>
           </div>
           {/* Gradient overlay for smooth transition */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent" style={{ height: '40vh' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent" style={{ height: '35vh' }} />
           <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-background to-transparent" />
         </div>
 
