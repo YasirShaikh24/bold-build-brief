@@ -115,7 +115,7 @@ export const Portfolio = () => {
         >
           <span className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs md:text-sm mb-4 md:mb-6">
             <span className="w-2 h-2 rounded-full bg-primary" />
-            Services
+            Portfolio
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-3 md:mb-4 text-foreground px-4">
             AI-Powered Services for
