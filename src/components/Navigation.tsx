@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, TrendingUp } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const navLinks = [
-  { name: 'Home', href: '#hero' },
-  { name: 'About', href: '#about' },
-  { name: 'Portfolio', href: '#work' },
-  { name: 'Contact', href: '#contact' },
-  { name: 'FAQ', href: '#faq' },
+  { name: 'Home', href: '#hero', path: '/' },
+  { name: 'About', href: '#about', path: '/' },
+  { name: 'Services', href: '/services', path: '/services' },
+  { name: 'Portfolio', href: '#work', path: '/' },
+  { name: 'Contact', href: '#contact', path: '/' },
+  { name: 'FAQ', href: '#faq', path: '/' },
 ];
 
 export const Navigation = () => {
@@ -21,10 +23,44 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (href: string) => {
+  const location = useLocation();
+
+  const handleNavClick = (link: typeof navLinks[0]) => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    
+    // If it's a route link (Services)
+    if (link.href.startsWith('/')) {
+      return; // Let Link component handle it
+    }
+    
+    // If we're on the home page, scroll to section
+    if (location.pathname === '/') {
+      const element = document.querySelector(link.href);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Navigate to home page with hash
+      window.location.href = '/' + link.href;
+    }
+  };
+
+  const handleLogoClick = () => {
+    setIsMobileMenuOpen(false);
+    if (location.pathname === '/') {
+      const element = document.querySelector('#hero');
+      element?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = '/';
+    }
+  };
+
+  const handleContactClick = () => {
+    setIsMobileMenuOpen(false);
+    if (location.pathname === '/') {
+      const element = document.querySelector('#contact');
+      element?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = '/#contact';
+    }
   };
 
   return (
@@ -39,7 +75,7 @@ export const Navigation = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <button
-            onClick={() => handleNavClick('#hero')}
+            onClick={handleLogoClick}
             className="flex items-center gap-2.5"
           >
             <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
@@ -53,20 +89,30 @@ export const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
-              <button
-                key={link.name}
-                onClick={() => handleNavClick(link.href)}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {link.name}
-              </button>
+              link.href.startsWith('/') ? (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <button
+                  key={link.name}
+                  onClick={() => handleNavClick(link)}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {link.name}
+                </button>
+              )
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
             <button
-              onClick={() => handleNavClick('#contact')}
+              onClick={handleContactClick}
               className="btn-purple"
             >
               Get In Touch
@@ -89,16 +135,27 @@ export const Navigation = () => {
           <div className="container mx-auto px-6 py-6">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <button
-                  key={link.name}
-                  onClick={() => handleNavClick(link.href)}
-                  className="text-left py-2 text-foreground hover:text-primary transition-colors"
-                >
-                  {link.name}
-                </button>
+                link.href.startsWith('/') ? (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-left py-2 text-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <button
+                    key={link.name}
+                    onClick={() => handleNavClick(link)}
+                    className="text-left py-2 text-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </button>
+                )
               ))}
               <button
-                onClick={() => handleNavClick('#contact')}
+                onClick={handleContactClick}
                 className="btn-purple mt-4"
               >
                 Get In Touch
