@@ -13,27 +13,29 @@ const Index = () => {
     <main className="relative bg-background">
       <Navigation />
 
-      {/* Hero Section with video background contained */}
-      <div className="relative">
-        {/* Video Background - only in hero */}
-        <div className="absolute inset-0 z-0 overflow-hidden" style={{ height: '110vh' }}>
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="w-full h-full object-cover"
-            style={{ 
-              objectPosition: 'center bottom',
-              filter: 'brightness(0.8)'
-            }}
-          >
-            <source src="/video/video1.mp4" type="video/mp4" />
-          </video>
+      {/* Hero Section with video background - positioned lower */}
+      <div className="relative min-h-[120vh]">
+        {/* Video Background - pushed to bottom portion */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 top-[30vh]">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              className="w-full h-full object-cover"
+              style={{ 
+                objectPosition: 'center center',
+                filter: 'brightness(0.7)'
+              }}
+            >
+              <source src="/video/video1.mp4" type="video/mp4" />
+            </video>
+          </div>
           {/* Gradient overlay for smooth transition */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-background" />
-          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-transparent" style={{ height: '40vh' }} />
+          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-background to-transparent" />
         </div>
 
         {/* Hero Content */}

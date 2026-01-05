@@ -27,10 +27,10 @@ export const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative min-h-[120vh] flex flex-col items-center justify-start overflow-hidden"
     >
       {/* Main content */}
-      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center pt-24">
+      <div className="relative z-10 container mx-auto px-6 lg:px-12 text-center pt-32 md:pt-40 lg:pt-48">
         {/* Main Heading - Light, Clean Typography */}
         <motion.h1 
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-6 tracking-tight leading-[1.1]"
