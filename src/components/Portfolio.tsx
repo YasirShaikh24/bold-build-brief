@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 
 const projects = [
@@ -71,12 +72,42 @@ const itemVariants = {
   },
 };
 
+const portfolioText = "Our cutting-edge AI solutions are designed to transform businesses, enhance efficiency, and drive innovation across multiple industries and platforms.";
+
+const Word = ({ children, progress, range }) => {
+  const opacity = useTransform(progress, range, [0.3, 1]);
+  const color = useTransform(progress, range, ['rgba(255,255,255,0.35)', 'rgba(255,255,255,1)']);
+  return (
+    <motion.span style={{ opacity, color }} className="inline-block mr-[0.25em]">
+      {children}
+    </motion.span>
+  );
+};
+
 export const Portfolio = () => {
+  const textRef = useRef(null);
+  const headingRef = useRef(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: textRef,
+    offset: ["start 0.9", "end 0.5"]
+  });
+
+  const { scrollYProgress: headingProgress } = useScroll({
+    target: headingRef,
+    offset: ["start 0.85", "end 0.6"]
+  });
+
   const handleVisit = (link) => {
     if (link) {
       window.open(link, '_blank', 'noopener,noreferrer');
     }
   };
+
+  const words = portfolioText.split(' ');
+  const headingLine1 = "AI-Powered Services for".split(' ');
+  const headingLine2 = "Future-Driven Businesses".split(' ');
+  const totalHeadingWords = headingLine1.length + headingLine2.length;
 
   return (
     <section id="work" className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
@@ -117,15 +148,48 @@ export const Portfolio = () => {
             <span className="w-2 h-2 rounded-full bg-primary" />
             Portfolio
           </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-3 md:mb-4 text-foreground px-4">
-            AI-Powered Services for
-            <br />
-            <span className="text-muted-foreground">Future-Driven Businesses</span>
-          </h2>
-          <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto mb-4 md:mb-6 px-4">
-            Our cutting-edge AI solutions are designed to transform businesses,
-            enhance efficiency, and drive innovation.
-          </p>
+          
+          {/* Heading with Scroll Effect */}
+          <div ref={headingRef} className="mb-3 md:mb-4 px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-[1.3] md:leading-[1.4]">
+              {headingLine1.map((word, index) => {
+                const start = index / totalHeadingWords;
+                const end = start + (1 / totalHeadingWords);
+                return (
+                  <Word key={index} progress={headingProgress} range={[start, end]}>
+                    {word}
+                  </Word>
+                );
+              })}
+              <br />
+              {headingLine2.map((word, index) => {
+                const globalIndex = headingLine1.length + index;
+                const start = globalIndex / totalHeadingWords;
+                const end = start + (1 / totalHeadingWords);
+                return (
+                  <Word key={`line2-${index}`} progress={headingProgress} range={[start, end]}>
+                    {word}
+                  </Word>
+                );
+              })}
+            </h2>
+          </div>
+          
+          {/* Narrative Text with Scroll Effect */}
+          <div ref={textRef} className="max-w-4xl mx-auto mb-4 md:mb-6 px-4">
+            <p className="text-sm md:text-base lg:text-lg leading-[1.6] md:leading-[1.7] tracking-tight">
+              {words.map((word, index) => {
+                const start = index / words.length;
+                const end = start + (1 / words.length);
+                return (
+                  <Word key={index} progress={scrollYProgress} range={[start, end]}>
+                    {word}
+                  </Word>
+                );
+              })}
+            </p>
+          </div>
+
           <button
             onClick={() => {
               const element = document.querySelector('#contact');

@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Sparkles, Clock, Headphones, Eye } from 'lucide-react';
 import mockupLaptop1 from '@/assets/mockup-laptop-1.png';
 import mockupMobile1 from '@/assets/mockup-mobile-1.png';
@@ -37,11 +38,41 @@ const floatingImages = [
   { src: mockupMulti, rotation: 12, y: 20, scale: 0.95 },
 ];
 
+const Word = ({ children, progress, range }) => {
+  const opacity = useTransform(progress, range, [0.15, 1]);
+  const color = useTransform(progress, range, ['rgba(255,255,255,0.15)', 'rgba(255,255,255,1)']);
+  return (
+    <motion.span style={{ opacity, color }} className="inline-block mr-[0.25em]">
+      {children}
+    </motion.span>
+  );
+};
+
 export const SupportSection = () => {
+  const headingRef = useRef(null);
+  const descriptionRef = useRef(null);
+
+  const { scrollYProgress: headingProgress } = useScroll({
+    target: headingRef,
+    offset: ["start 0.85", "end 0.6"]
+  });
+
+  const { scrollYProgress: descriptionProgress } = useScroll({
+    target: descriptionRef,
+    offset: ["start 0.9", "end 0.5"]
+  });
+
   const handleScroll = (href: string) => {
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const headingLine1 = "Here When You".split(' ');
+  const headingLine2 = "Need Us Most.".split(' ');
+  const totalHeadingWords = headingLine1.length + headingLine2.length;
+  
+  const descriptionText = "InTence comes with dedicated support to help you launch and maintain your site without friction.";
+  const descriptionWords = descriptionText.split(' ');
 
   return (
     <section className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
@@ -57,15 +88,47 @@ export const SupportSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-3 md:mb-4 text-foreground px-4">
-            Here When You
-            <br />
-            <span className="text-muted-foreground">Need Us Most.</span>
-          </h2>
-          <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-6 md:mb-8 px-4">
-            InTence comes with dedicated support to help you launch and maintain
-            your site without friction.
-          </p>
+          {/* Heading with Scroll Effect */}
+          <div ref={headingRef} className="mb-3 md:mb-4 px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold leading-[1.3] md:leading-[1.4]">
+              {headingLine1.map((word, index) => {
+                const start = index / totalHeadingWords;
+                const end = start + (1 / totalHeadingWords);
+                return (
+                  <Word key={index} progress={headingProgress} range={[start, end]}>
+                    {word}
+                  </Word>
+                );
+              })}
+              <br />
+              {headingLine2.map((word, index) => {
+                const globalIndex = headingLine1.length + index;
+                const start = globalIndex / totalHeadingWords;
+                const end = start + (1 / totalHeadingWords);
+                return (
+                  <Word key={`line2-${index}`} progress={headingProgress} range={[start, end]}>
+                    {word}
+                  </Word>
+                );
+              })}
+            </h2>
+          </div>
+
+          {/* Description with Scroll Effect */}
+          <div ref={descriptionRef} className="max-w-xl mx-auto mb-6 md:mb-8 px-4">
+            <p className="text-sm sm:text-base md:text-lg leading-[1.6] md:leading-[1.7]">
+              {descriptionWords.map((word, index) => {
+                const start = index / descriptionWords.length;
+                const end = start + (1 / descriptionWords.length);
+                return (
+                  <Word key={index} progress={descriptionProgress} range={[start, end]}>
+                    {word}
+                  </Word>
+                );
+              })}
+            </p>
+          </div>
+
           <button
             onClick={() => handleScroll('#about')}
             className="px-5 py-2.5 md:px-6 md:py-3 bg-primary text-primary-foreground rounded-xl font-medium text-sm hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
