@@ -53,34 +53,29 @@ const techLogos = [
       </svg>
     )
   },
-  { 
-    name: 'Figma', 
-    color: '#F24E1E',
-    svg: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 md:w-7 md:h-7">
-        <path fill="#F24E1E" d="M5 5.5A5.5 5.5 0 0 1 10.5 0H12v11h-1.5A5.5 5.5 0 0 1 5 5.5z"/>
-        <path fill="#FF7262" d="M12 0h1.5a5.5 5.5 0 1 1 0 11H12V0z"/>
-        <path fill="#1ABCFE" d="M12 12.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0z"/>
-        <path fill="#0ACF83" d="M5 19.5A5.5 5.5 0 0 1 10.5 14H12v5.5a5.5 5.5 0 1 1-7 0z"/>
-        <path fill="#A259FF" d="M5 12.5A5.5 5.5 0 0 1 10.5 7H12v11h-1.5A5.5 5.5 0 0 1 5 12.5z"/>
-      </svg>
-    )
-  },
 ];
 
 // Duplicate for seamless loop
 const allLogos = [...techLogos, ...techLogos, ...techLogos];
 
+// Split the title into two lines as requested
+const titleLine1 = "Seamless Integrations for";
+const titleLine2 = "Maximum Efficiency.";
 const marqueeText = "InTence seamlessly integrates with leading tools and platforms, ensuring a smooth and efficient workflow.";
 
 export const TechMarquee = () => {
+  const containerRef = useRef(null);
   const textRef = useRef(null);
-  const words = marqueeText.split(' ');
+  
+  const wordsLine1 = titleLine1.split(' ');
+  const wordsLine2 = titleLine2.split(' ');
+  const descriptionWords = marqueeText.split(' ');
 
-  // useScroll and useTransform for reveal effect
+  // OFFSET REFRENCED FROM ABOUT COMPONENT: ["start 0.9", "end 0.5"]
+  // This makes the text load perfectly fast as same as your About section.
   const { scrollYProgress } = useScroll({
     target: textRef,
-    offset: ["start 0.9", "end 0.6"]
+    offset: ["start 0.9", "end 0.5"]
   });
 
   const handleScroll = (href: string) => {
@@ -89,53 +84,83 @@ export const TechMarquee = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 relative overflow-hidden bg-black">
+    <section ref={containerRef} className="py-24 md:py-32 relative overflow-hidden bg-black">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/3 to-background" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-primary/10 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         {/* Header */}
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6">
-            <Link2 className="w-4 h-4" />
-            Integrations
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-foreground">
-            Seamless Integrations for
-            <br />
-            <span className="text-muted-foreground">Maximum Efficiency.</span>
-          </h2>
-          
-          {/* Narrative reveal text container */}
-          <div ref={textRef} className="max-w-xl mx-auto mb-10">
-            <p className="text-base md:text-lg font-light leading-relaxed">
-              {words.map((word, index) => {
-                const start = index / words.length;
-                const end = start + (1 / words.length);
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm mb-6">
+              <Link2 className="w-4 h-4" />
+              Integrations
+            </span>
+          </motion.div>
+
+          {/* Heading with FAST reveal effect and line break */}
+          <div ref={textRef}>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold mb-6 text-foreground leading-tight">
+              {/* Line 1 */}
+              {wordsLine1.map((word, index) => {
+                const totalWords = wordsLine1.length + wordsLine2.length;
+                const start = index / totalWords;
+                const end = start + (1 / totalWords);
                 return (
-                  <Word key={index} progress={scrollYProgress} range={[start, end]}>
+                  <Word key={`l1-${index}`} progress={scrollYProgress} range={[start, end]}>
                     {word}
                   </Word>
                 );
               })}
-            </p>
+              <br />
+              {/* Line 2 - Maximum Efficiency */}
+              <span className="text-muted-foreground">
+                {wordsLine2.map((word, index) => {
+                  const totalWords = wordsLine1.length + wordsLine2.length;
+                  const start = (index + wordsLine1.length) / totalWords;
+                  const end = start + (1 / totalWords);
+                  return (
+                    <Word key={`l2-${index}`} progress={scrollYProgress} range={[start, end]}>
+                      {word}
+                    </Word>
+                  );
+                })}
+              </span>
+            </h2>
+            
+            {/* Description FAST reveal */}
+            <div className="max-w-xl mx-auto mb-10">
+              <p className="text-base md:text-lg font-light leading-relaxed">
+                {descriptionWords.map((word, index) => {
+                  const start = index / descriptionWords.length;
+                  const end = start + (1 / descriptionWords.length);
+                  return (
+                    <Word key={`desc-${index}`} progress={scrollYProgress} range={[start, end]}>
+                      {word}
+                    </Word>
+                  );
+                })}
+              </p>
+            </div>
           </div>
 
-          <button
+          <motion.button
             onClick={() => handleScroll('#about')}
             className="px-6 py-3 bg-primary text-primary-foreground rounded-xl font-medium text-sm hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
           >
             View About InTence
-          </button>
-        </motion.div>
+          </motion.button>
+        </div>
 
-        {/* Marquee */}
+        {/* Marquee with ULTRA FAST icon speed (duration: 15) */}
         <div className="relative mt-16">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-primary/30 rounded-full blur-2xl pointer-events-none" />
           
@@ -144,7 +169,7 @@ export const TechMarquee = () => {
               className="flex gap-6 md:gap-8"
               animate={{ x: ['0%', '-33.33%'] }}
               transition={{
-                duration: 25, // FASTER icon speed (reduced from 40s)
+                duration: 15, // Ultra fast icon scrolling
                 repeat: Infinity,
                 ease: 'linear',
               }}
@@ -154,9 +179,7 @@ export const TechMarquee = () => {
                   key={`${logo.name}-${index}`}
                   className="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-full bg-card/60 border border-white/10 backdrop-blur-sm flex items-center justify-center hover:scale-110 hover:border-primary/40 transition-all duration-300 cursor-default group"
                   title={logo.name}
-                  style={{
-                    boxShadow: `0 0 20px ${logo.color}15`
-                  }}
+                  style={{ boxShadow: `0 0 20px ${logo.color}15` }}
                 >
                   <div className="opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                     {logo.svg}
@@ -174,10 +197,10 @@ export const TechMarquee = () => {
   );
 };
 
-// Word helper for reveal effect
-const Word = ({ children, progress, range }: { children: string; progress: any; range: [number, number] }) => {
+// Word helper matches About.tsx styling and logic
+const Word = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0.2, 1]);
-  const color = useTransform(progress, range, ['rgba(156, 163, 175, 0.3)', 'rgba(255, 255, 255, 1)']);
+  const color = useTransform(progress, range, ['rgba(255,255,255,0.2)', 'rgba(255,255,255,1)']);
   return (
     <motion.span style={{ opacity, color }} className="inline-block mr-[0.25em]">
       {children}
