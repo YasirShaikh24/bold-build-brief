@@ -60,13 +60,13 @@ const projects = [
   },
   {
     id: 6,
-    title: 'AI Automation',
-    subtitle: 'Driven Decisions',
-    link: '',
-    description: 'Automate tasks, reduce costs, and improve productivity with solutions.',
+    title: 'Sagir Trader',
+    subtitle: 'Enterprise Trading Solutions',
+    link: 'https://sagir-trader.netlify.app',
+    description: 'A powerful and responsive trading dashboard that enables users to track market movements, manage their portfolio, and analyze financial data in real time with a clean and intuitive interface designed for fast decision-making and seamless user experience.',
     technologies: ['Java', 'React', 'PostgreSQL'],
     showLivePreview: false,
-    showLiveBadge: false,
+    showLiveBadge: true,
     imageName: 'image-6.png'
   },
 ];
