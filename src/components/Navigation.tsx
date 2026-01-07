@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, TrendingUp } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { name: 'Home', href: '#hero' },
@@ -14,29 +14,24 @@ export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleNavClick = (href) => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    element?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleLogoClick = () => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector('#hero');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector('#hero')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleContactClick = () => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector('#contact');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -49,17 +44,14 @@ export const Navigation = () => {
     >
       <nav className="container mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <button
-            onClick={handleLogoClick}
-            className="flex items-center gap-2.5"
-          >
-            <div className="w-8 h-8 rounded-lg bg-[#8B5CF6] flex items-center justify-center">
-              <TrendingUp className="w-4 h-4 text-white" />
-            </div>
-            <span className="text-xl font-medium tracking-wide text-white">
-              InTence
-            </span>
+
+          {/* LOGO ONLY – TEXT REMOVED */}
+          <button onClick={handleLogoClick}>
+            <img
+              src="/logo1.png"
+              alt="InTence Logo"
+              className="h-20 md:h-24 w-auto"   // ⬅️ increased size
+            />
           </button>
 
           {/* Desktop Navigation */}
@@ -75,7 +67,7 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA */}
           <div className="hidden md:block">
             <button
               onClick={handleContactClick}
@@ -104,14 +96,14 @@ export const Navigation = () => {
                 <button
                   key={link.name}
                   onClick={() => handleNavClick(link.href)}
-                  className="text-left py-2 text-white hover:text-[#8B5CF6] transition-colors"
+                  className="text-left py-2 text-white hover:text-[#8B5CF6]"
                 >
                   {link.name}
                 </button>
               ))}
               <button
                 onClick={handleContactClick}
-                className="px-6 py-2.5 bg-[#8B5CF6] text-white rounded-lg font-medium text-sm hover:bg-[#7C3AED] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300 mt-4"
+                className="px-6 py-2.5 bg-[#8B5CF6] text-white rounded-lg font-medium text-sm mt-4"
               >
                 Get In Touch
               </button>

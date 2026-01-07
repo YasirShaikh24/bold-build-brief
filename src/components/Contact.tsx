@@ -186,7 +186,7 @@ export const Contact = () => {
             <div className="grid grid-cols-1 gap-4 md:gap-6">
               {[
                 { icon: Mail, label: 'Email', value: 'intence.it@gmail.com' },
-                { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
+                { icon: Phone, label: 'Phone', value: '+91 92652 50494' },
                 { icon: MapPin, label: 'Location', value: 'Gujarat, India' }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-secondary/5 border border-border/20">
@@ -266,7 +266,7 @@ export const Contact = () => {
                         pattern="[0-9]*"
                         value={formData.phone}
                         onChange={handleChange}
-                        placeholder="e.g., 9876543210"
+                        placeholder="Enter Your Mobile Number"
                         required
                         className="flex-1 px-4 bg-transparent border-none outline-none text-base text-foreground placeholder:text-muted-foreground"
                       />
