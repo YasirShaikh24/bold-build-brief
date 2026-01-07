@@ -55,7 +55,7 @@ const projects = [
     description: 'A modern and responsive e-commerce web app that allows users to browse products and shop online with ease.Built for a smooth, fast, and user-friendly shopping experience across all devices.',
     technologies: ['Node.js', 'Python', 'React'],
     showLivePreview: false,
-    showLiveBadge: false,
+    showLiveBadge: true,
     imageName: 'image-5.png'
   },
   {
