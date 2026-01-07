@@ -36,9 +36,10 @@ transporter.verify((error, success) => {
 
 // Contact form endpoint
 app.post('/api/contact', async (req, res) => {
-  const { name, email, message } = req.body;
+  const { name, email, phone, message } = req.body;
 
-  if (!name || !email || !message) {
+  // Validation - ALL fields including phone are required
+  if (!name || !email || !phone || !message) {
     return res.status(400).json({
       success: false,
       message: 'All fields are required',
@@ -55,6 +56,7 @@ app.post('/api/contact', async (req, res) => {
         <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin-top: 20px;">
           <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
           <p style="margin: 10px 0;"><strong>Email:</strong> ${email}</p>
+          <p style="margin: 10px 0;"><strong>Phone:</strong> ${phone}</p>
           <p style="margin: 10px 0;"><strong>Message:</strong></p>
           <div style="background-color: white; padding: 15px; border-radius: 5px; margin-top: 10px;">
             ${message.replace(/\n/g, '<br>')}
