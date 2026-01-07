@@ -42,15 +42,24 @@ export const Navigation = () => {
           : 'bg-transparent'
       }`}
     >
-      <nav className="container mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20">
+      <nav className="container mx-auto px-4 md:px-6 lg:px-12">
+        <div className="flex items-center justify-between h-16 md:h-20">
 
-          {/* LOGO ONLY – TEXT REMOVED */}
-          <button onClick={handleLogoClick}>
+          {/* LOGO – MOBILE FIXED, DESKTOP SAME */}
+          <button
+            onClick={handleLogoClick}
+            className="flex items-center"
+          >
             <img
               src="/logo1.png"
               alt="InTence Logo"
-              className="h-50 md:h-28 w-auto"   // ⬅️ increased size
+              className="
+                h-10        /* ✅ Mobile perfect size */
+                sm:h-12     /* ✅ Small tablets */
+                md:h-28     /* ✅ Desktop unchanged */
+                w-auto
+                object-contain
+              "
             />
           </button>
 
@@ -67,7 +76,7 @@ export const Navigation = () => {
             ))}
           </div>
 
-          {/* CTA */}
+          {/* CTA (Desktop Only) */}
           <div className="hidden md:block">
             <button
               onClick={handleContactClick}
