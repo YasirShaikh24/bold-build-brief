@@ -303,7 +303,7 @@ export const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your project..."
+                    placeholder="Type Your Message Here..."
                     required
                     rows={4}
                     className="bg-secondary/10 border-border/40 focus:ring-primary/20 resize-none w-full text-base rounded-xl py-3 min-h-[120px]"

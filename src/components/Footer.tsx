@@ -4,7 +4,7 @@ const socialLinks = [
   { icon: Github, href: '#', label: 'GitHub' },
   { icon: Twitter, href: '#', label: 'Twitter' },
   { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
+  { icon: Instagram, href: 'https://www.instagram.com/intence.in?igsh=eXZweWsxMHAzbnZ0', label: 'Instagram' },
 ];
 
 const footerLinks = [
