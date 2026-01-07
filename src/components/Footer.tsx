@@ -36,7 +36,7 @@ export const Footer = () => {
             <img
               src="/logo1.png"
               alt="InTence Logo"
-              className="h-20 w-auto mb-6"   // ⬅️ increased size
+              className="h-24 w-auto mb-6"   // ⬅️ increased size
             />
 
             <p className="text-gray-400 mb-8 max-w-sm">

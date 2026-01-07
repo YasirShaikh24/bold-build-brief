@@ -50,7 +50,7 @@ export const Navigation = () => {
             <img
               src="/logo1.png"
               alt="InTence Logo"
-              className="h-20 md:h-24 w-auto"   // ⬅️ increased size
+              className="h-50 md:h-28 w-auto"   // ⬅️ increased size
             />
           </button>
 
