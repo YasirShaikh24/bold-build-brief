@@ -12,6 +12,7 @@ const projects = [
     technologies: ['React', 'Tailwind CSS', 'Vite'],
     showLivePreview: false,
     showLiveBadge: true,
+    imageName: 'image-1.png' // Explicitly naming the file
   },
   {
     id: 2,
@@ -22,26 +23,29 @@ const projects = [
     technologies: ['React', 'Vite', 'Tailwind CSS'],
     showLivePreview: true,
     showLiveBadge: true,
+    imageName: 'image-1.png'
   },
   {
     id: 3,
-    title: 'AI Analytics',
-    subtitle: 'Data Platform',
-    link: '',
-    description: 'Leverage AI to analyze trends and predict outcomes for smarter decisions.',
+    title: 'Islamic Deeds Tracker',
+    subtitle: 'Faith & Productivity Platform',
+    link: 'https://islamic-deeds-tracker.vercel.app/',
+    description: 'A minimal and spiritually focused web app designed to help Muslims track daily good deeds, strengthen consistency in worship, and stay mindful of Islamic goals.',
     technologies: ['Python', 'React', 'PostgreSQL'],
     showLivePreview: false,
-    showLiveBadge: false,
+    showLiveBadge: true,
+    imageName: 'image-3.png' // Matches your screenshot
   },
   {
     id: 4,
-    title: 'Computer Vision',
-    subtitle: 'AI Solutions',
-    link: '',
-    description: 'AI-based facial recognition, image analysis, and automation solutions.',
+    title: 'Dual Sync',
+    subtitle: 'Productivity & Sync Tool',
+    link: 'https://dualsync-ojd8q93.public.builtwithrocket.new/',
+    description: 'A simple and powerful web app built to help users sync data seamlessly across devices and platforms with minimal setup, designed for fast and reliable syncing of data through a clean and intuitive interface.',
     technologies: ['Python', 'TensorFlow', 'React'],
     showLivePreview: false,
-    showLiveBadge: false,
+    showLiveBadge: true,
+    imageName: 'image-4.png'
   },
   {
     id: 5,
@@ -52,6 +56,7 @@ const projects = [
     technologies: ['Node.js', 'Python', 'React'],
     showLivePreview: false,
     showLiveBadge: false,
+    imageName: 'image-5.png'
   },
   {
     id: 6,
@@ -62,6 +67,7 @@ const projects = [
     technologies: ['Java', 'React', 'PostgreSQL'],
     showLivePreview: false,
     showLiveBadge: false,
+    imageName: 'image-6.png'
   },
 ];
 
@@ -311,12 +317,14 @@ export const Portfolio = () => {
                 ) : (
                   <div className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20">
                     <img
-                      src={`/projects/project-${project.id}/image-1.png`}
+                      // Updated to point to exactly what your screenshot shows:
+                      // Folder: project-1 | Filename: image-X.png
+                      src={`/projects/project-1/${project.imageName}`}
                       alt={project.title}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                       onError={(e) => {
-                        const target = e.target as HTMLImageElement;
+                        const target = e.target;
                         target.style.display = 'none';
                       }}
                     />
