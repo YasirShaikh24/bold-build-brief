@@ -187,7 +187,7 @@ export const Contact = () => {
               {[
                 { icon: Mail, label: 'Email', value: 'intence.it@gmail.com' },
                 { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567' },
-                { icon: MapPin, label: 'Location', value: 'San Francisco, CA' }
+                { icon: MapPin, label: 'Location', value: 'Gujarat, India' }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-secondary/5 border border-border/20">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -296,7 +296,7 @@ export const Contact = () => {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2 ml-1">
-                    Message
+                    Your Message
                   </label>
                   <Textarea
                     id="message"
