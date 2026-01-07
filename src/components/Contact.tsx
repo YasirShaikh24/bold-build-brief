@@ -6,62 +6,60 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
-// ✅ PERFECT: Works on BOTH localhost AND production
 const API_URL = import.meta.env.VITE_API_URL || '/api/contact';
 
-// Country codes with flags and dial codes
 const countryCodes = [
-  { code: 'IN', dialCode: '+91', flag: '🇮🇳' },
-  { code: 'US', dialCode: '+1', flag: '🇺🇸' },
-  { code: 'GB', dialCode: '+44', flag: '🇬🇧' },
-  { code: 'CA', dialCode: '+1', flag: '🇨🇦' },
-  { code: 'AU', dialCode: '+61', flag: '🇦🇺' },
-  { code: 'DE', dialCode: '+49', flag: '🇩🇪' },
-  { code: 'FR', dialCode: '+33', flag: '🇫🇷' },
-  { code: 'IT', dialCode: '+39', flag: '🇮🇹' },
-  { code: 'ES', dialCode: '+34', flag: '🇪🇸' },
-  { code: 'NL', dialCode: '+31', flag: '🇳🇱' },
-  { code: 'CH', dialCode: '+41', flag: '🇨🇭' },
-  { code: 'SE', dialCode: '+46', flag: '🇸🇪' },
-  { code: 'NO', dialCode: '+47', flag: '🇳🇴' },
-  { code: 'DK', dialCode: '+45', flag: '🇩🇰' },
-  { code: 'FI', dialCode: '+358', flag: '🇫🇮' },
-  { code: 'PL', dialCode: '+48', flag: '🇵🇱' },
-  { code: 'BE', dialCode: '+32', flag: '🇧🇪' },
-  { code: 'AT', dialCode: '+43', flag: '🇦🇹' },
-  { code: 'IE', dialCode: '+353', flag: '🇮🇪' },
-  { code: 'PT', dialCode: '+351', flag: '🇵🇹' },
-  { code: 'GR', dialCode: '+30', flag: '🇬🇷' },
-  { code: 'NZ', dialCode: '+64', flag: '🇳🇿' },
-  { code: 'SG', dialCode: '+65', flag: '🇸🇬' },
-  { code: 'HK', dialCode: '+852', flag: '🇭🇰' },
-  { code: 'MY', dialCode: '+60', flag: '🇲🇾' },
-  { code: 'TH', dialCode: '+66', flag: '🇹🇭' },
-  { code: 'PH', dialCode: '+63', flag: '🇵🇭' },
-  { code: 'ID', dialCode: '+62', flag: '🇮🇩' },
-  { code: 'VN', dialCode: '+84', flag: '🇻🇳' },
-  { code: 'JP', dialCode: '+81', flag: '🇯🇵' },
-  { code: 'KR', dialCode: '+82', flag: '🇰🇷' },
-  { code: 'CN', dialCode: '+86', flag: '🇨🇳' },
-  { code: 'TW', dialCode: '+886', flag: '🇹🇼' },
-  { code: 'AE', dialCode: '+971', flag: '🇦🇪' },
-  { code: 'SA', dialCode: '+966', flag: '🇸🇦' },
-  { code: 'IL', dialCode: '+972', flag: '🇮🇱' },
-  { code: 'TR', dialCode: '+90', flag: '🇹🇷' },
-  { code: 'ZA', dialCode: '+27', flag: '🇿🇦' },
-  { code: 'BR', dialCode: '+55', flag: '🇧🇷' },
-  { code: 'MX', dialCode: '+52', flag: '🇲🇽' },
-  { code: 'AR', dialCode: '+54', flag: '🇦🇷' },
-  { code: 'CL', dialCode: '+56', flag: '🇨🇱' },
-  { code: 'CO', dialCode: '+57', flag: '🇨🇴' },
-  { code: 'RU', dialCode: '+7', flag: '🇷🇺' },
-  { code: 'UA', dialCode: '+380', flag: '🇺🇦' },
-  { code: 'EG', dialCode: '+20', flag: '🇪🇬' },
-  { code: 'NG', dialCode: '+234', flag: '🇳🇬' },
-  { code: 'KE', dialCode: '+254', flag: '🇰🇪' },
-  { code: 'BD', dialCode: '+880', flag: '🇧🇩' },
-  { code: 'PK', dialCode: '+92', flag: '🇵🇰' },
-  { code: 'LK', dialCode: '+94', flag: '🇱🇰' },
+  { code: 'IN', dialCode: '+91', flag: '🇮🇳', name: 'India' },
+  { code: 'US', dialCode: '+1', flag: '🇺🇸', name: 'United States' },
+  { code: 'GB', dialCode: '+44', flag: '🇬🇧', name: 'United Kingdom' },
+  { code: 'CA', dialCode: '+1', flag: '🇨🇦', name: 'Canada' },
+  { code: 'AU', dialCode: '+61', flag: '🇦🇺', name: 'Australia' },
+  { code: 'DE', dialCode: '+49', flag: '🇩🇪', name: 'Germany' },
+  { code: 'FR', dialCode: '+33', flag: '🇫🇷', name: 'France' },
+  { code: 'IT', dialCode: '+39', flag: '🇮🇹', name: 'Italy' },
+  { code: 'ES', dialCode: '+34', flag: '🇪🇸', name: 'Spain' },
+  { code: 'NL', dialCode: '+31', flag: '🇳🇱', name: 'Netherlands' },
+  { code: 'CH', dialCode: '+41', flag: '🇨🇭', name: 'Switzerland' },
+  { code: 'SE', dialCode: '+46', flag: '🇸🇪', name: 'Sweden' },
+  { code: 'NO', dialCode: '+47', flag: '🇳🇴', name: 'Norway' },
+  { code: 'DK', dialCode: '+45', flag: '🇩🇰', name: 'Denmark' },
+  { code: 'FI', dialCode: '+358', flag: '🇫🇮', name: 'Finland' },
+  { code: 'PL', dialCode: '+48', flag: '🇵🇱', name: 'Poland' },
+  { code: 'BE', dialCode: '+32', flag: '🇧🇪', name: 'Belgium' },
+  { code: 'AT', dialCode: '+43', flag: '🇦🇹', name: 'Austria' },
+  { code: 'IE', dialCode: '+353', flag: '🇮🇪', name: 'Ireland' },
+  { code: 'PT', dialCode: '+351', flag: '🇵🇹', name: 'Portugal' },
+  { code: 'GR', dialCode: '+30', flag: '🇬🇷', name: 'Greece' },
+  { code: 'NZ', dialCode: '+64', flag: '🇳🇿', name: 'New Zealand' },
+  { code: 'SG', dialCode: '+65', flag: '🇸🇬', name: 'Singapore' },
+  { code: 'HK', dialCode: '+852', flag: '🇭🇰', name: 'Hong Kong' },
+  { code: 'MY', dialCode: '+60', flag: '🇲🇾', name: 'Malaysia' },
+  { code: 'TH', dialCode: '+66', flag: '🇹🇭', name: 'Thailand' },
+  { code: 'PH', dialCode: '+63', flag: '🇵🇭', name: 'Philippines' },
+  { code: 'ID', dialCode: '+62', flag: '🇮🇩', name: 'Indonesia' },
+  { code: 'VN', dialCode: '+84', flag: '🇻🇳', name: 'Vietnam' },
+  { code: 'JP', dialCode: '+81', flag: '🇯🇵', name: 'Japan' },
+  { code: 'KR', dialCode: '+82', flag: '🇰🇷', name: 'South Korea' },
+  { code: 'CN', dialCode: '+86', flag: '🇨🇳', name: 'China' },
+  { code: 'TW', dialCode: '+886', flag: '🇹🇼', name: 'Taiwan' },
+  { code: 'AE', dialCode: '+971', flag: '🇦🇪', name: 'United Arab Emirates' },
+  { code: 'SA', dialCode: '+966', flag: '🇸🇦', name: 'Saudi Arabia' },
+  { code: 'IL', dialCode: '+972', flag: '🇮🇱', name: 'Israel' },
+  { code: 'TR', dialCode: '+90', flag: '🇹🇷', name: 'Turkey' },
+  { code: 'ZA', dialCode: '+27', flag: '🇿🇦', name: 'South Africa' },
+  { code: 'BR', dialCode: '+55', flag: '🇧🇷', name: 'Brazil' },
+  { code: 'MX', dialCode: '+52', flag: '🇲🇽', name: 'Mexico' },
+  { code: 'AR', dialCode: '+54', flag: '🇦🇷', name: 'Argentina' },
+  { code: 'CL', dialCode: '+56', flag: '🇨🇱', name: 'Chile' },
+  { code: 'CO', dialCode: '+57', flag: '🇨🇴', name: 'Colombia' },
+  { code: 'RU', dialCode: '+7', flag: '🇷🇺', name: 'Russia' },
+  { code: 'UA', dialCode: '+380', flag: '🇺🇦', name: 'Ukraine' },
+  { code: 'EG', dialCode: '+20', flag: '🇪🇬', name: 'Egypt' },
+  { code: 'NG', dialCode: '+234', flag: '🇳🇬', name: 'Nigeria' },
+  { code: 'KE', dialCode: '+254', flag: '🇰🇪', name: 'Kenya' },
+  { code: 'BD', dialCode: '+880', flag: '🇧🇩', name: 'Bangladesh' },
+  { code: 'PK', dialCode: '+92', flag: '🇵🇰', name: 'Pakistan' },
+  { code: 'LK', dialCode: '+94', flag: '🇱🇰', name: 'Sri Lanka' },
 ];
 
 export const Contact = () => {
@@ -71,7 +69,7 @@ export const Contact = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]); // Default to India
+  const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -83,11 +81,11 @@ export const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Combine country code with phone number for submission
     const submissionData = {
       name: formData.name,
       email: formData.email,
       phone: `${selectedCountry.dialCode} ${formData.phone}`,
+      country: selectedCountry.name,
       message: formData.message,
     };
 
@@ -118,9 +116,8 @@ export const Contact = () => {
           duration: 5000,
         });
 
-        // Reset form
         setFormData({ name: '', email: '', phone: '', message: '' });
-        setSelectedCountry(countryCodes[0]); // Reset to India
+        setSelectedCountry(countryCodes[0]);
       } else {
         throw new Error(data.message || 'Failed to send message');
       }
@@ -143,7 +140,6 @@ export const Contact = () => {
   ) => {
     const { name, value } = e.target;
     
-    // Only allow numbers for phone field
     if (name === 'phone') {
       const numbersOnly = value.replace(/[^0-9]/g, '');
       setFormData((prev) => ({
@@ -165,13 +161,11 @@ export const Contact = () => {
 
   return (
     <section id="contact" className="py-12 md:py-32 relative overflow-hidden">
-      {/* Hard-constrained background glow to prevent overflow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[280px] md:w-[800px] h-[280px] md:h-[400px] bg-primary/10 rounded-full blur-[80px] md:blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10" ref={containerRef}>
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           
-          {/* Left Column - Info (Order 2 on mobile to show form first) */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +183,6 @@ export const Contact = () => {
               Ready to transform your ideas into powerful digital solutions?
             </p>
 
-            {/* Contact Info - Grid for better mobile layout */}
             <div className="grid grid-cols-1 gap-4 md:gap-6">
               {[
                 { icon: Mail, label: 'Email', value: 'intence.it@gmail.com' },
@@ -209,7 +202,6 @@ export const Contact = () => {
             </div>
           </motion.div>
 
-          {/* Right Column - Form (Order 1 on mobile) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -219,7 +211,6 @@ export const Contact = () => {
           >
             <div className="p-5 sm:p-8 rounded-3xl bg-card/40 border border-border/40 backdrop-blur-md w-full">
               <div className="space-y-5">
-                {/* Name Field */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2 ml-1">
                     Name
@@ -235,7 +226,6 @@ export const Contact = () => {
                   />
                 </div>
 
-                {/* Email Field */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-2 ml-1">
                     Email
@@ -252,14 +242,12 @@ export const Contact = () => {
                   />
                 </div>
 
-                {/* Mobile Number Field with Country Code Selector */}
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium mb-2 ml-1">
                     Mobile Number
                   </label>
                   <div className="relative">
                     <div className="flex items-stretch h-12 rounded-xl overflow-hidden bg-secondary/10 border border-border/40 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-                      {/* Country Code Selector Button */}
                       <button
                         type="button"
                         onClick={() => setShowCountryDropdown(!showCountryDropdown)}
@@ -270,7 +258,6 @@ export const Contact = () => {
                         <ChevronDown className="w-4 h-4 text-muted-foreground" />
                       </button>
 
-                      {/* Phone Number Input */}
                       <input
                         id="phone"
                         name="phone"
@@ -285,7 +272,6 @@ export const Contact = () => {
                       />
                     </div>
 
-                    {/* Country Dropdown Menu */}
                     {showCountryDropdown && (
                       <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border/40 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50 backdrop-blur-md">
                         {countryCodes.map((country) => (
@@ -303,16 +289,14 @@ export const Contact = () => {
                     )}
                   </div>
                   
-                  {/* Helper Text */}
                   <p className="text-xs text-muted-foreground mt-2 ml-1">
                     Select your country code using the flag selector and enter your mobile number (numbers only, no spaces or symbols)
                   </p>
                 </div>
 
-                {/* Project Description Field */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2 ml-1">
-                    Project Description
+                    Message
                   </label>
                   <Textarea
                     id="message"
@@ -326,7 +310,6 @@ export const Contact = () => {
                   />
                 </div>
 
-                {/* Submit Button */}
                 <Button
                   onClick={handleSubmit}
                   variant="hero"

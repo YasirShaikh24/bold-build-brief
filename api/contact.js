@@ -28,9 +28,11 @@ export default async function handler(req, res) {
     });
   }
 
-  const { name, email, message } = req.body;
+  // ✅ FIXED: Now includes phone field AND country
+  const { name, email, phone, message, country } = req.body;
 
-  if (!name || !email || !message) {
+  // ✅ FIXED: Validate ALL fields including phone
+  if (!name || !email || !phone || !message) {
     return res.status(400).json({
       success: false,
       message: 'All fields are required',
@@ -64,6 +66,7 @@ export default async function handler(req, res) {
     await transporter.verify();
     console.log('✅ SMTP verified successfully');
 
+    // ✅ FIXED: Now includes phone with country name in email template
     const mailOptions = {
       from: `"InTence Contact Form" <${process.env.GMAIL_USER}>`,
       to: process.env.RECIPIENT_EMAIL,
@@ -75,6 +78,7 @@ export default async function handler(req, res) {
           <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin-top: 20px;">
             <p style="margin: 10px 0;"><strong>Name:</strong> ${name}</p>
             <p style="margin: 10px 0;"><strong>Email:</strong> ${email}</p>
+            <p style="margin: 10px 0;"><strong>Phone:</strong> ${phone}${country ? ` (${country})` : ''}</p>
             <p style="margin: 10px 0;"><strong>Message:</strong></p>
             <div style="background-color: white; padding: 15px; border-radius: 5px; margin-top: 10px;">
               ${message.replace(/\n/g, '<br>')}
@@ -85,7 +89,7 @@ export default async function handler(req, res) {
           </p>
         </div>
       `,
-      text: `New Contact Form Submission\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+      text: `New Contact Form Submission\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}${country ? ` (${country})` : ''}\n\nMessage:\n${message}`,
     };
 
     console.log('📤 Sending email...');
