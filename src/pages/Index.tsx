@@ -1,6 +1,7 @@
 import { Navigation } from '@/components/Navigation';
 import { Hero } from '@/components/Hero';
 import { About } from '@/components/About';
+import { Services } from '@/components/Services';
 import { Portfolio } from '@/components/Portfolio';
 import { SupportSection } from '@/components/SupportSection';
 import { TechMarquee } from '@/components/TechMarquee';
@@ -51,8 +52,13 @@ const Index = () => {
         <About />
       </section>
 
-      {/* Portfolio Section */}
+      {/* Services Section */}
       <section className="bg-background">
+        <Services />
+      </section>
+
+      {/* Portfolio Section */}
+      <section id="portfolio" className="bg-background">
         <Portfolio />
       </section>
 

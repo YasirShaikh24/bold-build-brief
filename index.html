@@ -1,58 +1,85 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- ================= -->
+    <!-- BASIC META -->
+    <!-- ================= -->
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ===================== -->
-    <!-- FAVICON (FINAL SETUP) -->
+    <!-- FAVICON (KEEP .ICO + GOOGLE SAFE PNG) -->
     <!-- ===================== -->
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- ================= -->
+    <!-- BRAND IDENTITY (CRITICAL) -->
+    <!-- ================= -->
+    <meta name="application-name" content="INTENCE" />
+    <meta name="author" content="INTENCE" />
 
     <!-- ================= -->
-    <!-- SEO META TAGS -->
+    <!-- SEO -->
     <!-- ================= -->
+    <title>INTENCE | Software Development Company – Web Apps & Automation</title>
+
     <meta
       name="description"
-      content="InTence is a technology-driven company delivering modern web, mobile, AI, SaaS, and digital solutions that redefine innovation."
+      content="INTENCE is a software development company delivering web applications, automation systems, SaaS platforms, and scalable digital solutions."
     />
     <meta
       name="keywords"
-      content="InTence, software company, web development, mobile apps, AI solutions, SaaS, IT services"
+      content="INTENCE, software development company, web development, automation, SaaS solutions, IT services"
     />
-    <meta name="author" content="InTence" />
 
     <!-- ================= -->
-    <!-- OPEN GRAPH -->
+    <!-- OPEN GRAPH (FACEBOOK / LINKEDIN) -->
     <!-- ================= -->
-    <meta property="og:title" content="InTence - Redefining the Future" />
+    <meta property="og:site_name" content="INTENCE" />
+    <meta property="og:title" content="INTENCE | Software Development Company" />
     <meta
       property="og:description"
-      content="Modern digital solutions and scalable technology services by InTence."
+      content="Web applications, automation systems, and scalable software solutions by INTENCE."
     />
     <meta property="og:image" content="/android-chrome-512x512.png" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.intence.in" />
 
     <!-- ================= -->
     <!-- TWITTER CARD -->
     <!-- ================= -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="InTence - Redefining the Future" />
+    <meta name="twitter:title" content="INTENCE | Software Development Company" />
     <meta
       name="twitter:description"
-      content="Technology solutions that redefine innovation."
+      content="Modern web apps, automation, and scalable digital solutions by INTENCE."
     />
     <meta name="twitter:image" content="/android-chrome-512x512.png" />
 
-    <title>InTence - Redefining the Future</title>
+    <!-- ================= -->
+    <!-- ORGANIZATION SCHEMA (MOST IMPORTANT FOR GOOGLE) -->
+    <!-- ================= -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "INTENCE",
+        "url": "https://www.intence.in",
+        "logo": "https://www.intence.in/favicon-48x48.png"
+      }
+    </script>
   </head>
 
   <body>
     <div id="root"></div>
+
+    <!-- ================= -->
+    <!-- REACT ENTRY -->
+    <!-- ================= -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

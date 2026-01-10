@@ -171,14 +171,14 @@ export const Hero = () => {
             />
           </motion.button>
 
-          {/* What is InTence Button - Transparent with Black Border */}
+          {/* Our Portfolio Button - Transparent with Black Border */}
           <motion.button
-            onClick={() => handleScroll('#about')}
+            onClick={() => handleScroll('#portfolio')}
             className="group px-6 py-2.5 bg-white/5 text-white rounded-lg font-medium text-sm border border-black/80 hover:border-white/40 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            What is InTence?
+            Our Portfolio
           </motion.button>
         </motion.div>
       </div>
