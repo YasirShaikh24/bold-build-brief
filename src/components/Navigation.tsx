@@ -81,7 +81,10 @@ export const Navigation = () => {
           <div className="hidden md:block">
             <button
               onClick={handleContactClick}
-              className="px-6 py-2.5 bg-[#8B5CF6] text-white rounded-lg font-medium text-sm hover:bg-[#7C3AED] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300"
+              className="px-6 py-2.5 text-white rounded-lg font-medium text-sm hover:shadow-[0_0_30px_rgba(123,95,193,0.6)] transition-all duration-300"
+              style={{
+                background: 'linear-gradient(90deg, #342063, #7B5FC1)'
+              }}
             >
               Get In Touch
             </button>
@@ -113,7 +116,10 @@ export const Navigation = () => {
               ))}
               <button
                 onClick={handleContactClick}
-                className="px-6 py-2.5 bg-[#8B5CF6] text-white rounded-lg font-medium text-sm mt-4"
+                className="px-6 py-2.5 text-white rounded-lg font-medium text-sm mt-4 hover:shadow-[0_0_20px_rgba(123,95,193,0.6)] transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(90deg, #342063, #7B5FC1)'
+                }}
               >
                 Get In Touch
               </button>

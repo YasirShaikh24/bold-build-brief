@@ -21,7 +21,7 @@ export const Footer = () => {
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: 'url(/src/assets/footer.png)',
+          backgroundImage: 'url(/footer.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

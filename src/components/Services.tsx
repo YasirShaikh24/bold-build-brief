@@ -92,7 +92,7 @@ export const Services = () => {
         <div
           className="w-full h-full rounded-[3rem] overflow-hidden"
           style={{
-            backgroundImage: 'url(/src/assets/service1.png)',
+            backgroundImage: 'url(/service1.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
