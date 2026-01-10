@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Code, Globe, Zap, Database, Settings, Wrench } from 'lucide-react';
 
 const services = [
@@ -7,42 +8,42 @@ const services = [
     title: 'Custom Software Development',
     icon: Code,
     description:
-      'We build tailor-made software solutions\nfocused on real business processes\nto improve efficiency and scalability.'
+      'We build powerful, tailor-made software solutions designed specifically for your business processes. Our software is developed after understanding real operational workflows and requirements. We focus on performance, scalability, and long-term reliability. Each solution is built to adapt as your business grows and evolves.'
   },
   {
     id: 2,
     title: 'Web & Web Application Development',
     icon: Globe,
     description:
-      'We design modern responsive websites\nand secure web applications\nfor smooth and seamless experiences.'
+      'We design and develop modern, responsive websites and secure web applications. Our solutions ensure smooth user experiences across all devices and browsers. We follow clean UI practices and optimized coding standards. Every application is scalable, fast, and future-ready.'
   },
   {
     id: 3,
     title: 'Business Automation Solutions',
     icon: Zap,
     description:
-      'We automate repetitive business tasks\nusing smart digital workflows\nto reduce errors and improve productivity.'
+      'We automate manual and repetitive business tasks using smart digital systems. Automation helps reduce human effort and operational errors. Our solutions improve productivity and workflow efficiency. Businesses gain faster execution and better control through automation.'
   },
   {
     id: 4,
     title: 'Database & Backend Engineering',
     icon: Database,
     description:
-      'We develop secure backend systems\nwith scalable database architecture\nensuring performance and reliability.'
+      'We create robust backend architectures supported by secure and scalable databases. Our systems ensure high performance and smooth data handling. We focus on security, stability, and seamless integrations. This forms a strong foundation for enterprise-level applications.'
   },
   {
     id: 5,
     title: 'Management Systems & Business Applications',
     icon: Settings,
     description:
-      'We build complete management systems\nincluding ERP CRM inventory and billing\nfor centralized business control.'
+      'We develop complete management solutions including ERP, CRM, inventory, billing, and custom business applications. These systems centralize operations and improve decision-making. Real-time data access enhances control and transparency. Our solutions simplify complex business processes.'
   },
   {
     id: 6,
     title: 'Maintenance, Support & Optimization',
     icon: Wrench,
     description:
-      'We provide ongoing technical support\nsystem optimization and regular updates\nto keep everything running smoothly.'
+      'We provide continuous technical support to keep your systems running smoothly. Our services include performance optimization, security updates, and regular maintenance. We monitor systems to prevent issues before they arise. This ensures long-term stability and reliability.'
   }
 ];
 
@@ -64,8 +65,36 @@ const itemVariants = {
 };
 
 export const Services = () => {
+  const [activeId, setActiveId] = useState(null);
+
+  const toggleCard = (id) => {
+    setActiveId(activeId === id ? null : id);
+  };
+
   return (
     <section id="services" className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
+
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0 px-2 sm:px-3 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
+        <div
+          className="w-full h-full rounded-2xl sm:rounded-3xl md:rounded-[3rem] overflow-hidden"
+          style={{
+            backgroundImage: 'url(/src/assets/service1.png)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          <div
+            className="w-full h-full"
+            style={{ background: 'rgba(0, 0, 0, 0.4)' }}
+          />
+        </div>
+      </div>
+
+      {/* Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] md:w-[800px] h-[300px] md:h-[400px] bg-primary/10 rounded-full blur-[120px] md:blur-[150px] pointer-events-none z-[1]" />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
 
         {/* Heading */}
@@ -88,7 +117,7 @@ export const Services = () => {
           </h2>
 
           <p className="text-base md:text-lg text-white/60 max-w-2xl mx-auto">
-            From custom development to automation and support, we deliver complete technology solutions tailored to your business needs.
+            From custom development to ongoing support, we provide end-to-end technology solutions tailored to your unique business needs.
           </p>
         </motion.div>
 
@@ -102,50 +131,41 @@ export const Services = () => {
         >
           {services.map((service) => {
             const Icon = service.icon;
+            const isOpen = activeId === service.id;
+
             return (
-              <motion.div
-                key={service.id}
-                variants={itemVariants}
-                className="group relative overflow-visible"
-              >
-
-                {/* Tooltip */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 -translate-y-full 
-                  opacity-0 group-hover:opacity-100 transition-all duration-300 
-                  pointer-events-none z-20 mb-2">
-                  
-                  <div className="bg-card/95 backdrop-blur-md 
-                    border border-primary/20 
-                    rounded-2xl px-8 py-5 
-                    shadow-2xl w-[360px]">
-
-                    <p className="text-sm text-white/80 text-center leading-relaxed whitespace-pre-line">
-                      {service.description}
-                    </p>
-
-                    <div className="absolute top-full left-1/2 -translate-x-1/2">
-                      <div className="w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px]
-                        border-l-transparent border-r-transparent border-t-card/95" />
-                    </div>
-                  </div>
-                </div>
-
+              <motion.div key={service.id} variants={itemVariants} className="flex flex-col">
                 {/* Card */}
-                <div className="bg-card/50 border border-border/30 hover:border-primary/30 
-                  backdrop-blur-sm rounded-2xl p-6 transition-all duration-500 
-                  cursor-pointer hover:scale-[1.02] hover:shadow-lg">
-
+                <div
+                  onClick={() => toggleCard(service.id)}
+                  className="bg-card/50 border border-border/30 hover:border-primary/30 backdrop-blur-sm rounded-2xl p-6 transition-all duration-500 cursor-pointer hover:scale-[1.02] hover:shadow-lg"
+                >
                   <div className="flex flex-col items-center text-center h-full">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                       <Icon className="w-6 h-6 text-primary/80" />
                     </div>
-
-                    <h3 className="text-lg font-medium text-white group-hover:text-primary transition-colors">
+                    <h3 className="text-lg font-medium text-white">
                       {service.title}
                     </h3>
                   </div>
                 </div>
 
+                {/* Drawer */}
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="bg-card/70 border border-border/20 rounded-b-2xl px-6 py-4 text-center text-white/80 text-sm leading-relaxed">
+                        {service.description}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}

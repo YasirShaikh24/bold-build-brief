@@ -139,7 +139,7 @@ export const Hero = () => {
           {/* Connect With Us Button - White Background with Black Text */}
           <motion.button
             onClick={() => handleScroll('#contact')}
-            className="group relative px-6 py-2.5 bg-white text-black rounded-lg font-medium text-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-white/30 hover:scale-[1.02]"
+            className="group relative px-8 py-3 bg-white text-black rounded-lg font-medium text-sm overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-white/30 hover:scale-[1.02] min-w-[160px]"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -171,14 +171,16 @@ export const Hero = () => {
             />
           </motion.button>
 
-          {/* Our Portfolio Button - Transparent with Black Border */}
+          {/* Our Portfolio Button - Same size with white border */}
           <motion.button
             onClick={() => handleScroll('#portfolio')}
-            className="group px-6 py-2.5 bg-white/5 text-white rounded-lg font-medium text-sm border border-black/80 hover:border-white/40 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            className="group relative px-8 py-3 bg-transparent text-white rounded-lg font-medium text-sm border-2 border-white/80 hover:border-white hover:bg-white/10 transition-all duration-300 backdrop-blur-sm overflow-hidden hover:shadow-lg hover:shadow-white/20 hover:scale-[1.02] min-w-[160px]"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Our Portfolio
+            <span className="relative z-10">
+              Our Portfolio
+            </span>
           </motion.button>
         </motion.div>
       </div>
