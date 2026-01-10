@@ -270,8 +270,7 @@ export const Portfolio = () => {
 
           <button
             onClick={() => {
-              const element = document.querySelector('#contact');
-              element?.scrollIntoView({ behavior: 'smooth' });
+              window.location.href = 'tel:+919265250494';
             }}
             className="px-4 py-2 md:px-5 md:py-2 bg-primary text-primary-foreground rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors"
           >
