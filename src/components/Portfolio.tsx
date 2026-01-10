@@ -106,8 +106,17 @@ const LiveWebsitePreview = ({ url, title }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
+  const handleClick = () => {
+    if (url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
-    <div className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20 border border-border/30">
+    <div 
+      className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20 border border-border/30 cursor-pointer hover:border-primary/30 transition-colors duration-300"
+      onClick={handleClick}
+    >
       {!isLoaded && !hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-secondary/40 backdrop-blur-sm z-10">
           <div className="flex flex-col items-center gap-3">
@@ -121,7 +130,7 @@ const LiveWebsitePreview = ({ url, title }) => {
         <div className="absolute inset-0 flex items-center justify-center bg-secondary/40 z-10">
           <div className="text-center px-4">
             <p className="text-sm text-white/70 mb-2">Preview unavailable</p>
-            <p className="text-xs text-white/50">Click "Visit Site" to view</p>
+            <p className="text-xs text-white/50">Click to visit site</p>
           </div>
         </div>
       )}
@@ -315,7 +324,10 @@ export const Portfolio = () => {
                 {project.showLivePreview && project.link ? (
                   <LiveWebsitePreview url={project.link} title={project.title} />
                 ) : (
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20">
+                  <div 
+                    className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20 cursor-pointer hover:border-primary/30 border border-transparent transition-colors duration-300"
+                    onClick={() => project.link && window.open(project.link, '_blank', 'noopener,noreferrer')}
+                  >
                     <img
                       // Updated to point to exactly what your screenshot shows:
                       // Folder: project-1 | Filename: image-X.png
@@ -328,7 +340,7 @@ export const Portfolio = () => {
                         target.style.display = 'none';
                       }}
                     />
-                    <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-primary/0 hover:bg-primary/10 transition-colors duration-300" />
                     
                     {project.showLiveBadge && project.link && (
                       <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-green-500/20 border border-green-500/40 backdrop-blur-sm flex items-center gap-1.5 z-10">
@@ -344,20 +356,33 @@ export const Portfolio = () => {
         </motion.div>
 
         <motion.div 
-          className="flex flex-wrap justify-center gap-2 md:gap-3 mt-8 md:mt-12 px-4"
+          className="flex flex-wrap justify-center gap-3 md:gap-4 mt-8 md:mt-12 px-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          {['AI Content Generation', 'Cybersecurity', 'UX/UI Optimization', 'Data Insight', 'Analytics', 'Personalization', 'Data Analysis', 'Lead Generation'].map((tag) => (
-            <span
-              key={tag}
-              className="px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-card border border-border/50 text-xs md:text-sm text-muted-foreground hover:border-primary/30 hover:text-primary transition-all cursor-default"
+          {[
+            { name: 'AI Content Generation', icon: '✨' },
+            { name: 'Cybersecurity', icon: '🔒' },
+            { name: 'UX/UI Optimization', icon: '🎨' },
+            { name: 'Data Insight', icon: '📊' },
+            { name: 'Analytics', icon: '⏱️' },
+            { name: 'Personalization', icon: '⭐' },
+            { name: 'Data Analysis', icon: '📈' },
+            { name: 'Lead Generation', icon: '🎯' }
+          ].map((tag) => (
+            <div
+              key={tag.name}
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-transparent border border-primary/20 hover:border-primary/40 transition-all cursor-default"
             >
-              <span className="mr-1.5 md:mr-2">◈</span>
-              {tag}
-            </span>
+              <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                <span className="text-xs text-white">{tag.icon}</span>
+              </div>
+              <span className="text-sm text-white font-medium">
+                {tag.name}
+              </span>
+            </div>
           ))}
         </motion.div>
       </div>
