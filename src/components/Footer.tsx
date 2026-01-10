@@ -36,7 +36,7 @@ const socialLinks = [
   { icon: WhatsAppIcon, href: 'https://wa.me/919265250494', label: 'WhatsApp' },
   { icon: InstagramIcon, href: 'https://www.instagram.com/intence.in?igsh=eXZweWsxMHAzbnZ0', label: 'Instagram' },
   { icon: FacebookIcon, href: '#', label: 'Facebook' },
-  { icon: LinkedInIcon, href: '#', label: 'LinkedIn' },
+  { icon: LinkedInIcon, href: 'https://www.linkedin.com/in/intence-it-7b29413a4', label: 'LinkedIn' },
 ];
 
 const footerLinks = [
