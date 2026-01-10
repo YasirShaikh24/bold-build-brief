@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MessageCircle, X } from 'lucide-react';
+import { MessageCircle, X, Phone } from 'lucide-react';
 
 export const FloatingContactButton = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -27,6 +27,11 @@ export const FloatingContactButton = () => {
     }
   };
 
+  const handleCallNow = () => {
+    window.location.href = 'tel:+919265250494';
+    setIsExpanded(false);
+  };
+
   if (!isVisible) return null;
 
   return (
@@ -47,15 +52,26 @@ export const FloatingContactButton = () => {
           </button>
           
           <h3 className="text-white font-medium mb-2 pr-6">Need help?</h3>
-          <p className="text-white/70 text-sm mb-3">
+          <p className="text-white/70 text-sm mb-4">
             Get in touch with us for any inquiries or project discussions.
           </p>
-          <button
-            onClick={scrollToContact}
-            className="w-full px-4 py-2 bg-[#8B5CF6] text-white rounded-lg text-sm font-medium hover:bg-[#7C3AED] hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] transition-all duration-300"
-          >
-            Contact Us
-          </button>
+          
+          <div className="space-y-2">
+            <button
+              onClick={scrollToContact}
+              className="w-full px-4 py-2 bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400 text-white rounded-lg text-sm font-medium hover:from-purple-700 hover:via-purple-600 hover:to-purple-500 hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] transition-all duration-300"
+            >
+              Get In Touch
+            </button>
+            
+            <button
+              onClick={handleCallNow}
+              className="w-full px-4 py-2 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-lg text-sm font-medium hover:from-green-700 hover:to-green-600 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <Phone className="w-4 h-4" />
+              Call Now
+            </button>
+          </div>
         </div>
       )}
 
