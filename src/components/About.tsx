@@ -113,7 +113,7 @@ export const About = () => {
             onClick={() => handleScroll('#contact')}
             className="px-6 py-2.5 md:px-8 md:py-3.5 bg-primary text-primary-foreground rounded-xl font-medium text-sm hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/25"
           >
-            Book an Appointment
+            Get In Touch 
           </button>
         </motion.div>
 
