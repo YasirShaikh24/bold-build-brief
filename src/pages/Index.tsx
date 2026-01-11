@@ -6,6 +6,7 @@ import { Portfolio } from '@/components/Portfolio';
 import { SupportSection } from '@/components/SupportSection';
 import { TechMarquee } from '@/components/TechMarquee';
 import { FAQ } from '@/components/FAQ';
+import { Reviews } from '@/components/Reviews';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { FloatingContactButton } from '@/components/FloatingContactButton';
@@ -75,6 +76,11 @@ const Index = () => {
       {/* FAQ Section */}
       <section className="bg-background">
         <FAQ />
+      </section>
+
+      {/* Reviews Section */}
+      <section className="bg-background">
+        <Reviews />
       </section>
 
       {/* Contact Section */}
