@@ -1,6 +1,40 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+
+// Custom hook for mouse tracking
+const useMousePosition = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const updateMousePosition = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
+
+  return { mousePosition, updateMousePosition };
+};
+
+// Mouse-following View Now component
+const MouseFollowViewNow = ({ mousePosition, isVisible }: { mousePosition: { x: number; y: number }, isVisible: boolean }) => {
+  return (
+    <div
+      className={`absolute pointer-events-none z-30 transition-opacity duration-200 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      }`}
+      style={{
+        left: mousePosition.x - 50, // Center the button on cursor
+        top: mousePosition.y - 20,
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
+      <div className="px-4 py-2 bg-white text-black rounded-full font-semibold text-sm shadow-lg whitespace-nowrap">
+        View Now
+      </div>
+    </div>
+  );
+};
 
 const projects = [
   {
@@ -86,21 +120,10 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
 const portfolioText = "Our cutting-edge AI solutions are designed to transform businesses, enhance efficiency, and drive innovation across multiple industries and platforms.";
-
-const Word = ({ children, progress, range }) => {
-  const opacity = useTransform(progress, range, [0.3, 1]);
-  const color = useTransform(progress, range, ['rgba(255,255,255,0.35)', 'rgba(255,255,255,1)']);
-  return (
-    <motion.span style={{ opacity, color }} className="inline-block mr-[0.25em]">
-      {children}
-    </motion.span>
-  );
-};
 
 const LiveWebsitePreview = ({ url, title }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -169,29 +192,24 @@ const LiveWebsitePreview = ({ url, title }) => {
 };
 
 export const Portfolio = () => {
-  const textRef = useRef(null);
-  const headingRef = useRef(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: textRef,
-    offset: ["start 0.9", "end 0.5"]
-  });
+  const { mousePosition, updateMousePosition } = useMousePosition();
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
-  const { scrollYProgress: headingProgress } = useScroll({
-    target: headingRef,
-    offset: ["start 0.85", "end 0.6"]
-  });
+  useEffect(() => {
+    const animated = sessionStorage.getItem('portfolioAnimated');
+    if (!animated) {
+      sessionStorage.setItem('portfolioAnimated', 'true');
+    } else {
+      setHasAnimated(true);
+    }
+  }, []);
 
   const handleVisit = (link) => {
     if (link) {
       window.open(link, '_blank', 'noopener,noreferrer');
     }
   };
-
-  const words = portfolioText.split(' ');
-  const headingLine1 = "AI-Powered Services for".split(' ');
-  const headingLine2 = "Future-Driven Businesses".split(' ');
-  const totalHeadingWords = headingLine1.length + headingLine2.length;
 
   return (
     <section id="work" className="py-16 md:py-24 lg:py-32 relative overflow-hidden">
@@ -229,42 +247,66 @@ export const Portfolio = () => {
             Portfolio
           </span>
           
-          <div ref={headingRef} className="mb-3 md:mb-4 px-4">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-[1.3] md:leading-[1.4]">
-              {headingLine1.map((word, index) => {
-                const start = index / totalHeadingWords;
-                const end = start + (1 / totalHeadingWords);
-                return (
-                  <Word key={index} progress={headingProgress} range={[start, end]}>
-                    {word}
-                  </Word>
-                );
-              })}
+          <div className="mb-3 md:mb-4 px-4">
+            <motion.h2 
+              className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(12px)', x: -30 }}
+              whileInView={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.2, delay: hasAnimated ? 0 : 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                AI-Powered
+              </motion.span>
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                Services
+              </motion.span>
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                for
+              </motion.span>
               <br />
-              {headingLine2.map((word, index) => {
-                const globalIndex = headingLine1.length + index;
-                const start = globalIndex / totalHeadingWords;
-                const end = start + (1 / totalHeadingWords);
-                return (
-                  <Word key={`line2-${index}`} progress={headingProgress} range={[start, end]}>
-                    {word}
-                  </Word>
-                );
-              })}
-            </h2>
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white/70"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                Future-Driven
+              </motion.span>
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white/70"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                Businesses
+              </motion.span>
+            </motion.h2>
           </div>
           
-          <div ref={textRef} className="max-w-4xl mx-auto mb-4 md:mb-6 px-4">
-            <p className="text-sm md:text-base lg:text-lg leading-[1.6] md:leading-[1.7] tracking-tight">
-              {words.map((word, index) => {
-                const start = index / words.length;
-                const end = start + (1 / words.length);
-                return (
-                  <Word key={index} progress={scrollYProgress} range={[start, end]}>
-                    {word}
-                  </Word>
-                );
-              })}
+          <div className="max-w-4xl mx-auto mb-4 md:mb-6 px-4">
+            <p className="text-base md:text-lg lg:text-xl leading-relaxed text-white/60">
+              Our cutting-edge AI solutions are designed to transform businesses, enhance efficiency, and drive innovation across multiple industries and platforms.
             </p>
           </div>
 
@@ -272,9 +314,14 @@ export const Portfolio = () => {
             onClick={() => {
               window.location.href = 'tel:+919265250494';
             }}
-            className="px-4 py-2 md:px-5 md:py-2 bg-primary text-primary-foreground rounded-lg font-medium text-sm hover:bg-primary/90 transition-colors"
+            className="px-6 py-3 bg-purple-600 text-white rounded-2xl font-semibold text-base hover:bg-purple-700 hover:shadow-[0_0_40px_rgba(147,51,234,0.5)] transition-all duration-300 transform hover:scale-105"
+            style={{
+              background: 'linear-gradient(135deg, #8B5CF6, #A855F7)',
+              boxShadow: '0 0 20px rgba(147, 51, 234, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(147, 51, 234, 0.4)'
+            }}
           >
-            Make a Call 
+            Make a Call
           </button>
         </motion.div>
 
@@ -289,6 +336,7 @@ export const Portfolio = () => {
             <motion.div
               key={project.id}
               variants={itemVariants}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="group relative overflow-hidden rounded-xl md:rounded-2xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-500"
             >
               <div className="p-4 sm:p-5 md:p-6">
@@ -304,7 +352,7 @@ export const Portfolio = () => {
                       aria-label="Visit project site"
                     >
                       <span>Visit Site</span>
-                      <ExternalLink className="w-3 h-3" />
+                      <span className="text-xs">↗</span>
                     </button>
                   )}
                 </div>
@@ -321,25 +369,55 @@ export const Portfolio = () => {
                 </p>
 
                 {project.showLivePreview && project.link ? (
-                  <LiveWebsitePreview url={project.link} title={project.title} />
+                  <div 
+                    className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20 border border-border/30 cursor-pointer hover:border-primary/30 transition-colors duration-300 group"
+                    onClick={() => project.link && window.open(project.link, '_blank', 'noopener,noreferrer')}
+                    onMouseMove={updateMousePosition}
+                    onMouseEnter={() => setHoveredProject(project.id)}
+                    onMouseLeave={() => setHoveredProject(null)}
+                  >
+                    <LiveWebsitePreview url={project.link} title={project.title} />
+                    
+                    {/* Dark overlay on hover */}
+                    <div className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${
+                      hoveredProject === project.id ? 'opacity-100' : 'opacity-0'
+                    }`} />
+                    
+                    {/* Mouse-following View Now Button */}
+                    <MouseFollowViewNow 
+                      mousePosition={mousePosition} 
+                      isVisible={hoveredProject === project.id} 
+                    />
+                  </div>
                 ) : (
                   <div 
-                    className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20 cursor-pointer hover:border-primary/30 border border-transparent transition-colors duration-300"
+                    className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20 cursor-pointer hover:border-primary/30 border border-transparent transition-colors duration-300 group"
                     onClick={() => project.link && window.open(project.link, '_blank', 'noopener,noreferrer')}
+                    onMouseMove={updateMousePosition}
+                    onMouseEnter={() => setHoveredProject(project.id)}
+                    onMouseLeave={() => setHoveredProject(null)}
                   >
                     <img
-                      // Updated to point to exactly what your screenshot shows:
-                      // Folder: project-1 | Filename: image-X.png
                       src={`/projects/project-1/${project.imageName}`}
                       alt={project.title}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                       onError={(e) => {
-                        const target = e.target;
+                        const target = e.target as HTMLImageElement;
                         target.style.display = 'none';
                       }}
                     />
-                    <div className="absolute inset-0 bg-primary/0 hover:bg-primary/10 transition-colors duration-300" />
+                    
+                    {/* Dark overlay on hover */}
+                    <div className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${
+                      hoveredProject === project.id ? 'opacity-100' : 'opacity-0'
+                    }`} />
+                    
+                    {/* Mouse-following View Now Button */}
+                    <MouseFollowViewNow 
+                      mousePosition={mousePosition} 
+                      isVisible={hoveredProject === project.id} 
+                    />
                     
                     {project.showLiveBadge && project.link && (
                       <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-green-500/20 border border-green-500/40 backdrop-blur-sm flex items-center gap-1.5 z-10">

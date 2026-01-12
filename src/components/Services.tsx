@@ -1,11 +1,8 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import {
   motion,
   AnimatePresence,
-  useScroll,
-  useTransform
 } from 'framer-motion';
-import { Code, Globe, Zap, Database, Settings, Wrench } from 'lucide-react';
 
 /* ================= DATA ================= */
 
@@ -13,42 +10,42 @@ const services = [
   {
     id: 1,
     title: 'Custom Software Development',
-    icon: Code,
+    icon: '💻',
     description:
       'We build powerful tailor-made software solutions designed for real business workflows. Our systems improve scalability performance and long-term reliability. Each solution evolves with your organization and supports sustainable growth.'
   },
   {
     id: 2,
     title: 'Web & Web Application Development',
-    icon: Globe,
+    icon: '🌐',
     description:
       'We create modern responsive websites and secure web applications. Our focus is clean interfaces smooth performance and excellent user experience. Every product is optimized for future expansion.'
   },
   {
     id: 3,
     title: 'Business Automation Solutions',
-    icon: Zap,
+    icon: '⚡',
     description:
       'We automate repetitive and manual business processes using intelligent digital systems. Automation reduces errors improves efficiency and saves valuable time. Businesses gain stronger operational control.'
   },
   {
     id: 4,
     title: 'Database & Backend Engineering',
-    icon: Database,
+    icon: '🗄️',
     description:
       'We design secure scalable backend architectures supported by robust databases. Our systems ensure stability performance and seamless integration. This creates a reliable foundation for enterprise platforms.'
   },
   {
     id: 5,
     title: 'Management Systems & Business Applications',
-    icon: Settings,
+    icon: '⚙️',
     description:
       'We build ERP CRM inventory billing and custom management systems. These solutions centralize operations and improve decision making. Real-time data ensures transparency and control.'
   },
   {
     id: 6,
     title: 'Maintenance Support & Optimization',
-    icon: Wrench,
+    icon: '🔧',
     description:
       'We provide continuous system support performance optimization and security updates. Our proactive monitoring prevents future issues. This ensures long-term reliability and stability.'
   }
@@ -58,29 +55,20 @@ const services = [
 
 export const Services = () => {
   const [activeId, setActiveId] = useState(null);
-  
-  // Refs for scroll animations
-  const headingRef = useRef(null);
-  const subHeadingRef = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
 
-  // Heading scroll logic
-  const { scrollYProgress: headingProgress } = useScroll({
-    target: headingRef,
-    offset: ['start 0.9', 'end 0.6'],
-  });
-
-  // Subheading scroll logic (Syncs with Portfolio style)
-  const { scrollYProgress: subHeadingProgress } = useScroll({
-    target: subHeadingRef,
-    offset: ['start 0.85', 'end 0.5'],
-  });
+  useEffect(() => {
+    const animated = sessionStorage.getItem('servicesAnimated');
+    if (!animated) {
+      sessionStorage.setItem('servicesAnimated', 'true');
+    } else {
+      setHasAnimated(true);
+    }
+  }, []);
 
   const toggleCard = (id) => {
     setActiveId(activeId === id ? null : id);
   };
-
-  const headingText = 'Comprehensive Solutions for Your Business Growth';
-  const subHeadingText = 'From custom development to ongoing support, we provide end-to-end technology solutions tailored to your unique business needs.';
 
   return (
     <section
@@ -107,48 +95,82 @@ export const Services = () => {
       <div className="container mx-auto px-4 relative z-10">
 
         {/* ================= HEADING ================= */}
-        <div ref={headingRef} className="text-center max-w-5xl mx-auto mb-6">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight">
-            {headingText.split(' ').map((word, i) => {
-              const start = i / headingText.split(' ').length;
-              const end = start + 1 / headingText.split(' ').length;
-              return (
-                <Word
-                  key={i}
-                  progress={headingProgress}
-                  range={[start, end]}
-                >
-                  {word}
-                </Word>
-              );
-            })}
-          </h2>
+        <div className="text-center max-w-5xl mx-auto mb-6">
+          <motion.h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4"
+            initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(12px)', x: -30 }}
+            whileInView={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 1, filter: 'blur(0px)', x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 1.2, delay: hasAnimated ? 0 : 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Comprehensive
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Solutions
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              for
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Your
+            </motion.span>
+            <br />
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white/70"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Business
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white/70"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Growth
+            </motion.span>
+          </motion.h2>
         </div>
 
-        {/* ================= SUB HEADING (SCROLL REVEAL) ================= */}
-        <div ref={subHeadingRef} className="text-center max-w-3xl mx-auto mb-12 px-4">
+        {/* ================= SUB HEADING (ALWAYS VISIBLE) ================= */}
+        <div className="text-center max-w-3xl mx-auto mb-12 px-4">
           <p className="text-base md:text-lg lg:text-xl leading-relaxed text-white/60">
-            {subHeadingText.split(' ').map((word, i) => {
-              const wordsArray = subHeadingText.split(' ');
-              const start = i / wordsArray.length;
-              const end = start + 1 / wordsArray.length;
-              return (
-                <Word
-                  key={i}
-                  progress={subHeadingProgress}
-                  range={[start, end]}
-                >
-                  {word}
-                </Word>
-              );
-            })}
+            From custom development to ongoing support, we provide end-to-end technology solutions tailored to your unique business needs.
           </p>
         </div>
 
         {/* ================= CARDS ================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {services.map((service) => {
-            const Icon = service.icon;
             const isOpen = activeId === service.id;
 
             return (
@@ -164,7 +186,7 @@ export const Services = () => {
                 >
                   <div className="flex flex-col items-center text-center">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                      <Icon className="w-6 h-6 text-primary/80" />
+                      <span className="text-2xl">{service.icon}</span>
                     </div>
                     <h3 className="text-lg font-medium text-white">
                       {service.title}
@@ -201,25 +223,6 @@ export const Services = () => {
 };
 
 /* ================= SHARED COMPONENTS ================= */
-
-/**
- * Reusable Word component for Scroll-based reveals 
- * Matches the logic in your Portfolio code
- */
-const Word = ({ children, progress, range }) => {
-  const opacity = useTransform(progress, range, [0.3, 1]);
-  const color = useTransform(
-    progress,
-    range,
-    ['rgba(255,255,255,0.35)', 'rgba(255,255,255,1)']
-  );
-  
-  return (
-    <motion.span style={{ opacity, color }} className="inline-block mr-[0.25em]">
-      {children}
-    </motion.span>
-  );
-};
 
 /**
  * Fast typewriter for card descriptions

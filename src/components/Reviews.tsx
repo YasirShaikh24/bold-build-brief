@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const reviews = [
   {
@@ -73,11 +73,21 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] },
   },
 };
 
 export const Reviews = () => {
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const animated = sessionStorage.getItem('reviewsAnimated');
+    if (!animated) {
+      sessionStorage.setItem('reviewsAnimated', 'true');
+    } else {
+      setHasAnimated(true);
+    }
+  }, []);
+
   const handleBookAppointment = () => {
     const element = document.querySelector('#contact');
     element?.scrollIntoView({ behavior: 'smooth' });
@@ -120,13 +130,80 @@ export const Reviews = () => {
             Testimonial
           </span>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-4">
-            <span className="text-white">What Our Clients Say</span>
+          <motion.h2 
+            className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4"
+            initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(12px)', x: -30 }}
+            whileInView={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 1, filter: 'blur(0px)', x: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 1.2, delay: hasAnimated ? 0 : 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          >
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              What
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Our
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Clients
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Say
+            </motion.span>
             <br />
-            <span className="text-white/70">About InTence's Excellence</span>
-          </h2>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white/70"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              About
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white/70"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              InTence's
+            </motion.span>
+            <motion.span 
+              className="inline-block mr-[0.25em] text-white/70"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+              whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: hasAnimated ? 0 : 1.0, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              Excellence
+            </motion.span>
+          </motion.h2>
           
-          <p className="text-base md:text-lg text-white/60 max-w-2xl mx-auto mb-8">
+          <p className="text-base md:text-lg lg:text-xl leading-relaxed text-white/60 max-w-2xl mx-auto mb-8">
             Hear from our happy clients! See how we've helped them achieve their goals and create lasting impact.
           </p>
 
@@ -149,6 +226,7 @@ export const Reviews = () => {
             <motion.div
               key={review.id}
               variants={itemVariants}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               className="group relative overflow-hidden rounded-2xl p-6 bg-card/30 border border-border/20 hover:border-primary/30 backdrop-blur-sm transition-all duration-500 hover:scale-[1.02]"
             >
               {/* Avatar */}
@@ -175,10 +253,12 @@ export const Reviews = () => {
               {/* Star Rating */}
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <Star 
+                  <span 
                     key={i} 
-                    className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-600'}`} 
-                  />
+                    className={`text-lg ${i < review.rating ? 'text-yellow-400' : 'text-gray-600'}`}
+                  >
+                    ★
+                  </span>
                 ))}
               </div>
 
