@@ -199,7 +199,7 @@ export const Portfolio = () => {
         <div 
           className="w-full h-full rounded-2xl sm:rounded-3xl md:rounded-[3rem] overflow-hidden"
           style={{
-            backgroundImage: 'url(/src/assets/service.png)',
+            backgroundImage: 'url(/service.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
