@@ -161,6 +161,24 @@ export const Contact = () => {
 
   return (
     <section id="contact" className="py-12 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+  <div 
+    className="w-full h-full overflow-hidden"
+    style={{
+      backgroundImage: 'url(/contact.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}
+  >
+    <div 
+      className="w-full h-full"
+      style={{
+        background: 'rgba(0, 0, 0, 0.4)',
+      }}
+    />
+  </div>
+</div>
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[280px] md:w-[800px] h-[280px] md:h-[400px] bg-primary/10 rounded-full blur-[80px] md:blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10" ref={containerRef}>

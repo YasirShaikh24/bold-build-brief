@@ -73,14 +73,14 @@ const Index = () => {
         <TechMarquee />
       </section>
 
+      {/* Reviews Section (Testimonials) */}
+      <section className="bg-background">
+        <Reviews />
+      </section>
+
       {/* FAQ Section */}
       <section className="bg-background">
         <FAQ />
-      </section>
-
-      {/* Reviews Section */}
-      <section className="bg-background">
-        <Reviews />
       </section>
 
       {/* Contact Section */}

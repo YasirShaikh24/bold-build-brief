@@ -52,7 +52,7 @@ const footerLinks = {
 const contactInfo = [
   { icon: '📞', text: '+91 92652 50494', href: 'tel:+919265250494' },
   { icon: '✉️', text: 'intenceit@gmail.com', href: 'mailto:intenceit@gmail.com' },
-  { icon: '📍', text: 'Surat, Gujarat, India', href: null }
+  { icon: '📍', text: 'Vadodara, Gujarat, India', href: 'https://www.google.com/maps/place/Vadodara,+Gujarat,+India' }
 ];
 
 const handleNavClick = (href: string | null) => {
@@ -123,6 +123,8 @@ export const Footer = () => {
                   {item.href ? (
                     <a
                       href={item.href}
+                      target={item.href.startsWith('http') ? '_blank' : undefined}
+                      rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                       className="text-gray-400 hover:text-[#8B5CF6] transition-colors text-sm"
                     >
                       {item.text}
