@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, HelpCircle } from 'lucide-react';
 
@@ -31,6 +31,16 @@ const faqs = [
 
 export const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const animated = sessionStorage.getItem('faqAnimated');
+    if (!animated) {
+      sessionStorage.setItem('faqAnimated', 'true');
+    } else {
+      setHasAnimated(true);
+    }
+  }, []);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -51,12 +61,45 @@ export const FAQ = () => {
               <HelpCircle className="w-4 h-4" />
               FAQ
             </span>
-            <h2 className="text-4xl md:text-5xl font-normal mb-4 text-foreground">
-              Frequently
+            
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold mb-4"
+              initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(12px)', x: -30 }}
+              whileInView={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 1, filter: 'blur(0px)', x: 0 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.2, delay: hasAnimated ? 0 : 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            >
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                Frequently
+              </motion.span>
               <br />
-              <span className="text-muted-foreground">Asked Questions</span>
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-md">
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white/70"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                Asked
+              </motion.span>
+              <motion.span 
+                className="inline-block mr-[0.25em] text-white/70"
+                initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(10px)', x: -25 }}
+                whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.9, delay: hasAnimated ? 0 : 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                Questions
+              </motion.span>
+            </motion.h2>
+            
+            <p className="text-white/60 text-lg max-w-md leading-relaxed">
               Have questions? Our FAQ section has you covered with quick answers
               to the most common inquiries.
             </p>

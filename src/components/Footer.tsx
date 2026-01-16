@@ -35,40 +35,24 @@ const LinkedInIcon = ({ className }: { className?: string }) => (
 const socialLinks = [
   { icon: WhatsAppIcon, href: 'https://wa.me/919265250494', label: 'WhatsApp' },
   { icon: InstagramIcon, href: 'https://www.instagram.com/intence.in?igsh=eXZweWsxMHAzbnZ0', label: 'Instagram' },
-  { icon: FacebookIcon, href: '#', label: 'Facebook' },
+  { icon: FacebookIcon, href: 'https://www.facebook.com/share/17gSLJ3PMS/', label: 'Facebook' },
   { icon: LinkedInIcon, href: 'https://www.linkedin.com/in/intence-it-7b29413a4', label: 'LinkedIn' },
 ];
 
-const footerLinks = [
-  { 
-    title: 'Company', 
-    links: [
-      { name: 'Home', href: '#hero' },
-      { name: 'About', href: '#about' },
-      { name: 'Portfolio', href: '#portfolio' },
-      { name: 'Contact', href: '#contact' }
-    ]
-  },
-  { 
-    title: 'Services', 
-    links: [
-      { name: 'Custom Software Development', href: '#services' },
-      { name: 'Web & Web Application Development', href: '#services' },
-      { name: 'Business Automation Solutions', href: '#services' },
-      { name: 'Database & Backend Engineering', href: '#services' },
-      { name: 'Management Systems & Business Applications', href: '#services' },
-      { name: 'Maintenance, Support & Optimization', href: '#services' }
-    ]
-  },
-  { 
-    title: 'Resources', 
-    links: [
-      { name: 'FAQ', href: '#faq' },
-      { name: 'Documentation', href: null },
-      { name: 'Case Studies', href: null },
-      { name: 'Support', href: null }
-    ]
-  },
+const footerLinks = {
+  quickLinks: [
+    { name: 'Home', href: '#hero' },
+    { name: 'About Us', href: '#about' },
+    { name: 'Services', href: '#services' },
+    { name: 'Portfolio', href: '#portfolio' },
+    { name: 'Contact Us', href: '#contact' }
+  ]
+};
+
+const contactInfo = [
+  { icon: '📞', text: '+91 92652 50494', href: 'tel:+919265250494' },
+  { icon: '✉️', text: 'intenceit@gmail.com', href: 'mailto:intenceit@gmail.com' },
+  { icon: '📍', text: 'Surat, Gujarat, India', href: null }
 ];
 
 const handleNavClick = (href: string | null) => {
@@ -84,7 +68,7 @@ const handleNavClick = (href: string | null) => {
 
 export const Footer = () => {
   return (
-    <footer className="py-20 border-t border-white/5 relative overflow-hidden">
+    <footer className="py-16 border-t border-white/5 relative overflow-hidden">
 
       {/* Background */}
       <div
@@ -98,22 +82,63 @@ export const Footer = () => {
       <div className="absolute inset-0 z-0 bg-black/30" />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
-        <div className="grid lg:grid-cols-5 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
-          {/* Brand Column – LOGO ONLY */}
-          <div className="lg:col-span-2">
+          {/* Brand Column - Logo & Description */}
+          <div>
             <img
               src="/logo1.png"
               alt="InTence Logo"
-              className="h-24 w-auto mb-6"
+              className="h-20 w-auto mb-4"
             />
-
-            <p className="text-gray-400 mb-8 max-w-sm">
-              Building powerful digital experiences through innovative software
-              development and cutting-edge technology.
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Your trusted partner for premium software development and innovative technology solutions.
             </p>
+          </div>
 
-            <div className="flex items-center gap-4">
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold mb-6 text-white text-lg">Quick Links</h4>
+            <ul className="space-y-3">
+              {footerLinks.quickLinks.map((link) => (
+                <li key={link.name}>
+                  <button
+                    onClick={() => handleNavClick(link.href)}
+                    className="text-gray-400 hover:text-[#8B5CF6] transition-colors text-sm"
+                  >
+                    {link.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-semibold mb-6 text-white text-lg">Contact</h4>
+            <ul className="space-y-4">
+              {contactInfo.map((item, index) => (
+                <li key={index} className="flex items-start gap-3">
+                  <span className="text-lg flex-shrink-0">{item.icon}</span>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      className="text-gray-400 hover:text-[#8B5CF6] transition-colors text-sm"
+                    >
+                      {item.text}
+                    </a>
+                  ) : (
+                    <span className="text-gray-400 text-sm">{item.text}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Follow Us */}
+          <div>
+            <h4 className="font-semibold mb-6 text-white text-lg">Follow Us</h4>
+            <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -129,34 +154,10 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Links */}
-          {footerLinks.map((column) => (
-            <div key={column.title}>
-              <h4 className="font-semibold mb-6 text-white">{column.title}</h4>
-              <ul className="space-y-3">
-                {column.links.map((link) => (
-                  <li key={link.name}>
-                    {link.href ? (
-                      <button
-                        onClick={() => handleNavClick(link.href)}
-                        className="text-gray-400 hover:text-[#8B5CF6] transition-colors text-left"
-                      >
-                        {link.name}
-                      </button>
-                    ) : (
-                      <span className="text-gray-500 cursor-not-allowed">
-                        {link.name}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between gap-4">
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} InTence. All rights reserved.
           </p>
@@ -171,13 +172,7 @@ export const Footer = () => {
               onClick={() => handleNavClick('#')}
               className="hover:text-[#8B5CF6] transition-colors"
             >
-              Terms
-            </button>
-            <button 
-              onClick={() => handleNavClick('#')}
-              className="hover:text-[#8B5CF6] transition-colors"
-            >
-              Cookies
+              Terms of Service
             </button>
           </div>
         </div>

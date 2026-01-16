@@ -164,6 +164,86 @@ export const Contact = () => {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[280px] md:w-[800px] h-[280px] md:h-[400px] bg-primary/10 rounded-full blur-[80px] md:blur-[150px] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10" ref={containerRef}>
+        <motion.div 
+  className="text-center mb-8 md:mb-12"
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.6 }}
+>
+  <span className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs md:text-sm mb-4 md:mb-6">
+    <span className="w-2 h-2 rounded-full bg-primary" />
+    Contact Us
+  </span>
+  
+  <div className="mb-3 md:mb-4 px-4">
+    <motion.h2 
+      className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4"
+      initial={{ opacity: 0, filter: 'blur(12px)', x: -30 }}
+      whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+    >
+      <motion.span 
+        className="inline-block mr-[0.25em] text-white"
+        initial={{ opacity: 0, filter: 'blur(10px)', x: -25 }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        Let's
+      </motion.span>
+      <motion.span 
+        className="inline-block mr-[0.25em] text-white"
+        initial={{ opacity: 0, filter: 'blur(10px)', x: -25 }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        Transform
+      </motion.span>
+      <motion.span 
+        className="inline-block mr-[0.25em] text-white"
+        initial={{ opacity: 0, filter: 'blur(10px)', x: -25 }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        Your
+      </motion.span>
+      <br />
+      <motion.span 
+        className="inline-block mr-[0.25em] text-white/70"
+        initial={{ opacity: 0, filter: 'blur(10px)', x: -25 }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, delay: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        Vision
+      </motion.span>
+      <motion.span 
+        className="inline-block mr-[0.25em] text-white/70"
+        initial={{ opacity: 0, filter: 'blur(10px)', x: -25 }}
+        whileInView={{ opacity: 1, filter: 'blur(0px)', x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+      >
+        into Reality
+      </motion.span>
+    </motion.h2>
+  </div>
+  
+  <div className="max-w-4xl mx-auto mb-4 md:mb-6 px-4">
+    <p className="text-base md:text-lg lg:text-xl leading-relaxed text-white/60">
+      Ready to transform your ideas into powerful digital solutions? Get in touch with our team and let's discuss how we can help elevate your business.
+    </p>
+  </div>
+  
+</motion.div>
+
+
+
+
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           
           <motion.div

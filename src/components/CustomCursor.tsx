@@ -44,31 +44,42 @@ export const CustomCursor = () => {
 
   return (
     <>
-      {/* White dot cursor */}
-      <div
-        className="custom-cursor-dot"
+      {/* Modern hollow triangular arrow cursor */}
+      <svg
+        className="custom-cursor-arrow"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
-          transform: `translate(-50%, -50%) scale(${isHovering ? 1.5 : 1})`,
+          transform: `scale(${isHovering ? 1.15 : 1})`,
         }}
-      />
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M3 3L21 12L12 13.5L9 21L3 3Z"
+          stroke="#FFFFFF"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+      </svg>
 
       <style>{`
-        .custom-cursor-dot {
+        .custom-cursor-arrow {
           position: fixed;
-          width: 12px;
-          height: 12px;
-          background: white;
-          border-radius: 50%;
           pointer-events: none;
           z-index: 10000;
-          transition: transform 0.2s ease;
+          transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-origin: top left;
         }
 
         /* Hide custom cursor on mobile */
         @media (max-width: 768px) {
-          .custom-cursor-dot {
+          .custom-cursor-arrow {
             display: none !important;
           }
         }
