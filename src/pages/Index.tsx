@@ -17,11 +17,12 @@ const Index = () => {
       <Navigation />
       <FloatingContactButton />
 
-      {/* Hero Section with video background - positioned lower */}
+      {/* Hero Section with video background - responsive positioning */}
       <div className="relative min-h-[100vh]">
-        {/* Video Background - pushed to bottom portion - MORE VISIBLE */}
+        {/* Video Background - responsive positioning */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div className="absolute inset-0 top-[25vh]">
+          {/* Desktop: video starts from 25vh, Mobile: video starts from 15vh */}
+          <div className="absolute inset-0 top-[15vh] md:top-[25vh]">
             <video
               autoPlay
               loop
@@ -31,15 +32,15 @@ const Index = () => {
               className="w-full h-full object-cover"
               style={{ 
                 objectPosition: 'center center',
-                filter: 'brightness(0.85) contrast(1.1)' // Increased visibility
+                filter: 'brightness(0.85) contrast(1.1)'
               }}
             >
               <source src="/video/video1.mp4" type="video/mp4" />
             </video>
           </div>
-          {/* Gradient overlay for smooth transition - Lighter */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-black/30 to-transparent" style={{ height: '35vh' }} />
-          <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-background to-transparent" />
+          {/* Gradient overlay - responsive height */}
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-black/30 to-transparent h-[20vh] md:h-[35vh]" />
+          <div className="absolute bottom-0 left-0 right-0 h-48 md:h-64 bg-gradient-to-t from-background to-transparent" />
         </div>
 
         {/* Hero Content */}
