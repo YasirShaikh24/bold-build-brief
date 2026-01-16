@@ -188,9 +188,12 @@ export const Services = () => {
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                       <span className="text-2xl">{service.icon}</span>
                     </div>
-                    <h3 className="text-lg font-medium text-white">
+                    <h3 className="text-lg font-medium text-white mb-3">
                       {service.title}
                     </h3>
+                    <p className="text-xs text-white/50">
+                      Click here for more details
+                    </p>
                   </div>
                 </motion.div>
 

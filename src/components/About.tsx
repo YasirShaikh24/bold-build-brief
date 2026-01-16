@@ -5,14 +5,14 @@ import { Home, Zap, Shield, TrendingUp, Clock, Eye, Sparkles, Mic } from 'lucide
 const services = [
   {
     icon: Zap,
-    title: 'Seamless API Integrations',
-    description: 'Nubien supports a wide range of third-party integrations.',
+    title: 'Software Development for Businesses',
+    description: 'Custom software built to solve real business problems.',
     animation: 'video',
     videoSrc: '/video/api.mp4'
   },
   {
     icon: Shield,
-    title: 'Trusted Authentication',
+    title: 'Process & Workflow Automation',
     description: 'Quickly integrate with major platforms to workflows.',
     animation: 'video',
     videoSrc: '/video/trusted.mp4'
