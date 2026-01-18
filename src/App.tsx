@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CustomCursor } from "./components/CustomCursor";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
+import ContactForm from "./pages/ContactForm";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -20,6 +21,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<ContactForm />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

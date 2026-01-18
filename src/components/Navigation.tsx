@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const navLinks = [
-  { name: 'Home', href: '#hero' },
-  { name: 'About', href: '#about' },
-  { name: 'Services', href: '#services' },
-  { name: 'Portfolio', href: '#work' },
-  { name: 'Contact', href: '#contact' },
-  { name: 'FAQ', href: '#faq' },
+  { name: 'Home', href: '#hero', isRoute: false },
+  { name: 'About', href: '#about', isRoute: false },
+  { name: 'Services', href: '#services', isRoute: false },
+  { name: 'Portfolio', href: '#work', isRoute: false },
+  { name: 'Contact', href: '/contact', isRoute: true },
+  { name: 'FAQ', href: '#faq', isRoute: false },
 ];
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -20,19 +23,47 @@ export const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (href) => {
+  const handleNavClick = (href: string, isRoute: boolean) => {
     setIsMobileMenuOpen(false);
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    
+    if (isRoute) {
+      // Navigate to route and scroll to top
+      navigate(href);
+      // Scroll to top after navigation
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 0);
+    } else {
+      // If we're not on home page, navigate home first
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait for navigation then scroll
+        setTimeout(() => {
+          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      } else {
+        // Already on home, just scroll
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   const handleLogoClick = () => {
     setIsMobileMenuOpen(false);
-    document.querySelector('#hero')?.scrollIntoView({ behavior: 'smooth' });
+    navigate('/');
+    // Scroll to top when clicking logo
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
   };
 
   const handleContactClick = () => {
     setIsMobileMenuOpen(false);
-    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+    navigate('/contact');
+    // Always scroll to top when navigating to contact page
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 0);
   };
 
   return (
@@ -69,7 +100,7 @@ export const Navigation = () => {
             {navLinks.map((link) => (
               <button
                 key={link.name}
-                onClick={() => handleNavClick(link.href)}
+                onClick={() => handleNavClick(link.href, link.isRoute)}
                 className="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 {link.name}
@@ -108,7 +139,7 @@ export const Navigation = () => {
               {navLinks.map((link) => (
                 <button
                   key={link.name}
-                  onClick={() => handleNavClick(link.href)}
+                  onClick={() => handleNavClick(link.href, link.isRoute)}
                   className="text-left py-2 text-white hover:text-[#8B5CF6]"
                 >
                   {link.name}
