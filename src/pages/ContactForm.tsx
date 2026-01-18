@@ -395,26 +395,27 @@ export const ContactForm = () => {
             </motion.p>
           </motion.div>
 
-          {/* Contact Form - Optimized for Mobile */}
+          {/* Contact Form - Mobile Optimized with Contact.tsx styling */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="max-w-2xl mx-auto mb-16 sm:mb-20"
+            className="max-w-full mx-auto mb-16 sm:mb-20 px-4 sm:px-6 lg:px-0"
           >
-            <div className="relative p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border mx-2 sm:mx-0"
+            <div className="relative p-5 sm:p-8 rounded-3xl w-full max-w-2xl mx-auto" 
               style={{
-                backgroundColor: '#111214',
-                borderColor: 'rgba(124, 58, 237, 0.25)',
-                boxShadow: '0 0 20px rgba(124, 58, 237, 0.45), 0 0 40px rgba(124, 58, 237, 0.25)',
+                background: 'linear-gradient(135deg, rgba(20, 20, 25, 0.95) 0%, rgba(15, 15, 20, 0.98) 100%)',
+                border: '1px solid rgba(255, 255, 255, 0.05)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(20px)'
               }}
             >
-              {/* Glowing border effect */}
-              <div className="absolute inset-0 rounded-2xl sm:rounded-3xl blur-xl opacity-50 -z-10" style={{
-                background: 'radial-gradient(circle at center, rgba(124, 58, 237, 0.45) 0%, rgba(124, 58, 237, 0.25) 30%, rgba(124, 58, 237, 0.12) 55%, rgba(124, 58, 237, 0.04) 70%, rgba(0, 0, 0, 0) 85%)'
+              {/* Subtle gradient overlay effect */}
+              <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{
+                background: 'radial-gradient(circle at top right, rgba(139, 92, 246, 0.03), transparent 50%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.03), transparent 50%)'
               }} />
               
-              <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 relative z-10">
+              <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
                 {/* Name Field */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2 ml-1 text-gray-200">
@@ -427,7 +428,12 @@ export const ContactForm = () => {
                     onChange={handleChange}
                     placeholder="Enter Your Name"
                     required
-                    className="h-12 sm:h-14 text-base rounded-xl w-full bg-black/60 border-white/20 text-white placeholder:text-white/40 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
+                    className="h-12 text-base rounded-xl w-full"
+                    style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: '#e5e7eb'
+                    }}
                   />
                 </div>
 
@@ -442,9 +448,14 @@ export const ContactForm = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="your@email.com"
+                    placeholder="Enter Your Mail Id (your@gmail.com)"
                     required
-                    className="h-12 sm:h-14 text-base rounded-xl w-full bg-black/60 border-white/20 text-white placeholder:text-white/40 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
+                    className="h-12 text-base rounded-xl w-full"
+                    style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: '#e5e7eb'
+                    }}
                   />
                 </div>
 
@@ -454,14 +465,21 @@ export const ContactForm = () => {
                     Mobile Number
                   </label>
                   <div className="relative">
-                    <div className="flex items-stretch h-12 sm:h-14 rounded-xl overflow-hidden bg-black/60 border border-white/20 focus-within:border-purple-400 focus-within:ring-2 focus-within:ring-purple-400/20 transition-all">
+                    <div className="flex items-stretch h-12 rounded-xl overflow-hidden" style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)'
+                    }}>
                       <button
                         type="button"
                         onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                        className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 border-r border-white/20 flex-shrink-0 hover:bg-white/5 transition-colors min-w-[80px] sm:min-w-[90px]"
+                        className="flex items-center gap-2 px-3 border-r flex-shrink-0 hover:bg-white/5 transition-colors"
+                        style={{
+                          background: 'rgba(40, 40, 45, 0.6)',
+                          borderRight: '1px solid rgba(255, 255, 255, 0.08)'
+                        }}
                       >
-                        <span className="text-lg sm:text-xl leading-none">{selectedCountry.flag}</span>
-                        <span className="text-xs sm:text-sm font-medium whitespace-nowrap text-gray-200">{selectedCountry.dialCode}</span>
+                        <span className="text-xl leading-none">{selectedCountry.flag}</span>
+                        <span className="text-sm font-medium whitespace-nowrap text-gray-200">{selectedCountry.dialCode}</span>
                         <ChevronDownIcon />
                       </button>
 
@@ -475,27 +493,34 @@ export const ContactForm = () => {
                         onChange={handleChange}
                         placeholder="Enter Your Mobile Number"
                         required
-                        className="flex-1 px-3 sm:px-4 bg-transparent border-none outline-none text-base text-white placeholder:text-white/40"
+                        className="flex-1 px-4 bg-transparent border-none outline-none text-base"
+                        style={{ color: '#e5e7eb' }}
                       />
                     </div>
 
                     {showCountryDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-2xl max-h-48 sm:max-h-60 overflow-y-auto z-50 bg-black/95 backdrop-blur-xl border border-white/20">
+                      <div className="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50" style={{
+                        background: 'rgba(20, 20, 25, 0.98)',
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        backdropFilter: 'blur(20px)'
+                      }}>
                         {countryCodes.map((country) => (
                           <button
                             key={country.code}
                             type="button"
                             onClick={() => handleCountrySelect(country)}
-                            className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 hover:bg-white/10 transition-colors text-left"
+                            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
                           >
-                            <span className="text-lg sm:text-xl leading-none">{country.flag}</span>
+                            <span className="text-xl leading-none">{country.flag}</span>
                             <span className="text-sm font-medium text-gray-200">{country.dialCode}</span>
-                            <span className="text-xs text-gray-400 hidden sm:inline">{country.name}</span>
                           </button>
                         ))}
                       </div>
                     )}
                   </div>
+                  <p className="text-xs mt-2 ml-1" style={{ color: '#9ca3af' }}>
+                    Select your country code using the flag selector and enter your mobile number (numbers only, no spaces or symbols)
+                  </p>
                 </div>
 
                 {/* Message Field */}
@@ -508,28 +533,34 @@ export const ContactForm = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your project..."
+                    placeholder="Type Your Message Here..."
                     required
                     rows={4}
-                    className="resize-none w-full text-base rounded-xl py-3 min-h-[120px] sm:min-h-[140px] bg-black/60 border-white/20 text-white placeholder:text-white/40 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/20 transition-all"
+                    className="resize-none w-full text-base rounded-xl py-3 min-h-[120px]"
+                    style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: '#e5e7eb'
+                    }}
                   />
                 </div>
 
                 {/* Submit Button - Mobile Optimized */}
                 <Button
                   type="submit"
-                  className="w-full h-12 sm:h-14 text-base font-bold rounded-xl transition-all duration-300 mt-6"
-                  style={{
-                    background: 'linear-gradient(90deg, #7C3AED 0%, #8B5CF6 50%, #6D28D9 100%)',
-                    boxShadow: '0 0 20px rgba(124, 58, 237, 0.45), 0 0 40px rgba(124, 58, 237, 0.25)',
-                  }}
+                  className="w-full h-14 text-base font-bold rounded-xl active:scale-95 transition-all touch-manipulation"
                   disabled={isSubmitting}
+                  style={{
+                    background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+                    border: 'none',
+                    color: 'white'
+                  }}
                 >
                   {isSubmitting ? (
                     <LoaderIcon />
                   ) : (
                     <>
-                      <SendIcon className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                      <SendIcon className="w-5 h-5 mr-2" />
                       Send Message
                     </>
                   )}
