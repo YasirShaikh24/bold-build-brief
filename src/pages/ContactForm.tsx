@@ -1,54 +1,64 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Send, Mail, MapPin, Phone, Loader2, ChevronDown, MessageCircle, Instagram, Facebook, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
+import { Navigation } from '@/components/Navigation';
+import { Footer } from '@/components/Footer';
 
-const API_URL = '/api/contact';
+const API_URL = import.meta.env.VITE_API_URL || '/api/contact';
 
-// Custom hook for mouse tracking
-const useMousePosition = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+// Simple SVG Icons
+const SendIcon = ({ className = "w-5 h-5 mr-2" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+  </svg>
+);
 
-  const updateMousePosition = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    });
-  };
+const ChevronDownIcon = ({ className = "w-4 h-4 text-gray-400" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+  </svg>
+);
 
-  return { mousePosition, updateMousePosition };
-};
+const LoaderIcon = ({ className = "w-5 h-5 animate-spin" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+);
 
-// Mouse-following button component
-const MouseFollowButton = ({ 
-  mousePosition, 
-  isVisible, 
-  text 
-}: { 
-  mousePosition: { x: number; y: number }; 
-  isVisible: boolean; 
-  text: string;
-}) => {
-  return (
-    <div
-      className={`absolute pointer-events-none z-30 transition-opacity duration-200 ${
-        isVisible ? 'opacity-100' : 'opacity-0'
-      }`}
-      style={{
-        left: mousePosition.x,
-        top: mousePosition.y,
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
-      <div className="px-4 py-2 bg-white text-black rounded-full font-semibold text-sm shadow-lg whitespace-nowrap">
-        {text}
-      </div>
-    </div>
-  );
-};
+const MapPinIcon = ({ className = "w-4 h-4 sm:w-5 sm:h-5 text-purple-400" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+  </svg>
+);
+
+const MessageCircleIcon = ({ className = "w-6 h-6 sm:w-7 sm:h-7" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+);
+
+const PhoneIcon = ({ className = "w-6 h-6 sm:w-7 sm:h-7" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+  </svg>
+);
+
+const MailIcon = ({ className = "w-6 h-6 sm:w-7 sm:h-7" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+  </svg>
+);
+
+const ExternalLinkIcon = ({ className = "w-6 h-6 sm:w-7 sm:h-7" }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+  </svg>
+);
 
 const countryCodes = [
   { code: 'IN', dialCode: '+91', flag: '🇮🇳', name: 'India' },
@@ -58,7 +68,7 @@ const countryCodes = [
   { code: 'AU', dialCode: '+61', flag: '🇦🇺', name: 'Australia' },
   { code: 'DE', dialCode: '+49', flag: '🇩🇪', name: 'Germany' },
   { code: 'FR', dialCode: '+33', flag: '🇫🇷', name: 'France' },
-  { code: 'IT', dialCode: '+39', flag: '🇮🇹', name: 'Italy' },
+  { code: 'IT', dialCode: '+39', flag: '��🇹', name: 'Italy' },
   { code: 'ES', dialCode: '+34', flag: '🇪🇸', name: 'Spain' },
   { code: 'NL', dialCode: '+31', flag: '🇳🇱', name: 'Netherlands' },
   { code: 'CH', dialCode: '+41', flag: '🇨🇭', name: 'Switzerland' },
@@ -72,7 +82,7 @@ const countryCodes = [
   { code: 'IE', dialCode: '+353', flag: '🇮🇪', name: 'Ireland' },
   { code: 'PT', dialCode: '+351', flag: '🇵🇹', name: 'Portugal' },
   { code: 'GR', dialCode: '+30', flag: '🇬🇷', name: 'Greece' },
-  { code: 'NZ', dialCode: '+64', flag: '🇳🇿', name: 'New Zealand' },
+  { code: 'NZ', dialCode: '+64', flag: '��🇿', name: 'New Zealand' },
   { code: 'SG', dialCode: '+65', flag: '🇸🇬', name: 'Singapore' },
   { code: 'HK', dialCode: '+852', flag: '🇭🇰', name: 'Hong Kong' },
   { code: 'MY', dialCode: '+60', flag: '🇲🇾', name: 'Malaysia' },
@@ -107,77 +117,70 @@ const countryCodes = [
 const contactOptions = [
   {
     id: 'whatsapp',
-    icon: MessageCircle,
+    icon: MessageCircleIcon,
     title: 'WhatsApp',
     description: 'Chat with us instantly',
     link: 'https://wa.me/919265250494?text=Hello!%20I%27m%20interested%20in%20partnering%20with%20your%20agency.',
     iconColor: 'text-green-400',
     bgGlow: 'bg-green-500/10',
     glowColor: 'radial-gradient(circle at center, rgba(34, 197, 94, 0.45) 0%, rgba(34, 197, 94, 0.25) 30%, rgba(34, 197, 94, 0.12) 55%, rgba(34, 197, 94, 0.04) 70%, rgba(0, 0, 0, 0) 85%)',
-    buttonText: 'SEND MESSAGE',
   },
   {
     id: 'call',
-    icon: Phone,
+    icon: PhoneIcon,
     title: 'Call Us',
     description: 'Speak directly with our team',
     link: 'tel:+919265250494',
     iconColor: 'text-blue-400',
     bgGlow: 'bg-blue-500/10',
     glowColor: 'radial-gradient(circle at center, rgba(59, 130, 246, 0.45) 0%, rgba(59, 130, 246, 0.25) 30%, rgba(59, 130, 246, 0.12) 55%, rgba(59, 130, 246, 0.04) 70%, rgba(0, 0, 0, 0) 85%)',
-    buttonText: 'CALL NOW',
   },
   {
     id: 'email',
-    icon: Mail,
+    icon: MailIcon,
     title: 'Email',
     description: 'Send us a detailed message',
     link: 'mailto:intence.it@gmail.com',
     iconColor: 'text-purple-400',
     bgGlow: 'bg-purple-500/10',
     glowColor: 'radial-gradient(circle at center, rgba(124, 58, 237, 0.45) 0%, rgba(124, 58, 237, 0.25) 30%, rgba(124, 58, 237, 0.12) 55%, rgba(124, 58, 237, 0.04) 70%, rgba(0, 0, 0, 0) 85%)',
-    buttonText: 'SEND EMAIL',
   },
   {
     id: 'instagram',
-    icon: Instagram,
+    icon: ExternalLinkIcon,
     title: 'Instagram',
     description: 'Follow us for updates',
     link: 'https://www.instagram.com/intence.in?igsh=eXZweWsxMHAzbnZ0',
     iconColor: 'text-pink-400',
     bgGlow: 'bg-pink-500/10',
     glowColor: 'radial-gradient(circle at center, rgba(236, 72, 153, 0.45) 0%, rgba(236, 72, 153, 0.25) 30%, rgba(236, 72, 153, 0.12) 55%, rgba(236, 72, 153, 0.04) 70%, rgba(0, 0, 0, 0) 85%)',
-    buttonText: 'FOLLOW NOW',
   },
   {
     id: 'facebook',
-    icon: Facebook,
+    icon: ExternalLinkIcon,
     title: 'Facebook',
     description: 'Like and follow our page',
     link: 'https://www.facebook.com/share/17gSLJ3PMS/',
     iconColor: 'text-blue-500',
     bgGlow: 'bg-blue-600/10',
     glowColor: 'radial-gradient(circle at center, rgba(37, 99, 235, 0.45) 0%, rgba(37, 99, 235, 0.25) 30%, rgba(37, 99, 235, 0.12) 55%, rgba(37, 99, 235, 0.04) 70%, rgba(0, 0, 0, 0) 85%)',
-    buttonText: 'LIKE PAGE',
   },
   {
     id: 'linkedin',
-    icon: Linkedin,
+    icon: ExternalLinkIcon,
     title: 'LinkedIn',
     description: 'Connect professionally',
     link: 'https://www.linkedin.com/in/intence-it-7b29413a4',
     iconColor: 'text-cyan-400',
     bgGlow: 'bg-cyan-500/10',
     glowColor: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.45) 0%, rgba(6, 182, 212, 0.25) 30%, rgba(6, 182, 212, 0.12) 55%, rgba(6, 182, 212, 0.04) 70%, rgba(0, 0, 0, 0) 85%)',
-    buttonText: 'CONNECT NOW',
   },
 ];
 
 export const ContactForm = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
-  const { mousePosition, updateMousePosition } = useMousePosition();
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
@@ -232,7 +235,11 @@ export const ContactForm = () => {
       if (response.ok && data.success) {
         console.log('✅ Form submitted successfully!');
         
-        alert("Message sent successfully! We'll get back to you within 24 hours.");
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+          duration: 5000,
+        });
 
         setFormData({ name: '', email: '', phone: '', message: '' });
         setSelectedCountry(countryCodes[0]);
@@ -242,7 +249,12 @@ export const ContactForm = () => {
     } catch (error) {
       console.error('❌ Error submitting form:', error);
       
-      alert(error instanceof Error ? error.message : 'Failed to send message. Please try again or email us directly at intence.it@gmail.com');
+      toast({
+        title: "Failed to send message",
+        description: error instanceof Error ? error.message : 'Please try again or email us directly at intence.it@gmail.com',
+        variant: "destructive",
+        duration: 7000,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -274,6 +286,8 @@ export const ContactForm = () => {
 
   return (
     <div className="min-h-screen bg-black">
+      <Navigation />
+      
       {/* Premium Background with Glowing Effects */}
       <div className="fixed inset-0 z-0">
         {/* Base dark gradient */}
@@ -295,16 +309,16 @@ export const ContactForm = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 pt-20 pb-12 px-4 sm:px-6 lg:px-12" ref={containerRef}>
+      <div className="relative z-10 pt-20 sm:pt-32 pb-20 px-4 sm:px-6 lg:px-12" ref={containerRef}>
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <motion.div 
-            className="text-center mb-12"
+            className="text-center mb-12 sm:mb-16"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
-            <div className="mb-3 md:mb-4 px-4">
+            <div className="mb-3 md:mb-4 px-2 sm:px-4">
               <motion.h1 
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6"
                 initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(12px)', x: -30 }}
@@ -372,7 +386,7 @@ export const ContactForm = () => {
             </div>
             
             <motion.p 
-              className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto px-4"
+              className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto px-2"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -381,20 +395,21 @@ export const ContactForm = () => {
             </motion.p>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Contact Form - Full Width Mobile Layout like Contact.tsx */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="order-1 lg:order-2 w-full max-w-full overflow-hidden mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="w-full max-w-full overflow-hidden mb-16 sm:mb-20"
           >
-            <div className="relative p-5 sm:p-8 rounded-3xl w-full" style={{
-              background: 'linear-gradient(135deg, rgba(20, 20, 25, 0.95) 0%, rgba(15, 15, 20, 0.98) 100%)',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
-              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
-              backdropFilter: 'blur(20px)'
-            }}>
+            <div className="relative p-5 sm:p-8 rounded-3xl w-full" 
+              style={{
+                background: 'linear-gradient(135deg, rgba(20, 20, 25, 0.95) 0%, rgba(15, 15, 20, 0.98) 100%)',
+                border: '1px solid rgba(255, 255, 255, 0.05)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(20px)'
+              }}
+            >
               {/* Subtle gradient overlay effect */}
               <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{
                 background: 'radial-gradient(circle at top right, rgba(139, 92, 246, 0.03), transparent 50%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.03), transparent 50%)'
@@ -433,7 +448,7 @@ export const ContactForm = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="your@email.com"
+                    placeholder="Enter Your Mail Id (your@gmail.com)"
                     required
                     className="h-12 text-base rounded-xl w-full"
                     style={{
@@ -465,7 +480,7 @@ export const ContactForm = () => {
                       >
                         <span className="text-xl leading-none">{selectedCountry.flag}</span>
                         <span className="text-sm font-medium whitespace-nowrap text-gray-200">{selectedCountry.dialCode}</span>
-                        <ChevronDown className="w-4 h-4 text-gray-400" />
+                        <ChevronDownIcon />
                       </button>
 
                       <input
@@ -494,7 +509,7 @@ export const ContactForm = () => {
                             key={country.code}
                             type="button"
                             onClick={() => handleCountrySelect(country)}
-                            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/10 transition-colors text-left"
+                            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors text-left"
                           >
                             <span className="text-xl leading-none">{country.flag}</span>
                             <span className="text-sm font-medium text-gray-200">{country.dialCode}</span>
@@ -503,6 +518,9 @@ export const ContactForm = () => {
                       </div>
                     )}
                   </div>
+                  <p className="text-xs mt-2 ml-1" style={{ color: '#9ca3af' }}>
+                    Select your country code using the flag selector and enter your mobile number (numbers only, no spaces or symbols)
+                  </p>
                 </div>
 
                 {/* Message Field */}
@@ -515,7 +533,7 @@ export const ContactForm = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your project..."
+                    placeholder="Type Your Message Here..."
                     required
                     rows={4}
                     className="resize-none w-full text-base rounded-xl py-3 min-h-[120px]"
@@ -530,19 +548,19 @@ export const ContactForm = () => {
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full h-14 text-base font-bold rounded-xl transition-all duration-300 active:scale-95"
+                  className="w-full h-14 text-base font-bold rounded-xl active:scale-95 transition-all touch-manipulation"
+                  disabled={isSubmitting}
                   style={{
                     background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
                     border: 'none',
                     color: 'white'
                   }}
-                  disabled={isSubmitting}
                 >
                   {isSubmitting ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <LoaderIcon />
                   ) : (
                     <>
-                      <Send className="w-5 h-5 mr-2" />
+                      <SendIcon />
                       Send Message
                     </>
                   )}
@@ -551,13 +569,14 @@ export const ContactForm = () => {
             </div>
           </motion.div>
 
-          {/* Contact Options Cards */}
+          {/* Contact Options Cards - Mobile Optimized */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.8 }}
+            className="px-2 sm:px-0"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-white px-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-white">
               Or reach us through
             </h2>
             
@@ -573,66 +592,58 @@ export const ContactForm = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
-                    className="group relative p-5 sm:p-6 rounded-2xl border transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
+                    className="group relative p-4 sm:p-6 rounded-xl sm:rounded-2xl border transition-all duration-300 hover:scale-105 cursor-pointer"
                     style={{
                       backgroundColor: '#111214',
                       borderColor: 'rgba(124, 58, 237, 0.25)',
                       boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
                     }}
-                    onMouseMove={updateMousePosition}
-                    onMouseEnter={() => setHoveredCard(option.id)}
-                    onMouseLeave={() => setHoveredCard(null)}
                   >
                     {/* Glow effect on hover - with specific color for each card */}
                     <div 
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300 -z-10"
+                      className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300 -z-10"
                       style={{
                         background: option.glowColor,
                       }}
                     />
                     
-                    {/* Dark overlay on hover */}
-                    <div className={`absolute inset-0 bg-black/20 transition-opacity duration-300 ${
-                      hoveredCard === option.id ? 'opacity-100' : 'opacity-0'
-                    }`} />
-                    
-                    {/* Mouse-following Button - only on larger screens */}
-                    <div className="hidden md:block">
-                      <MouseFollowButton 
-                        mousePosition={mousePosition} 
-                        isVisible={hoveredCard === option.id}
-                        text={option.buttonText}
-                      />
-                    </div>
-                    
                     {/* Icon */}
-                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl ${option.bgGlow} border border-white/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10`}>
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl ${option.bgGlow} border border-white/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300`}>
                       <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${option.iconColor}`} />
                     </div>
                     
                     {/* Content */}
-                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 relative z-10">{option.title}</h3>
-                    <p className="text-sm text-white/60 relative z-10">{option.description}</p>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">{option.title}</h3>
+                    <p className="text-sm text-white/60">{option.description}</p>
+                    
+                    {/* Arrow indicator */}
+                    <div className="absolute top-4 sm:top-6 right-4 sm:right-6 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg className="w-3 h-3 sm:w-4 sm:h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
                   </motion.a>
                 );
               })}
             </div>
           </motion.div>
 
-          {/* Location Info */}
+          {/* Location Info - Mobile Optimized */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 1.4 }}
-            className="mt-12 sm:mt-20 text-center"
+            className="mt-16 sm:mt-20 text-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl">
-              <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+            <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl">
+              <MapPinIcon />
               <span className="text-sm sm:text-base text-white/80">Gujarat, India</span>
             </div>
           </motion.div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
