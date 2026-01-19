@@ -4,11 +4,8 @@ import { Send, Mail, MapPin, Phone, Loader2, ChevronDown, MessageCircle, Instagr
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
-import { Navigation } from '@/components/Navigation';
-import { Footer } from '@/components/Footer';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api/contact';
+const API_URL = '/api/contact';
 
 // Custom hook for mouse tracking
 const useMousePosition = () => {
@@ -179,7 +176,6 @@ const contactOptions = [
 export const ContactForm = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
-  const { toast } = useToast();
   const { mousePosition, updateMousePosition } = useMousePosition();
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
@@ -236,11 +232,7 @@ export const ContactForm = () => {
       if (response.ok && data.success) {
         console.log('✅ Form submitted successfully!');
         
-        toast({
-          title: "Message sent successfully!",
-          description: "We'll get back to you within 24 hours.",
-          duration: 5000,
-        });
+        alert("Message sent successfully! We'll get back to you within 24 hours.");
 
         setFormData({ name: '', email: '', phone: '', message: '' });
         setSelectedCountry(countryCodes[0]);
@@ -250,12 +242,7 @@ export const ContactForm = () => {
     } catch (error) {
       console.error('❌ Error submitting form:', error);
       
-      toast({
-        title: "Failed to send message",
-        description: error instanceof Error ? error.message : 'Please try again or email us directly at intence.it@gmail.com',
-        variant: "destructive",
-        duration: 7000,
-      });
+      alert(error instanceof Error ? error.message : 'Failed to send message. Please try again or email us directly at intence.it@gmail.com');
     } finally {
       setIsSubmitting(false);
     }
@@ -287,8 +274,6 @@ export const ContactForm = () => {
 
   return (
     <div className="min-h-screen bg-black">
-      <Navigation />
-      
       {/* Premium Background with Glowing Effects */}
       <div className="fixed inset-0 z-0">
         {/* Base dark gradient */}
@@ -310,18 +295,18 @@ export const ContactForm = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 pt-32 pb-20 px-4 sm:px-6 lg:px-12" ref={containerRef}>
+      <div className="relative z-10 pt-20 pb-12 px-4" ref={containerRef}>
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
           >
             <div className="mb-3 md:mb-4 px-4">
               <motion.h1 
-                className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6"
                 initial={hasAnimated ? { opacity: 1, filter: 'blur(0px)', x: 0 } : { opacity: 0, filter: 'blur(12px)', x: -30 }}
                 animate={isInView ? { opacity: 1, filter: 'blur(0px)', x: 0 } : {}}
                 transition={{ duration: 1.2, delay: hasAnimated ? 0 : 0.3, ease: [0.25, 0.1, 0.25, 1] }}
@@ -387,7 +372,7 @@ export const ContactForm = () => {
             </div>
             
             <motion.p 
-              className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto"
+              className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto px-4"
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -401,11 +386,11 @@ export const ContactForm = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="max-w-3xl mx-auto mb-20"
+            className="max-w-3xl mx-auto mb-16"
           >
-            <div className="relative p-8 rounded-3xl border"
+            <div className="relative p-5 sm:p-8 rounded-3xl border w-full max-w-full overflow-hidden"
               style={{
-                backgroundColor: '#111214',
+                backgroundColor: 'rgba(20, 20, 25, 0.95)',
                 borderColor: 'rgba(124, 58, 237, 0.25)',
                 boxShadow: '0 0 20px rgba(124, 58, 237, 0.45), 0 0 40px rgba(124, 58, 237, 0.25)',
               }}
@@ -415,7 +400,7 @@ export const ContactForm = () => {
                 background: 'radial-gradient(circle at center, rgba(124, 58, 237, 0.45) 0%, rgba(124, 58, 237, 0.25) 30%, rgba(124, 58, 237, 0.12) 55%, rgba(124, 58, 237, 0.04) 70%, rgba(0, 0, 0, 0) 85%)'
               }} />
               
-              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+              <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
                 {/* Name Field */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2 ml-1 text-gray-200">
@@ -428,7 +413,12 @@ export const ContactForm = () => {
                     onChange={handleChange}
                     placeholder="Enter Your Name"
                     required
-                    className="h-12 text-base rounded-xl w-full bg-black/60 border-white/20 text-white placeholder:text-white/40"
+                    className="h-12 text-base rounded-xl w-full"
+                    style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: '#e5e7eb'
+                    }}
                   />
                 </div>
 
@@ -445,7 +435,12 @@ export const ContactForm = () => {
                     onChange={handleChange}
                     placeholder="your@email.com"
                     required
-                    className="h-12 text-base rounded-xl w-full bg-black/60 border-white/20 text-white placeholder:text-white/40"
+                    className="h-12 text-base rounded-xl w-full"
+                    style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: '#e5e7eb'
+                    }}
                   />
                 </div>
 
@@ -455,11 +450,18 @@ export const ContactForm = () => {
                     Mobile Number
                   </label>
                   <div className="relative">
-                    <div className="flex items-stretch h-12 rounded-xl overflow-hidden bg-black/60 border border-white/20">
+                    <div className="flex items-stretch h-12 rounded-xl overflow-hidden" style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)'
+                    }}>
                       <button
                         type="button"
                         onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                        className="flex items-center gap-2 px-3 border-r border-white/20 flex-shrink-0 hover:bg-white/5 transition-colors"
+                        className="flex items-center gap-2 px-3 border-r flex-shrink-0 hover:bg-white/5 transition-colors"
+                        style={{
+                          background: 'rgba(40, 40, 45, 0.6)',
+                          borderRight: '1px solid rgba(255, 255, 255, 0.08)'
+                        }}
                       >
                         <span className="text-xl leading-none">{selectedCountry.flag}</span>
                         <span className="text-sm font-medium whitespace-nowrap text-gray-200">{selectedCountry.dialCode}</span>
@@ -476,12 +478,17 @@ export const ContactForm = () => {
                         onChange={handleChange}
                         placeholder="Enter Your Mobile Number"
                         required
-                        className="flex-1 px-4 bg-transparent border-none outline-none text-base text-white placeholder:text-white/40"
+                        className="flex-1 px-4 bg-transparent border-none outline-none text-base"
+                        style={{ color: '#e5e7eb' }}
                       />
                     </div>
 
                     {showCountryDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-2xl max-h-60 overflow-y-auto z-50 bg-black/95 backdrop-blur-xl border border-white/20">
+                      <div className="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-2xl max-h-60 overflow-y-auto z-50" style={{
+                        background: 'rgba(20, 20, 25, 0.98)',
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        backdropFilter: 'blur(20px)'
+                      }}>
                         {countryCodes.map((country) => (
                           <button
                             key={country.code}
@@ -510,18 +517,24 @@ export const ContactForm = () => {
                     onChange={handleChange}
                     placeholder="Tell us about your project..."
                     required
-                    rows={5}
-                    className="resize-none w-full text-base rounded-xl py-3 min-h-[140px] bg-black/60 border-white/20 text-white placeholder:text-white/40"
+                    rows={4}
+                    className="resize-none w-full text-base rounded-xl py-3 min-h-[120px]"
+                    style={{
+                      background: 'rgba(30, 30, 35, 0.6)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      color: '#e5e7eb'
+                    }}
                   />
                 </div>
 
                 {/* Submit Button */}
                 <Button
                   type="submit"
-                  className="w-full h-14 text-base font-bold rounded-xl transition-all duration-300"
+                  className="w-full h-14 text-base font-bold rounded-xl transition-all duration-300 active:scale-95"
                   style={{
-                    background: 'linear-gradient(90deg, #7C3AED 0%, #8B5CF6 50%, #6D28D9 100%)',
-                    boxShadow: '0 0 20px rgba(124, 58, 237, 0.45), 0 0 40px rgba(124, 58, 237, 0.25)',
+                    background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)',
+                    border: 'none',
+                    color: 'white'
                   }}
                   disabled={isSubmitting}
                 >
@@ -544,11 +557,11 @@ export const ContactForm = () => {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-8 sm:mb-12 text-white px-4">
               Or reach us through
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-6xl mx-auto">
               {contactOptions.map((option, index) => {
                 const Icon = option.icon;
                 return (
@@ -560,7 +573,7 @@ export const ContactForm = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6, delay: 1 + index * 0.1 }}
-                    className="group relative p-6 rounded-2xl border transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
+                    className="group relative p-5 sm:p-6 rounded-2xl border transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden"
                     style={{
                       backgroundColor: '#111214',
                       borderColor: 'rgba(124, 58, 237, 0.25)',
@@ -583,20 +596,22 @@ export const ContactForm = () => {
                       hoveredCard === option.id ? 'opacity-100' : 'opacity-0'
                     }`} />
                     
-                    {/* Mouse-following Button */}
-                    <MouseFollowButton 
-                      mousePosition={mousePosition} 
-                      isVisible={hoveredCard === option.id}
-                      text={option.buttonText}
-                    />
+                    {/* Mouse-following Button - only on larger screens */}
+                    <div className="hidden md:block">
+                      <MouseFollowButton 
+                        mousePosition={mousePosition} 
+                        isVisible={hoveredCard === option.id}
+                        text={option.buttonText}
+                      />
+                    </div>
                     
                     {/* Icon */}
-                    <div className={`w-14 h-14 rounded-xl ${option.bgGlow} border border-white/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10`}>
-                      <Icon className={`w-7 h-7 ${option.iconColor}`} />
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl ${option.bgGlow} border border-white/20 flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 relative z-10`}>
+                      <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${option.iconColor}`} />
                     </div>
                     
                     {/* Content */}
-                    <h3 className="text-xl font-semibold text-white mb-2 relative z-10">{option.title}</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 relative z-10">{option.title}</h3>
                     <p className="text-sm text-white/60 relative z-10">{option.description}</p>
                   </motion.a>
                 );
@@ -609,17 +624,15 @@ export const ContactForm = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 1.4 }}
-            className="mt-20 text-center"
+            className="mt-12 sm:mt-20 text-center"
           >
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl">
-              <MapPin className="w-5 h-5 text-purple-400" />
-              <span className="text-white/80">Gujarat, India</span>
+            <div className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl">
+              <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+              <span className="text-sm sm:text-base text-white/80">Gujarat, India</span>
             </div>
           </motion.div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
