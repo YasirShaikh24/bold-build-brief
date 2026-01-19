@@ -386,9 +386,9 @@ export const ContactForm = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="max-w-3xl mx-auto mb-16"
+            className="max-w-xl mx-auto mb-16 px-2"
           >
-            <div className="relative p-5 sm:p-8 rounded-3xl border w-full max-w-full overflow-hidden"
+            <div className="relative p-6 sm:p-8 rounded-3xl border w-full"
               style={{
                 backgroundColor: 'rgba(20, 20, 25, 0.95)',
                 borderColor: 'rgba(124, 58, 237, 0.25)',
