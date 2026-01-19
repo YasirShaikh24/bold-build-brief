@@ -333,7 +333,7 @@ export const PortfolioMore = () => {
                           <div className="h-full">
                             {project.mediaType === 'video' ? (
                               <video
-                                src={`/projects/portfolio/${project.media}`}
+                                src={`/${project.media}`}
                                 className="w-full h-full object-cover group-hover/image:scale-105 transition-transform duration-700 ease-out"
                                 style={{
                                   boxShadow: '0 30px 60px rgba(0, 0, 0, 0.8)'
@@ -363,7 +363,7 @@ export const PortfolioMore = () => {
                               />
                             ) : (
                               <img
-                                src={`/projects/portfolio/${project.media}`}
+                                src={`/${project.media}`}
                                 alt={project.name}
                                 className="w-full h-full object-cover group-hover/image:scale-105 transition-transform duration-700 ease-out"
                                 style={{
