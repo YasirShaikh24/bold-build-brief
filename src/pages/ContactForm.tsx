@@ -295,7 +295,7 @@ export const ContactForm = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 pt-20 pb-12 px-4" ref={containerRef}>
+      <div className="relative z-10 pt-20 pb-12 px-4 sm:px-6 lg:px-12" ref={containerRef}>
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <motion.div 
@@ -383,21 +383,21 @@ export const ContactForm = () => {
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="max-w-xl mx-auto mb-16 px-2"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="order-1 lg:order-2 w-full max-w-full overflow-hidden mb-16"
           >
-            <div className="relative p-6 sm:p-8 rounded-3xl border w-full"
-              style={{
-                backgroundColor: 'rgba(20, 20, 25, 0.95)',
-                borderColor: 'rgba(124, 58, 237, 0.25)',
-                boxShadow: '0 0 20px rgba(124, 58, 237, 0.45), 0 0 40px rgba(124, 58, 237, 0.25)',
-              }}
-            >
-              {/* Glowing border effect */}
-              <div className="absolute inset-0 rounded-3xl blur-xl opacity-50 -z-10" style={{
-                background: 'radial-gradient(circle at center, rgba(124, 58, 237, 0.45) 0%, rgba(124, 58, 237, 0.25) 30%, rgba(124, 58, 237, 0.12) 55%, rgba(124, 58, 237, 0.04) 70%, rgba(0, 0, 0, 0) 85%)'
+            <div className="relative p-5 sm:p-8 rounded-3xl w-full" style={{
+              background: 'linear-gradient(135deg, rgba(20, 20, 25, 0.95) 0%, rgba(15, 15, 20, 0.98) 100%)',
+              border: '1px solid rgba(255, 255, 255, 0.05)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+              backdropFilter: 'blur(20px)'
+            }}>
+              {/* Subtle gradient overlay effect */}
+              <div className="absolute inset-0 rounded-3xl pointer-events-none" style={{
+                background: 'radial-gradient(circle at top right, rgba(139, 92, 246, 0.03), transparent 50%), radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.03), transparent 50%)'
               }} />
               
               <form onSubmit={handleSubmit} className="space-y-5 relative z-10">
@@ -484,7 +484,7 @@ export const ContactForm = () => {
                     </div>
 
                     {showCountryDropdown && (
-                      <div className="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-2xl max-h-60 overflow-y-auto z-50" style={{
+                      <div className="absolute top-full left-0 right-0 mt-2 rounded-xl shadow-lg max-h-60 overflow-y-auto z-50" style={{
                         background: 'rgba(20, 20, 25, 0.98)',
                         border: '1px solid rgba(255, 255, 255, 0.08)',
                         backdropFilter: 'blur(20px)'
