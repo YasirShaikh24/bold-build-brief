@@ -7,6 +7,7 @@ import { CustomCursor } from "./components/CustomCursor";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import ContactForm from "./pages/ContactForm";
+import PortfolioMore from "./pages/PortfolioMore";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<ContactForm />} />
+          <Route path="/portfolio-more" element={<PortfolioMore />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

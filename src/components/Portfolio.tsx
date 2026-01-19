@@ -312,7 +312,7 @@ export const Portfolio = () => {
 
           <button
             onClick={() => {
-              window.location.href = 'tel:+919265250494';
+              window.location.href = '/portfolio-more';
             }}
             className="px-6 py-3 bg-purple-600 text-white rounded-2xl font-semibold text-base hover:bg-purple-700 hover:shadow-[0_0_40px_rgba(147,51,234,0.5)] transition-all duration-300 transform hover:scale-105"
             style={{
@@ -321,7 +321,7 @@ export const Portfolio = () => {
               border: '1px solid rgba(147, 51, 234, 0.4)'
             }}
           >
-            Make a Call
+            View More Projects
           </button>
         </motion.div>
 
