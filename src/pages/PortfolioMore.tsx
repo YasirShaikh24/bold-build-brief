@@ -7,22 +7,22 @@ import { Footer } from '@/components/Footer';
 const projects = [
   {
     id: 1,
-    year: '2024',
-    name: 'Lemonade Tech',
+    year: '2025',
+    name: 'Shaden House',
     points: [
-      'AI Integration',
+      'AI Videos',
       'Responsive Design', 
       'Custom Layouts',
       'Fast Loading'
     ],
-    categories: ['E-Commerce', 'Portfolio'],
+    categories: ['Business', 'Company'],
     media: 'project1.mp4',
     mediaType: 'video'
   },
   {
     id: 2,
     year: '2025',
-    name: 'Viper Studio',
+    name: 'Firdaus Makeover',
     points: [
       'Modern Typography',
       'User Friendly',
@@ -35,22 +35,22 @@ const projects = [
   },
   {
     id: 3,
-    year: '2025',
-    name: 'Million One',
+    year: '2023',
+    name: 'LifeLync',
     points: [
       'Easy Customization',
       'Interactive Elements',
       'Retina Ready',
       'High Performance'
     ],
-    categories: ['Portfolio', 'Agency'],
+    categories: ['Hospital', 'Agency'],
     media: 'project3.png',
     mediaType: 'image'
   },
   {
     id: 4,
     year: '2023',
-    name: 'CloudVision Pro',
+    name: 'Vibgyor Maple',
     points: [
       'Cloud Integration',
       'Real-time Analytics',
@@ -58,13 +58,13 @@ const projects = [
       'Scalable Infrastructure'
     ],
     categories: ['SaaS', 'Enterprise'],
-    media: 'project1.png',
+    media: 'project4.png',
     mediaType: 'image'
   },
   {
     id: 5,
     year: '2023',
-    name: 'CreativeHub Studio',
+    name: 'Grass Hawk Mole Trap',
     points: [
       'Creative Workflows',
       'Team Collaboration',
@@ -75,48 +75,7 @@ const projects = [
     media: 'project5.png',
     mediaType: 'image'
   },
-  {
-    id: 6,
-    year: '2022',
-    name: 'DataStream Analytics',
-    points: [
-      'Big Data Processing',
-      'Machine Learning',
-      'Predictive Analysis',
-      'Custom Dashboards'
-    ],
-    categories: ['Analytics', 'AI'],
-    media: 'project3.png',
-    mediaType: 'image'
-  },
-  {
-    id: 7,
-    year: '2022',
-    name: 'EcoTech Solutions',
-    points: [
-      'Sustainable Technology',
-      'Green Computing',
-      'Energy Efficient',
-      'Carbon Tracking'
-    ],
-    categories: ['GreenTech', 'Sustainability'],
-    media: 'project1.png',
-    mediaType: 'image'
-  },
-  {
-    id: 8,
-    year: '2022',
-    name: 'FinanceFlow Pro',
-    points: [
-      'Financial Modeling',
-      'Risk Assessment',
-      'Automated Reporting',
-      'Compliance Ready'
-    ],
-    categories: ['FinTech', 'Enterprise'],
-    media: 'project.png',
-    mediaType: 'image'
-  }
+
 ];
 
 export const PortfolioMore = () => {
