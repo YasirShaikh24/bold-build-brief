@@ -188,7 +188,9 @@ export const PortfolioMore = () => {
 
       {/* Content */}
       <div className="relative z-10 pt-20 sm:pt-32 pb-20 px-4 sm:px-6 lg:px-12" ref={containerRef}>
-        <div className="container mx-auto max-w-7xl">
+
+        <div className="w-full">
+
           {/* Header with blur animation */}
           <motion.div 
             className="text-center mb-12 sm:mb-16"
@@ -241,7 +243,8 @@ export const PortfolioMore = () => {
           </motion.div>
 
           {/* Projects - Mobile optimized cards */}
-          <div className="space-y-4 sm:space-y-6 md:space-y-8 max-w-7xl mx-auto">
+         <div className="space-y-4 sm:space-y-6 md:space-y-8 w-full">
+
             {visibleProjects.map((project, index) => (
               <div key={project.id}>
                 <motion.div
@@ -250,7 +253,8 @@ export const PortfolioMore = () => {
                   viewport={{ once: true, margin: '-100px' }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   whileHover={{ scale: 1.005 }}
-                  className="group relative overflow-hidden"
+                  className="group relative overflow-hidden w-full"
+
                   style={{
                     backgroundColor: '#0B0B0F',
                     border: '1px solid rgba(255, 255, 255, 0.06)',
@@ -361,7 +365,8 @@ export const PortfolioMore = () => {
                           className="relative h-full overflow-hidden"
                           style={{
                             backgroundColor: '#0A0A0A',
-                            borderRadius: '0 16px 16px 0'
+                            borderRadius: '0 0 16px 16px'
+
                           }}
                         >
                           <div className="h-full">
