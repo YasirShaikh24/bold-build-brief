@@ -133,20 +133,6 @@ const projects = [
     mediaType: 'image'
   },
   {
-    id: 10,
-     year: '2026',
-  name: 'Islamic Deeds Tracker',
-  points: [
-    'Digital Tasbeeh Counter',
-    'Multiple Deeds & Counters',
-    'Progress & Target Tracking',
-    'Minimal & Peaceful Dark UI'
-  ],
-  categories: ['Islamic App', 'Productivity', 'Web App'],
-    media: 'project14.png',
-    mediaType: 'image'
-  },
-  {
     id: 11,
    year: '2023',
     name: 'Vibgyor Maple',
@@ -160,34 +146,7 @@ const projects = [
     media: 'project4.png',
     mediaType: 'image'
   },
-  {
-    id: 12,
-    year: '2025',
-    name: 'EduLearn Platform',
-    points: [
-      'Interactive Learning',
-      'Progress Tracking',
-      'Video Streaming',
-      'Assessment Tools'
-    ],
-    categories: ['Education', 'E-Learning'],
-    media: 'project12.png',
-    mediaType: 'image'
-  },
-  {
-    id: 13,
-    year: '2026',
-    name: 'HealthCare Connect',
-    points: [
-      'Patient Management',
-      'Appointment Scheduling',
-      'Medical Records',
-      'Telemedicine Support'
-    ],
-    categories: ['Healthcare', 'Enterprise'],
-    media: 'project13.png',
-    mediaType: 'image'
-  }
+  
 ];
 
 export const PortfolioMore = () => {
@@ -282,7 +241,7 @@ export const PortfolioMore = () => {
           </motion.div>
 
           {/* Projects - Mobile optimized cards */}
-          <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto">
+          <div className="space-y-4 sm:space-y-6 md:space-y-8 max-w-7xl mx-auto">
             {visibleProjects.map((project, index) => (
               <div key={project.id}>
                 <motion.div
@@ -307,8 +266,8 @@ export const PortfolioMore = () => {
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center">
                     
                     {/* LEFT SIDE - Company Info with gradient background */}
-                    <div 
-                      className="p-4 sm:p-5 lg:p-6 space-y-3"
+                    <div
+  className="p-5 sm:p-6 lg:p-8 space-y-4"
                       style={{
                         background: 'linear-gradient(180deg, #0F0F16, #09090D)',
                         boxShadow: 'inset 0 0 20px rgba(124, 58, 237, 0.08)'
@@ -328,7 +287,7 @@ export const PortfolioMore = () => {
                       
                       {/* Company Name */}
                       <motion.h3 
-                        className="text-lg sm:text-xl lg:text-2xl font-bold group-hover:text-purple-300 transition-colors duration-300"
+                        className="text-xl sm:text-2xl lg:text-3xl font-bold group-hover:text-purple-300 transition-colors duration-300"
                         style={{ color: '#FFFFFF' }}
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -349,7 +308,7 @@ export const PortfolioMore = () => {
                         {project.points.map((point, pointIndex) => (
                           <div key={pointIndex} className="flex items-center gap-2">
                             <div 
-                              className="w-3.5 h-3.5 rounded-full flex items-center justify-center flex-shrink-0"
+                              className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0"
                               style={{
                                 backgroundColor: '#7C3AED',
                                 filter: 'drop-shadow(0 0 6px rgba(124, 58, 237, 0.7))'
@@ -390,7 +349,7 @@ export const PortfolioMore = () => {
 
                     {/* RIGHT SIDE - Single Image */}
                     <motion.div 
-                      className="relative h-full min-h-[200px] sm:min-h-[250px] lg:min-h-[280px]"
+                      className="relative h-full min-h-[240px] sm:min-h-[280px] lg:min-h-[320px]"
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
