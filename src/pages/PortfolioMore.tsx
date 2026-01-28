@@ -106,7 +106,49 @@ const projects = [
   },
   {
     id: 8,
-    year: '2023',
+    year: '2026',
+  name: 'Islamic Deeds Tracker',
+  points: [
+    'Digital Tasbeeh Counter',
+    'Multiple Deeds & Counters',
+    'Progress & Target Tracking',
+    'Minimal & Peaceful Dark UI'
+  ],
+  categories: ['Islamic App', 'Productivity', 'Web App'],
+    media: 'project10.png',
+    mediaType: 'image'
+  },
+  {
+    id: 9,
+     year: '2026',
+      name: 'NOVA – E-Commerce Website',
+      points: [
+        'Modern Landing Page Design',
+        'Product Listing & Shop Pages',
+        'Premium Tech Store UI',
+        'Responsive & Fast Performance'
+      ],
+      categories: ['E-Commerce', 'Website'],
+    media: 'project9.png',
+    mediaType: 'image'
+  },
+  {
+    id: 10,
+     year: '2026',
+  name: 'Islamic Deeds Tracker',
+  points: [
+    'Digital Tasbeeh Counter',
+    'Multiple Deeds & Counters',
+    'Progress & Target Tracking',
+    'Minimal & Peaceful Dark UI'
+  ],
+  categories: ['Islamic App', 'Productivity', 'Web App'],
+    media: 'project14.png',
+    mediaType: 'image'
+  },
+  {
+    id: 11,
+   year: '2023',
     name: 'Vibgyor Maple',
     points: [
       'Cloud Integration',
@@ -117,14 +159,45 @@ const projects = [
     categories: ['SaaS', 'Enterprise'],
     media: 'project4.png',
     mediaType: 'image'
+  },
+  {
+    id: 12,
+    year: '2025',
+    name: 'EduLearn Platform',
+    points: [
+      'Interactive Learning',
+      'Progress Tracking',
+      'Video Streaming',
+      'Assessment Tools'
+    ],
+    categories: ['Education', 'E-Learning'],
+    media: 'project12.png',
+    mediaType: 'image'
+  },
+  {
+    id: 13,
+    year: '2026',
+    name: 'HealthCare Connect',
+    points: [
+      'Patient Management',
+      'Appointment Scheduling',
+      'Medical Records',
+      'Telemedicine Support'
+    ],
+    categories: ['Healthcare', 'Enterprise'],
+    media: 'project13.png',
+    mediaType: 'image'
   }
-
 ];
 
 export const PortfolioMore = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: '-100px' });
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+
+  // Show first 6 projects initially, then all when showMore is true
+  const visibleProjects = showMore ? projects : projects.slice(0, 6);
 
   useEffect(() => {
     const animated = sessionStorage.getItem('portfolioMoreAnimated');
@@ -210,7 +283,7 @@ export const PortfolioMore = () => {
 
           {/* Projects - Mobile optimized cards */}
           <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto">
-            {projects.map((project, index) => (
+            {visibleProjects.map((project, index) => (
               <div key={project.id}>
                 <motion.div
                   initial={{ opacity: 0, y: 60 }}
@@ -409,7 +482,7 @@ export const PortfolioMore = () => {
                 </motion.div>
 
                 {/* Section divider glow between cards (except last) */}
-                {index < projects.length - 1 && (
+                {index < visibleProjects.length - 1 && (
                   <div className="h-[2px] w-full my-6 sm:my-8" style={{
                     background: 'linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent)'
                   }} />
@@ -417,6 +490,36 @@ export const PortfolioMore = () => {
               </div>
             ))}
           </div>
+
+          {/* View More Button - Show after project 6 if not showing more */}
+          {!showMore && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-center mt-12 sm:mt-16"
+            >
+              <button
+                onClick={() => setShowMore(true)}
+                className="inline-flex items-center gap-3 px-8 py-4 text-white rounded-full text-base font-semibold transition-all duration-300 hover:scale-105 group"
+                style={{
+                  background: 'linear-gradient(135deg, #7C3AED, #5B21B6)',
+                  boxShadow: '0 0 20px rgba(124, 58, 237, 0.6), 0 10px 30px rgba(124, 58, 237, 0.4)'
+                }}
+              >
+                <span>View More Projects</span>
+                <svg 
+                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-1" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </button>
+            </motion.div>
+          )}
 
           {/* Bottom Call to Action */}
           <motion.div
