@@ -20,7 +20,22 @@ const projects = [
     mediaType: 'video'
   },
   {
-    id: 2,
+  id: 2,
+  year: '2024',
+  name: 'LifeSync',
+  description: 'LifeSync is an all-in-one personal productivity and tracking mobile app that helps users manage daily tasks, build habits, maintain journals, and track expenses in one place.',
+  points: [
+    'To-Do Task Management',
+    'Daily Journal Writing',
+    'Habit Tracking with Streaks',
+    'Expense Tracking with Insights'
+  ],
+  categories: ['Productivity', 'Mobile App'],
+    media: 'project6.png',
+    mediaType: 'image'
+  },
+  {
+    id: 3,
     year: '2025',
     name: 'Firdaus Makeover',
     points: [
@@ -34,32 +49,18 @@ const projects = [
     mediaType: 'image'
   },
   {
-    id: 3,
-    year: '2023',
-    name: 'LifeLync',
-    points: [
-      'Easy Customization',
-      'Interactive Elements',
-      'Retina Ready',
-      'High Performance'
-    ],
-    categories: ['Hospital', 'Agency'],
-    media: 'project3.png',
-    mediaType: 'image'
-  },
-  {
     id: 4,
-    year: '2023',
-    name: 'Vibgyor Maple',
+     year: '2026',
+    name: 'E-Commerce App',
     points: [
-      'Cloud Integration',
-      'Real-time Analytics',
-      'Secure Architecture',
-      'Scalable Infrastructure'
+      'Online Shopping App',
+      'Product Listing & Details',
+      'Cart & Checkout',
+      'Modern UI'
     ],
-    categories: ['SaaS', 'Enterprise'],
-    media: 'project4.png',
-    mediaType: 'image'
+    categories: ['E-Commerce', 'Mobile App'],
+      media: 'project8.png',
+      mediaType: 'image'
   },
   {
     id: 5,
@@ -75,6 +76,48 @@ const projects = [
     media: 'project5.png',
     mediaType: 'image'
   },
+    {
+    id: 6,
+    year: '2025',
+    name: 'Habit Tracker',
+    points: [
+      'Daily Habit Tracking',
+      'Streak & Consistency System',
+      'Calendar-Based Habit View',
+      'Minimal & User-Friendly UI'
+    ],
+    categories: ['Productivity', 'Habit Tracker'],
+      media: 'project7.png',
+      mediaType: 'image'
+  },
+  {
+    id: 7,
+    year: '2023',
+    name: 'LifeLync',
+    points: [
+      'Easy Customization',
+      'Interactive Elements',
+      'Retina Ready',
+      'High Performance'
+    ],
+    categories: ['Hospital', 'Agency'],
+    media: 'project3.png',
+    mediaType: 'image'
+  },
+  {
+    id: 8,
+    year: '2023',
+    name: 'Vibgyor Maple',
+    points: [
+      'Cloud Integration',
+      'Real-time Analytics',
+      'Secure Architecture',
+      'Scalable Infrastructure'
+    ],
+    categories: ['SaaS', 'Enterprise'],
+    media: 'project4.png',
+    mediaType: 'image'
+  }
 
 ];
 
@@ -165,8 +208,8 @@ export const PortfolioMore = () => {
             </motion.div>
           </motion.div>
 
-          {/* Projects - Smaller cards to show 1.5 cards on screen */}
-          <div className="space-y-4 lg:space-y-5">
+          {/* Projects - Mobile optimized cards */}
+          <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto">
             {projects.map((project, index) => (
               <div key={project.id}>
                 <motion.div
@@ -192,7 +235,7 @@ export const PortfolioMore = () => {
                     
                     {/* LEFT SIDE - Company Info with gradient background */}
                     <div 
-                      className="p-5 lg:p-6 space-y-3"
+                      className="p-4 sm:p-5 lg:p-6 space-y-3"
                       style={{
                         background: 'linear-gradient(180deg, #0F0F16, #09090D)',
                         boxShadow: 'inset 0 0 20px rgba(124, 58, 237, 0.08)'
@@ -212,7 +255,7 @@ export const PortfolioMore = () => {
                       
                       {/* Company Name */}
                       <motion.h3 
-                        className="text-xl lg:text-2xl font-bold group-hover:text-purple-300 transition-colors duration-300"
+                        className="text-lg sm:text-xl lg:text-2xl font-bold group-hover:text-purple-300 transition-colors duration-300"
                         style={{ color: '#FFFFFF' }}
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -274,7 +317,7 @@ export const PortfolioMore = () => {
 
                     {/* RIGHT SIDE - Single Image */}
                     <motion.div 
-                      className="relative h-full min-h-[250px] lg:min-h-[280px]"
+                      className="relative h-full min-h-[200px] sm:min-h-[250px] lg:min-h-[280px]"
                       initial={{ opacity: 0, x: 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
@@ -367,7 +410,7 @@ export const PortfolioMore = () => {
 
                 {/* Section divider glow between cards (except last) */}
                 {index < projects.length - 1 && (
-                  <div className="h-[2px] w-full my-4 lg:my-5" style={{
+                  <div className="h-[2px] w-full my-6 sm:my-8" style={{
                     background: 'linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.5), transparent)'
                   }} />
                 )}
