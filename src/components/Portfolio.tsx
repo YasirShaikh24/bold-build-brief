@@ -39,6 +39,17 @@ const MouseFollowViewNow = ({ mousePosition, isVisible }: { mousePosition: { x: 
 const projects = [
   {
     id: 1,
+    title: 'ScaleSight',
+    subtitle: 'Finance & Compliance Advisory',
+    link: 'https://www.scalesight.in',
+    description: 'Supporting businesses with Virtual CFO services, financial planning, and strategic guidance.',
+    technologies: ['React', 'Tailwind CSS', 'Node.js'],
+    showLivePreview: true,
+    showLiveBadge: true,
+    imageName: 'image-1.png'
+  },
+  {
+    id: 2,
     title: 'Firdaus Makeover',
     subtitle: 'Beauty Platform',
     link: 'https://firdaus-beauty-suite.vercel.app',
@@ -46,10 +57,10 @@ const projects = [
     technologies: ['React', 'Tailwind CSS', 'Vite'],
     showLivePreview: false,
     showLiveBadge: true,
-    imageName: 'image-1.png' // Explicitly naming the file
+    imageName: 'image-1.png'
   },
   {
-    id: 2,
+    id: 3,
     title: 'Shaden House',
     subtitle: 'Luxury Property',
     link: 'https://www.shadenhouse.com',
@@ -57,10 +68,10 @@ const projects = [
     technologies: ['React', 'Vite', 'Tailwind CSS'],
     showLivePreview: true,
     showLiveBadge: true,
-    imageName: 'image-1.png'
+    imageName: 'image-3.png'
   },
   {
-    id: 3,
+    id: 4,
     title: 'Islamic Deeds Tracker',
     subtitle: 'Faith & Productivity Platform',
     link: 'https://islamic-deeds-tracker.vercel.app/',
@@ -68,25 +79,14 @@ const projects = [
     technologies: ['Python', 'React', 'PostgreSQL'],
     showLivePreview: false,
     showLiveBadge: true,
-    imageName: 'image-3.png' // Matches your screenshot
-  },
-  {
-    id: 4,
-    title: 'Dual Sync',
-    subtitle: 'Productivity & Sync Tool',
-    link: 'https://dualsync-ojd8q93.public.builtwithrocket.new/',
-    description: 'A simple and powerful web app built to help users sync data seamlessly across devices and platforms with minimal setup, designed for fast and reliable syncing of data through a clean and intuitive interface.',
-    technologies: ['Python', 'TensorFlow', 'React'],
-    showLivePreview: false,
-    showLiveBadge: true,
-    imageName: 'image-4.png'
+    imageName: 'image-3.png'
   },
   {
     id: 5,
     title: 'NOVA',
     subtitle: 'Modern Shopping Experience',
     link: 'https://nova-ecommerce-website.netlify.app/',
-    description: 'A modern and responsive e-commerce web app that allows users to browse products and shop online with ease.Built for a smooth, fast, and user-friendly shopping experience across all devices.',
+    description: 'A modern and responsive e-commerce web app that allows users to browse products and shop online with ease. Built for a smooth, fast, and user-friendly shopping experience across all devices.',
     technologies: ['Node.js', 'Python', 'React'],
     showLivePreview: false,
     showLiveBadge: true,
@@ -128,6 +128,13 @@ const portfolioText = "Our cutting-edge AI solutions are designed to transform b
 const LiveWebsitePreview = ({ url, title }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
+
+  useEffect(() => {
+    // Show logo animation for 1.8s then reveal the iframe
+    const timer = setTimeout(() => setShowIntro(false), 1800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleClick = () => {
     if (url) {
@@ -135,12 +142,67 @@ const LiveWebsitePreview = ({ url, title }) => {
     }
   };
 
+  // Per-project intro styling
+  const isScaleSight = title === 'ScaleSight';
+  const introBg = isScaleSight
+    ? 'linear-gradient(135deg, #e8f8f5 0%, #f0fdfb 100%)'
+    : 'linear-gradient(135deg, #1a1025 0%, #0d0d1a 100%)';
+  const introIconBg = isScaleSight
+    ? 'linear-gradient(135deg, #0d9488, #14b8a6)'
+    : 'linear-gradient(135deg, #7c3aed, #a855f7)';
+  const introIconShadow = isScaleSight
+    ? '0 0 20px rgba(20,184,166,0.5)'
+    : '0 0 20px rgba(124,58,237,0.5)';
+  const introNameColor = isScaleSight ? '#0d9488' : '#c4b5fd';
+  const introSubColor = isScaleSight ? 'rgba(13,148,136,0.6)' : 'rgba(196,181,253,0.5)';
+  const introSubText = isScaleSight ? 'Global Advisory' : 'Luxury Property';
+
   return (
     <div 
       className="relative aspect-[16/10] overflow-hidden rounded-lg md:rounded-xl bg-secondary/20 border border-border/30 cursor-pointer hover:border-primary/30 transition-colors duration-300"
       onClick={handleClick}
     >
-      {!isLoaded && !hasError && (
+      {/* Logo intro animation */}
+      <div
+        className={`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-700 ${
+          showIntro ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        style={{ background: introBg }}
+      >
+        <div className="flex flex-col items-center gap-2">
+          {/* Animated logo ring */}
+          <div className="relative flex items-center justify-center">
+            <div
+              className="absolute w-14 h-14 rounded-full animate-ping"
+              style={{ background: isScaleSight ? 'rgba(20, 184, 166, 0.2)' : 'rgba(124,58,237,0.2)' }}
+            />
+            <div
+              className="w-10 h-10 rounded-full flex items-center justify-center animate-pulse"
+              style={{ background: introIconBg, boxShadow: introIconShadow }}
+            >
+              {isScaleSight ? (
+                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              ) : (
+                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              )}
+            </div>
+          </div>
+          <span
+            className="text-xs font-bold tracking-widest uppercase"
+            style={{ color: introNameColor, letterSpacing: '0.15em' }}
+          >
+            {title}
+          </span>
+          <span className="text-[10px]" style={{ color: introSubColor }}>{introSubText}</span>
+        </div>
+      </div>
+
+      {/* Loading spinner (shown while iframe loads, after intro) */}
+      {!isLoaded && !hasError && !showIntro && (
         <div className="absolute inset-0 flex items-center justify-center bg-secondary/40 backdrop-blur-sm z-10">
           <div className="flex flex-col items-center gap-3">
             <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin" />
@@ -164,14 +226,13 @@ const LiveWebsitePreview = ({ url, title }) => {
           title={`${title} - Live Preview`}
           className="absolute border-0"
           style={{
-            width: '4500px',
-            height: '2800px',
-            transform: 'scale(0.18)',
-            transformOrigin: 'top center',
+            width: '1440px',
+            height: '900px',
+            transform: 'scale(0.29)',
+            transformOrigin: 'top left',
             pointerEvents: 'none',
-            top: '-150px',
-            left: '50%',
-            marginLeft: '-2250px',
+            top: '0px',
+            left: '0px',
           }}
           sandbox="allow-scripts allow-same-origin allow-popups"
           onLoad={() => setIsLoaded(true)}
