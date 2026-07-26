@@ -35,11 +35,11 @@ export const FloatingContactButton = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-8 right-8 z-50">
+    <div className="fixed bottom-8 left-8 z-50">
       {/* Expanded card */}
       {isExpanded && (
         <div
-          className="absolute bottom-20 right-0 w-64 p-4 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl"
+          className="absolute bottom-20 left-0 w-64 p-4 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl"
           style={{
             animation: 'fadeIn 0.2s ease-out',
           }}
@@ -104,7 +104,7 @@ export const FloatingContactButton = () => {
         )}
       </button>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fadeIn {
           from {
             opacity: 0;

@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CustomCursor } from "./components/CustomCursor";
+import { Chatbot } from "./components/Chatbot";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
 import ContactForm from "./pages/ContactForm";
@@ -26,6 +27,8 @@ const App = () => (
           <Route path="/portfolio-more" element={<PortfolioMore />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        {/* Chatbot - visible on all pages */}
+        <Chatbot />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

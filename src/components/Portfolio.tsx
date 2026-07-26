@@ -52,7 +52,7 @@ const projects = [
     id: 2,
     title: 'Firdaus Makeover',
     subtitle: 'Beauty Platform',
-    link: 'https://firdaus-beauty-suite.vercel.app',
+    link: 'https://firdausmakeover.com',
     description: 'A high-end, responsive beauty service platform designed for Firdaus Beauty Suite.',
     technologies: ['React', 'Tailwind CSS', 'Vite'],
     showLivePreview: false,

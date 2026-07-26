@@ -57,7 +57,7 @@
     "express": "^4.22.1",
     "framer-motion": "^12.26.1",
     "input-otp": "^1.4.2",
-    "lucide-react": "^0.462.0",
+    "lucide-react": "0.462.0",
     "next-themes": "^0.3.0",
     "nodemailer": "^6.10.1",
     "react": "^18.3.1",
