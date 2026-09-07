@@ -211,7 +211,7 @@ export const SupportSection = () => {
       </div>
 
       {/* Add scrollbar hide utility */}
-      <style jsx>{`
+      <style>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
         }

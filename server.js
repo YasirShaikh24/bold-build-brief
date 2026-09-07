@@ -2,6 +2,7 @@ import express from 'express';
 import nodemailer from 'nodemailer';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { handleChatRequest } from './api/chat.js';
 
 dotenv.config();
 
@@ -87,14 +88,26 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+// Chatbot endpoint with Gemini AI
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { messages } = req.body || {};
+    const reply = await handleChatRequest(messages);
+    res.json({ reply });
+  } catch (error) {
+    console.error('❌ Error processing chat request:', error);
+    res.status(500).json({ error: 'Failed to process chat request' });
+  }
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`📧 Using email: ${process.env.GMAIL_USER}`);
+  console.log(`📧 Using email: ${process.env.GMAIL_USER || 'Not set'}`);
 });
